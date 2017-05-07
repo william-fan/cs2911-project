@@ -25,6 +25,7 @@ public class PuzzleGameDemo extends Application {
 		Player player1 = new Player();
 		
         primaryStage.setTitle("Puzzle Game");
+        primaryStage.setResizable(false);
         
         //Play button
     	Button button1 = new Button("Play Game");
@@ -50,9 +51,9 @@ public class PuzzleGameDemo extends Application {
         help.getChildren().addAll(mainMenu);
         		
         //Set scene
-        Scene Menu = new Scene(pane1, 1010, 1010);
-        Scene Game = new Scene(game, 1010, 1010);
-        Scene Help = new Scene(help, 1010, 1010);
+        Scene Menu = new Scene(pane1, 511, 816);
+        Scene Game = new Scene(game, 511, 816);
+        Scene Help = new Scene(help, 511, 816);
 
         //Events
         button1.setOnAction(actionEvent ->  {
@@ -81,7 +82,7 @@ public class PuzzleGameDemo extends Application {
         //Need to add player properly
         Game.setOnKeyPressed((event) -> {
             if (event.getCode() == KeyCode.DOWN) {
-            	if (imageView.getTranslateY() < 980) {
+            	if (imageView.getTranslateY() < Game.getHeight()-36) {
 	            	imageView.setTranslateY(imageView.getTranslateY()+20);
 	            	player1.moveDown();
 	            	System.out.println(event.getCode());
@@ -102,7 +103,7 @@ public class PuzzleGameDemo extends Application {
             	}
             }
             else if (event.getCode() == KeyCode.RIGHT) {
-            	if (imageView.getTranslateX() < 980) {
+            	if (imageView.getTranslateX() < Game.getWidth()-31) {
 	            	imageView.setTranslateX(imageView.getTranslateX()+20);
 	            	player1.moveRight();     
 	            	System.out.println(event.getCode());

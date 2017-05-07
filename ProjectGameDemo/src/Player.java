@@ -7,7 +7,7 @@ public class Player {
 	public Player () {
 		this.setX(0);
 		this.setY(0);
-		this.ID = 0;
+		this.setID(0);
 	}
 	
 	public void moveDown() {
@@ -40,5 +40,13 @@ public class Player {
 
 	public void setY(int y) {
 		this.y = y;
+	}
+
+	public int getID() {
+		return this.ID;
+	}
+
+	public void setID(int iD) {
+		this.ID = iD;
 	}
 }

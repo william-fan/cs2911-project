@@ -14,7 +14,7 @@ public class PuzzleGame {
 	}
 	
 	public FlowPane Help() { 
-		Label label = new Label("This is the help screen");
+		Label label = new Label("This is the help screen\nTEST");
 		FlowPane pane2 = new FlowPane();
     	
 		pane2.getChildren().addAll(label);

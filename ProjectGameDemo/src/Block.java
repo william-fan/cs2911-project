@@ -1,12 +1,12 @@
 
-public class Player {
+public class Block {
 	private int x;
 	private int y;
 	private int ID;
 	
-	public Player() {
-		this.x = 0;
-		this.y = 0;
+	public Block() {
+		this.x = 12;
+		this.y = -19;
 		this.ID = 0;
 	}
 	

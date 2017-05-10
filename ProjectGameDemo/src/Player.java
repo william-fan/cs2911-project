@@ -1,13 +1,20 @@
+import java.io.File;
+import java.util.ArrayList;
+
+import javafx.scene.image.Image;
 
 public class Player {
 	private int x;
 	private int y;
 	private int ID;
+	private Image playerImage;
+	private ArrayList<ArrayList<Image>> sprites;
 	
-	public Player() {
+	public Player(int ID) {
 		this.x = 0;
 		this.y = 0;
-		this.ID = 0;
+		this.ID = ID;
+	  	this.playerImage = new Image(new File("images/sprite1.png").toURI().toString());
 	}
 	
 	public void moveDown() {
@@ -48,5 +55,13 @@ public class Player {
 
 	public void setID(int iD) {
 		this.ID = iD;
+	}
+	
+	public void updateSprite (int newDirection) {
+		
+	}
+	
+	public Image getPlayerImage() {
+		return this.playerImage;
 	}
 }

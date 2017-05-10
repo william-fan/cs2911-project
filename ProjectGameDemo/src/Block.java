@@ -1,13 +1,16 @@
+import java.io.File;
+
+import javafx.scene.image.Image;
 
 public class Block {
 	private int x;
 	private int y;
 	private int ID;
+	private Image blockImage;
 	
-	public Block() {
-		this.x = 12;
-		this.y = -19;
-		this.ID = 0;
+	public Block(int ID) {
+		this.ID = ID;
+	  	this.blockImage = new Image(new File("images/block"+ID+".png").toURI().toString());
 	}
 	
 	public void moveDown() {
@@ -48,5 +51,9 @@ public class Block {
 
 	public void setID(int iD) {
 		this.ID = iD;
+	}
+	
+	public Image getBlockImage() {
+		return this.blockImage;
 	}
 }

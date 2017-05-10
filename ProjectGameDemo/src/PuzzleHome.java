@@ -52,21 +52,16 @@ public class PuzzleHome extends Application {
         //Events
         playButton.setOnAction(actionEvent ->  {
         	test.resetGame();
-        	mainWindow.setScene(test.Game(new Cell[100][100],primaryStage, menuScene, 1));
-            //primaryStage.setFullScreen(true);
+        	mainWindow.setScene(test.Game(new Cell[15][11], primaryStage, menuScene, 1, 1));
         });
         
         helpButton.setOnAction(actionEvent ->  {
         	mainWindow.setScene(helpScene);    
-            //primaryStage.setFullScreen(true);
         });
         
         menuButton.setOnAction(actionEvent ->  {
         	mainWindow.setScene(menuScene);
-        	//mainWindow.getScene().setRoot(newContent);
-            //primaryStage.setFullScreen(true);
         });
-        
         
         //Show final
         primaryStage.setTitle("Puzzle Game");

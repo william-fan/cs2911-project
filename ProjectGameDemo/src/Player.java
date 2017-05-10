@@ -17,20 +17,36 @@ public class Player {
 	  	this.playerImage = new Image(new File("images/sprite1.png").toURI().toString());
 	}
 	
-	public void moveDown() {
-		y -= 1;
-	}
-
-	public void moveLeft() {
-		x -= 1;
-	}
-
-	public void moveUp() {
+	public Boolean moveDown(ArrayList<Block> blockList, int gameWidth, int gameHeight) {
+		if (y + 1 >= gameHeight) {
+			return false;
+		}
 		y += 1;
+		return true;
 	}
 
-	public void moveRight() {
+	public Boolean moveLeft(ArrayList<Block> blockList, int gameWidth, int gameHeight) {
+		if (x - 1 < 0) {
+			return false;
+		}
+		x -= 1;
+		return true;
+	}
+
+	public Boolean moveUp(ArrayList<Block> blockList, int gameWidth, int gameHeight) {
+		if (y - 1 < 0) {
+			return false;
+		}
+		y -= 1;
+		return true;
+	}
+
+	public Boolean moveRight(ArrayList<Block> blockList, int gameWidth, int gameHeight) {
+		if (x + 1 >= gameWidth) {
+			return false;
+		}
 		x += 1;
+		return true;
 	}
 
 	public int getX() {
@@ -63,5 +79,14 @@ public class Player {
 	
 	public Image getPlayerImage() {
 		return this.playerImage;
+	}
+	
+	//1 - up, 2 - right, 3 - down, 4 - left
+	public void checkCollision(ArrayList<Block> blockList, int direction, int gameWidth, int gameHeight) {
+		for (Block block : blockList) {
+			if (block.getX() + 1 == this.getX() && direction == 1) {
+				
+			}
+		}
 	}
 }

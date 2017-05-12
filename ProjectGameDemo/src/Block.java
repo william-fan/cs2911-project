@@ -1,16 +1,27 @@
 import java.io.File;
 
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public class Block {
 	private int x;
 	private int y;
 	private int ID;
-	private Image blockImage;
+	private ImageView blockImage;
 	
-	public Block(int ID) {
+	public Block(int ID, int x, int y) {
 		this.ID = ID;
-	  	this.blockImage = new Image(new File("images/block"+ID+".png").toURI().toString());
+		this.x = x;
+		this.y = y;
+	  	this.blockImage = imageInit();
+
+	}
+	
+	public ImageView imageInit() {
+	  	ImageView tempImage = new ImageView(new Image(new File("images/block"+ID+".png").toURI().toString()));
+	  	tempImage.setFitHeight(64);
+	  	tempImage.setFitWidth(64);
+	  	return tempImage;
 	}
 	
 	public void moveDown() {
@@ -53,7 +64,7 @@ public class Block {
 		this.ID = iD;
 	}
 	
-	public Image getBlockImage() {
+	public ImageView getBlockImage() {
 		return this.blockImage;
 	}
 }

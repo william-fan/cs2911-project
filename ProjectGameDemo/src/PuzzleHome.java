@@ -17,11 +17,53 @@ public class PuzzleHome extends Application {
 		return pane2;
 	}
 	
-	public FlowPane selectDifficulty() { 
+	public Cell[][] generateMap(int difficulty) {
+		Cell[][] map = null;
+		if (difficulty == 0) {
+			map = new Cell[10][10];
+			for (int x = 0; x != 10; x++) {
+				for (int y = 0; y != 10; y++) {
+					Cell cell = new Cell(x, y, false);
+					if (x == 0) {
+						cell.setWall(true);
+					}
+					if (y == 0) {
+						cell.setWall(true);
+					}
+					if (y == 9) {
+						cell.setWall(true);
+					}
+					if (x == 9) {
+						cell.setWall(true);
+					}
+					map[x][y] = cell;
+ 				}
+			}
+		}
+		return map;
+	}
+	
+	public Scene selectDifficulty(Stage primaryStage, Scene menu) { 
+		Rectangle2D screenSize = Screen.getPrimary().getVisualBounds(); //Get screen size
 		Label label = new Label("This is the difficulty screen\nTEST");
-		FlowPane pane2 = new FlowPane();
-		pane2.getChildren().addAll(label);
-		return pane2;
+		FlowPane difficultyPane = new FlowPane();
+		difficultyPane.getChildren().addAll(label);
+		
+        Button easyButton = new Button("Easy");
+        Button menuButton = new Button("Main Menu");
+        difficultyPane.getChildren().addAll(menuButton, easyButton);
+        
+        PuzzleGame game = new PuzzleGame();
+        easyButton.setOnAction(actionEvent ->  {
+        	game.resetGame();
+        	primaryStage.setScene(game.Game(generateMap(0), primaryStage, menu, 1, 2));
+        });
+        
+        menuButton.setOnAction(actionEvent ->  {
+        	primaryStage.setScene(menu);
+        });
+        Scene difficultyScene = new Scene(difficultyPane, screenSize.getWidth(), screenSize.getHeight());
+		return difficultyScene;
 	}
 	
 	public void start(Stage primaryStage) throws Exception {
@@ -29,7 +71,6 @@ public class PuzzleHome extends Application {
 		Stage mainWindow = primaryStage;
 		FlowPane menuPane = new FlowPane();
 		Rectangle2D screenSize = Screen.getPrimary().getVisualBounds(); //Get screen size
-
         
         //Play button
     	Button playButton = new Button("Play Game");
@@ -43,18 +84,17 @@ public class PuzzleHome extends Application {
         FlowPane helpPane = this.helpPage();
         Button menuButton = new Button("Main menu");
         helpPane.getChildren().addAll(menuButton);
-        		
+        
+        
         //Set scene
         Scene menuScene = new Scene(menuPane, screenSize.getWidth(), screenSize.getHeight());
         Scene helpScene = new Scene(helpPane, screenSize.getWidth(), screenSize.getHeight());
-        PuzzleGame test = new PuzzleGame();
         
         //Events
         playButton.setOnAction(actionEvent ->  {
-        	test.resetGame();
-        	mainWindow.setScene(test.Game(new Cell[15][11], primaryStage, menuScene, 1, 1));
+        	mainWindow.setScene(selectDifficulty(mainWindow, menuScene));
         });
-        
+
         helpButton.setOnAction(actionEvent ->  {
         	mainWindow.setScene(helpScene);    
         });
@@ -62,6 +102,7 @@ public class PuzzleHome extends Application {
         menuButton.setOnAction(actionEvent ->  {
         	mainWindow.setScene(menuScene);
         });
+        
         
         //Show final
         primaryStage.setTitle("Puzzle Game");

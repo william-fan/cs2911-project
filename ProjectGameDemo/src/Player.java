@@ -26,7 +26,7 @@ public class Player {
 	}
 	
 	public Boolean moveDown(ArrayList<Block> blockList, Cell[][] grid) {
-		if (y + 1 >= grid[0].length || grid[x][y+1].isWall()) {
+		if (y + 1 >= grid[0].length || grid[x][y+1].getType() == 1) {
 			return false;
 		}
 		if (!checkCollision(blockList, 3, grid)) {
@@ -37,7 +37,7 @@ public class Player {
 	}
 
 	public Boolean moveLeft(ArrayList<Block> blockList, Cell[][] grid) {
-		if (x - 1 < 0 || grid[x-1][y].isWall()) {
+		if (x - 1 < 0 || grid[x-1][y].getType() == 1) {
 			return false;
 		}
 		if (!checkCollision(blockList, 4, grid)) {
@@ -48,7 +48,7 @@ public class Player {
 	}
 
 	public Boolean moveUp(ArrayList<Block> blockList, Cell[][] grid) {
-		if ((y - 1 < 0 || grid[x][y-1].isWall())) {
+		if ((y - 1 < 0 || grid[x][y-1].getType() == 1)) {
 			return false;
 		}
 		if (!checkCollision(blockList, 1, grid)) {
@@ -59,7 +59,7 @@ public class Player {
 	}
 
 	public Boolean moveRight(ArrayList<Block> blockList, Cell[][] grid) {
-		if (x + 1 >= grid.length || grid[x+1][y].isWall()) {
+		if (x + 1 >= grid.length || grid[x+1][y].getType() == 1) {
 			return false;
 		}
 		if (!checkCollision(blockList, 2, grid)) {
@@ -110,7 +110,7 @@ public class Player {
 				return true;
 			}
 			if (tempBlockSecond == null) { //if no second box above the first
-				if (grid[tempBlock.getX()][tempBlock.getY() - 1].isWall() == true) {
+				if (grid[tempBlock.getX()][tempBlock.getY() - 1].getType() == 1) {
 					return false;
 				} else {
 					tempBlock.setY(this.getY() - 2);
@@ -126,7 +126,7 @@ public class Player {
 				return true;
 			}
 			if (tempBlockSecond == null) { //if no second box above the first
-				if (grid[tempBlock.getX() + 1][tempBlock.getY()].isWall() == true) {
+				if (grid[tempBlock.getX() + 1][tempBlock.getY()].getType() == 1) {
 					return false;
 				} else {
 					tempBlock.setX(this.getX() + 2);
@@ -142,7 +142,7 @@ public class Player {
 				return true;
 			}
 			if (tempBlockSecond == null) { //if no second box above the first
-				if (grid[tempBlock.getX()][tempBlock.getY() + 1].isWall() == true) {
+				if (grid[tempBlock.getX()][tempBlock.getY() + 1].getType() == 1) {
 					return false;
 				} else {
 					tempBlock.setY(this.getY() + 2);
@@ -158,7 +158,7 @@ public class Player {
 				return true;
 			}
 			if (tempBlockSecond == null) { //if no second box above the first
-				if (grid[tempBlock.getX() - 1][tempBlock.getY()].isWall() == true) {
+				if (grid[tempBlock.getX() - 1][tempBlock.getY()].getType() == 1) {
 					return false;
 				} else {
 					tempBlock.setX(this.getX() - 2);

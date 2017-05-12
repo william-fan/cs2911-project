@@ -5,13 +5,13 @@ import javafx.scene.image.Image;
 public class Cell {
 	private int x;
 	private int y;
-	private boolean isWall;
+	private int type; //0 floor, 1 wall, 2 target
 	private Image floorImage;
 	
 	public Cell (int x, int y, boolean isWall) {
 		this.x = x;
 		this.y = y;
-	  	this.isWall = false;
+	  	this.setType(0);
   		this.floorImage = new Image(new File("images/ground.png").toURI().toString());
 	}
 	
@@ -30,21 +30,31 @@ public class Cell {
 		return this.y;
 	}
 
-	public boolean isWall() {
-		return isWall;
-	}
-
-	public void setWall(boolean isWall) {
-		this.isWall = isWall;
-  		this.setFloorImage(new Image(new File("images/wall.png").toURI().toString()));
-	}
-
 	public Image getFloorImage() {
 		return floorImage;
 	}
 
 	public void setFloorImage(Image floorImage) {
 		this.floorImage = floorImage;
+	}
+	
+	public void changeFloorImage() {
+		if (this.type == 0) {
+			this.floorImage = new Image(new File("images/ground.png").toURI().toString());
+		} else if (this.type == 1) {
+			this.floorImage = new Image(new File("images/wall.png").toURI().toString());
+		} else if (this.type == 2) {
+			this.floorImage = new Image(new File("images/target.png").toURI().toString());
+		}
+	}
+
+	public int getType() {
+		return this.type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
+		changeFloorImage();
 	}
 	
 

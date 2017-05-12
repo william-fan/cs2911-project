@@ -25,16 +25,19 @@ public class PuzzleHome extends Application {
 				for (int y = 0; y != 10; y++) {
 					Cell cell = new Cell(x, y, false);
 					if (x == 0) {
-						cell.setWall(true);
+						cell.setType(1);
 					}
 					if (y == 0) {
-						cell.setWall(true);
+						cell.setType(1);
 					}
 					if (y == 9) {
-						cell.setWall(true);
+						cell.setType(1);
 					}
 					if (x == 9) {
-						cell.setWall(true);
+						cell.setType(1);
+					}
+					if (x == 8 && y == 8) {
+						cell.setType(2);
 					}
 					map[x][y] = cell;
  				}
@@ -56,7 +59,7 @@ public class PuzzleHome extends Application {
         PuzzleGame game = new PuzzleGame();
         easyButton.setOnAction(actionEvent ->  {
         	game.resetGame();
-        	primaryStage.setScene(game.Game(generateMap(0), primaryStage, menu, 1, 2));
+        	primaryStage.setScene(game.Game(generateMap(0), primaryStage, menu, 1, 3));
         });
         
         menuButton.setOnAction(actionEvent ->  {

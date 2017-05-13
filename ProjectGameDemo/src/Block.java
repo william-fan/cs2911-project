@@ -14,7 +14,6 @@ public class Block {
 		this.x = x;
 		this.y = y;
 	  	this.blockImage = imageInit();
-
 	}
 	
 	public ImageView imageInit() {

@@ -8,10 +8,10 @@ public class Cell {
 	private int type; //0 floor, 1 wall, 2 target
 	private Image floorImage;
 	
-	public Cell (int x, int y, boolean isWall) {
+	public Cell (int x, int y, int type) {
 		this.x = x;
 		this.y = y;
-	  	this.setType(0);
+	  	this.type = 0;
   		this.floorImage = new Image(new File("images/ground.png").toURI().toString());
 	}
 	

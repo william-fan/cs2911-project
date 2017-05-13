@@ -25,8 +25,9 @@ public class Player {
 	  	return tempImage;
 	}
 	
-	public Boolean moveDown(ArrayList<Block> blockList, Cell[][] grid) {
-		if (y + 1 >= grid[0].length || grid[x][y+1].getType() == 1) {
+	public Boolean moveDown(ArrayList<Block> blockList, Player otherPlayer, Cell[][] grid) {
+		if ((y + 1 >= grid[0].length || grid[x][y+1].getType() == 1) 
+				&& (otherPlayer.getX() != this.getX() && otherPlayer.getY()+1 != this.getY())) {
 			return false;
 		}
 		if (!checkCollision(blockList, 3, grid)) {
@@ -36,7 +37,7 @@ public class Player {
 		return true;
 	}
 
-	public Boolean moveLeft(ArrayList<Block> blockList, Cell[][] grid) {
+	public Boolean moveLeft(ArrayList<Block> blockList, Player otherPlayer, Cell[][] grid) {
 		if (x - 1 < 0 || grid[x-1][y].getType() == 1) {
 			return false;
 		}
@@ -47,7 +48,7 @@ public class Player {
 		return true;
 	}
 
-	public Boolean moveUp(ArrayList<Block> blockList, Cell[][] grid) {
+	public Boolean moveUp(ArrayList<Block> blockList, Player otherPlayer, Cell[][] grid) {
 		if ((y - 1 < 0 || grid[x][y-1].getType() == 1)) {
 			return false;
 		}
@@ -58,7 +59,7 @@ public class Player {
 		return true;
 	}
 
-	public Boolean moveRight(ArrayList<Block> blockList, Cell[][] grid) {
+	public Boolean moveRight(ArrayList<Block> blockList, Player otherPlayer, Cell[][] grid) {
 		if (x + 1 >= grid.length || grid[x+1][y].getType() == 1) {
 			return false;
 		}

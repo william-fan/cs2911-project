@@ -89,6 +89,9 @@ public class PuzzleHome extends Application {
         	if(!next.equals("#")) {
 		    	current.setType(0);
         	}	
+        	if(next.equals("5")) {
+		    	current.setType(2);
+        	}
         	if(next.equals("4")) {
 		    	current.setType(1);
         	}

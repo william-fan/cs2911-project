@@ -9,6 +9,7 @@ import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -20,22 +21,22 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class PuzzleGame {
-	private Player player1 = new Player(1, 0, 0);
+	private Player player1 = new Player(1, 0, 0); //assume 0, 0 is a wall and is invalid
 	private Player player2 = new Player(2, 0, 0);
 	private ArrayList <Block> blockList = new ArrayList <Block>();
-	
+	private String timerString;
 	//blockCount only for generation purposes
 	public Scene Game(Cell[][] grid, Stage primaryStage, Scene menu, int playerCount, int blockCount, File inputFile) {
 		Label timeElapsed = new Label("ADSSDSDSDSDAA");
 		timeElapsed.setStyle("-fx-text-fill: white;");
-		AnimationTimer timer = new AnimationTimer() {
+		AnimationTimer timer = new AnimationTimer() {  //everytime a frame updates, we add to frame counter.
 		    private long timestamp;
 		    private int seconds = 0;
 			private int minutes = 0;
-		    private int frames = 0; //60 fps
+		    private int frames = 0;
 		    
 			@Override
-			public void handle(long now) {
+			public void handle(long now) {	//Every 60 frames, add one second
 				long newTime = System.currentTimeMillis();
 		        if (timestamp + 1000 <= newTime) {
 		        	frames ++;
@@ -47,7 +48,7 @@ public class PuzzleGame {
  			    	minutes ++;
  			    	seconds = 0;
  			    }
- 			    String timerString = "" + seconds;
+ 			    timerString = "" + seconds;
  			    if (seconds < 10) {
  			    	timerString = "0" + timerString;
  			    }
@@ -68,14 +69,12 @@ public class PuzzleGame {
 		
 		FlowPane gameUI = new FlowPane();
 		gameUI.getChildren().add(timeElapsed);
-		gameUI.setAlignment(Pos.TOP_RIGHT);
-		gameUI.setOrientation(Orientation.VERTICAL);
-		
+		gameUI.setAlignment(Pos.TOP_RIGHT);		
 		
         GridPane gamePane = new GridPane();
         gamePane.setMinSize(gameWidth, gameHeight);
-        gamePane.setVgap(1);
-        gamePane.setHgap(1);
+        //gamePane.setVgap(1);
+        //gamePane.setHgap(1);
 		
 		//Rectangle2D screenSize = Screen.getPrimary().getVisualBounds(); //Get screen size
 		if (inputFile.exists() && !inputFile.isDirectory()) {
@@ -121,6 +120,7 @@ public class PuzzleGame {
         
         
         Game.setOnKeyPressed((event) -> {
+        	checkVictory(primaryStage, menu, grid, this.blockList);
             if (event.getCode() == KeyCode.DOWN) {
             	if (this.player1.moveDown(this.getBlockList(), this.player2, grid)) {
             		gamePane.getChildren().remove(this.player1.getPlayerImage());
@@ -132,7 +132,7 @@ public class PuzzleGame {
             	}
             }
             else if (event.getCode() == KeyCode.UP) {
-            	if (this.player1.moveUp(this.getBlockList(), player2, grid)) {
+            	if (this.player1.moveUp(this.getBlockList(), this.player2, grid)) {
             		gamePane.getChildren().remove(this.player1.getPlayerImage());
                 	gamePane.add(this.player1.getPlayerImage(), this.player1.getX(), this.player1.getY());
                     for (Block block : this.blockList) {
@@ -152,7 +152,7 @@ public class PuzzleGame {
             	}
             }
             else if (event.getCode() == KeyCode.RIGHT) {
-            	if (this.player1.moveRight(this.getBlockList(), player2, grid)) {
+            	if (this.player1.moveRight(this.getBlockList(), this.player2, grid)) {
             		gamePane.getChildren().remove(this.player1.getPlayerImage());
                 	gamePane.add(this.player1.getPlayerImage(), this.player1.getX(), this.player1.getY());
                     for (Block block : this.blockList) {
@@ -163,7 +163,6 @@ public class PuzzleGame {
             }
             else if (event.getCode() == KeyCode.ESCAPE) {
             	primaryStage.setScene(menu);
-                primaryStage.setTitle("Puzzle Game");
                 primaryStage.setResizable(false);       
                 //primaryStage.setMaximized(true);
                 primaryStage.show();
@@ -214,6 +213,40 @@ public class PuzzleGame {
         
 		return Game;
 		
+	}
+	
+	public void checkVictory(Stage primaryStage, Scene menu, Cell[][] map, ArrayList<Block> blockList) {
+		int gameWidth = map.length;
+		int gameHeight = map[0].length;
+		ArrayList<Block> tempList = new ArrayList<Block>(blockList);
+        for(int y = 0; y < gameHeight; y++) {
+        	for(int x = 0; x < gameWidth; x++) {
+        		if (map[x][y].getType() == 2) {
+        			Block block = findBlock(tempList, x, y); 
+        			if (block != null) {
+        				tempList.remove(block);
+        			} else {
+	        			return;  //failed, no blocks on target
+        			}
+        		}
+        	}
+        }
+        if (tempList.isEmpty()) {
+    		primaryStage.setScene(victoryScreen(primaryStage, menu));
+        }
+	}
+	
+	public Scene victoryScreen(Stage primaryStage, Scene menu) {
+		Label victoryText = new Label(timerString);
+		FlowPane victoryPane = new FlowPane();
+		victoryPane.getChildren().addAll(victoryText);
+        Button menuButton = new Button("Main menu");
+        victoryPane.getChildren().addAll(menuButton);
+        Scene helpScene = new Scene(victoryPane);//, screenSize.getWidth(), screenSize.getHeight());
+        menuButton.setOnAction(actionEvent ->  {
+        	primaryStage.setScene(menu);
+        });
+		return helpScene;
 	}
 	
 	//reset stuff here
@@ -273,5 +306,14 @@ public class PuzzleGame {
 	        	}
 			}
 		}
+	}
+	
+	public Block findBlock(ArrayList<Block> tempBlockList, int x, int y) {
+		for (Block block : tempBlockList) {
+			if (block.getX() == x && block.getY() == y) {
+				return block;
+			}
+		}
+		return null;
 	}
 }

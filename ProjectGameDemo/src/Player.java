@@ -32,7 +32,7 @@ public class Player {
 		if (otherPlayer.getX() == this.getX() && otherPlayer.getY() == this.getY() + 1) {
 			return false;
 		}
-		if (!checkCollision(blockList, 3, grid)) {
+		if (!checkCollision(blockList, otherPlayer, 3, grid)) {
 			return false;
 		}
 		y += 1;
@@ -46,7 +46,7 @@ public class Player {
 		if (otherPlayer.getX() == this.getX() - 1 && otherPlayer.getY() == this.getY()) {
 			return false;
 		}
-		if (!checkCollision(blockList, 4, grid)) {
+		if (!checkCollision(blockList, otherPlayer, 4, grid)) {
 			return false;
 		}
 		x -= 1;
@@ -60,7 +60,7 @@ public class Player {
 		if (otherPlayer.getX() == this.getX() && otherPlayer.getY() == this.getY() - 1) {
 			return false;
 		}
-		if (!checkCollision(blockList, 1, grid)) {
+		if (!checkCollision(blockList, otherPlayer, 1, grid)) {
 			return false;
 		}
 		y -= 1;
@@ -74,7 +74,7 @@ public class Player {
 		if (otherPlayer.getX() == this.getX() + 1 && otherPlayer.getY() == this.getY()) {
 			return false;
 		}
-		if (!checkCollision(blockList, 2, grid)) {
+		if (!checkCollision(blockList, otherPlayer, 2, grid)) {
 			return false;
 		}
 		x += 1;
@@ -114,7 +114,7 @@ public class Player {
 	}
 	
 	//1 - up, 2 - right, 3 - down, 4 - left
-	public Boolean checkCollision(ArrayList<Block> blockList, int direction, Cell[][] grid) {
+	public Boolean checkCollision(ArrayList<Block> blockList, Player otherPlayer, int direction, Cell[][] grid) {
 		if (direction == 1) {
 			Block tempBlock = findBlock(blockList, this.getX(), this.getY() - 1);
 			Block tempBlockSecond = findBlock(blockList, this.getX(), this.getY() - 2);
@@ -122,7 +122,9 @@ public class Player {
 				return true;
 			}
 			if (tempBlockSecond == null) { //if no second box above the first
-				if (grid[tempBlock.getX()][tempBlock.getY() - 1].getType() == 1) {
+				if (otherPlayer.getX() == tempBlock.getX() && otherPlayer.getY() + 1 == tempBlock.getY()) {
+					return false;
+				} else if (grid[tempBlock.getX()][tempBlock.getY() - 1].getType() == 1) {
 					return false;
 				} else {
 					tempBlock.setY(this.getY() - 2);
@@ -138,7 +140,9 @@ public class Player {
 				return true;
 			}
 			if (tempBlockSecond == null) { //if no second box above the first
-				if (grid[tempBlock.getX() + 1][tempBlock.getY()].getType() == 1) {
+				if (otherPlayer.getX() - 1 == tempBlock.getX() && otherPlayer.getY() == tempBlock.getY()) {
+					return false;
+				} else if (grid[tempBlock.getX() + 1][tempBlock.getY()].getType() == 1) {
 					return false;
 				} else {
 					tempBlock.setX(this.getX() + 2);
@@ -154,7 +158,9 @@ public class Player {
 				return true;
 			}
 			if (tempBlockSecond == null) { //if no second box above the first
-				if (grid[tempBlock.getX()][tempBlock.getY() + 1].getType() == 1) {
+				if (otherPlayer.getX() == tempBlock.getX() && otherPlayer.getY() - 1 == tempBlock.getY()) {
+					return false;
+				} else if (grid[tempBlock.getX()][tempBlock.getY() + 1].getType() == 1) {
 					return false;
 				} else {
 					tempBlock.setY(this.getY() + 2);
@@ -170,7 +176,9 @@ public class Player {
 				return true;
 			}
 			if (tempBlockSecond == null) { //if no second box above the first
-				if (grid[tempBlock.getX() - 1][tempBlock.getY()].getType() == 1) {
+				if (otherPlayer.getX() + 1 == tempBlock.getX() && otherPlayer.getY() == tempBlock.getY()) {
+					return false;
+				} else if (grid[tempBlock.getX() - 1][tempBlock.getY()].getType() == 1) {
 					return false;
 				} else {
 					tempBlock.setX(this.getX() - 2);

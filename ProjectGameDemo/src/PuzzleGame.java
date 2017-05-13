@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import javafx.animation.AnimationTimer;
-import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
@@ -29,7 +28,7 @@ public class PuzzleGame {
 	public Scene Game(Cell[][] grid, Stage primaryStage, Scene menu, int playerCount, int blockCount, File inputFile) {
 		Label timeElapsed = new Label("ADSSDSDSDSDAA");
 		timeElapsed.setStyle("-fx-text-fill: white;");
-		AnimationTimer timer = new AnimationTimer() {  //everytime a frame updates, we add to frame counter.
+		AnimationTimer timer = new AnimationTimer() {  //every time a frame updates, we add to frame counter.
 		    private long timestamp;
 		    private int seconds = 0;
 			private int minutes = 0;
@@ -80,13 +79,13 @@ public class PuzzleGame {
 		if (inputFile.exists() && !inputFile.isDirectory()) {
 			findMapFeatures(inputFile);
 		} else {
-			for (int c = blockCount; c != 0; c--) {
+			for (int c = blockCount; c != 0; c--) {  //generate blocks if no input given
 				Block tempBlock = new Block(1, c, 3);
 				this.blockList.add(tempBlock);
 			}
 		}
 
-        for(int y = 0; y < gameHeight; y++) {
+        for(int y = 0; y < gameHeight; y++) {  //add images to gridpane
         	for(int x = 0; x < gameWidth; x++) {
         		HBox a = new HBox();
         		ImageView ground = new ImageView(grid[x][y].getFloorImage());
@@ -166,6 +165,9 @@ public class PuzzleGame {
                 primaryStage.setResizable(false);       
                 //primaryStage.setMaximized(true);
                 primaryStage.show();
+            }
+            else if (event.getCode() == KeyCode.R) {
+            	resetGame(grid, primaryStage, menu, playerCount, blockCount, inputFile);
             } 
             if (playerCount == 2) {
 	            if (event.getCode() == KeyCode.S) {
@@ -249,9 +251,13 @@ public class PuzzleGame {
 		return helpScene;
 	}
 	
-	//reset stuff here
-	public void resetGame() {
-		
+	//reset values to original
+	public void resetGame(Cell[][] grid, Stage primaryStage, Scene menu, int playerCount, int blockCount, File inputFile) {
+		this.player1 = new Player(1, 0, 0); //assume 0, 0 is a wall and is invalid
+		this.player2 = new Player(2, 0, 0);
+		this.blockList = new ArrayList <Block>();
+		this.timerString = "";
+		primaryStage.setScene(Game(grid, primaryStage, menu, playerCount, blockCount, inputFile));
 	}
 
 	public ArrayList <Block> getBlockList() {

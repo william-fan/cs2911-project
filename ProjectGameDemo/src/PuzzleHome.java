@@ -121,7 +121,6 @@ public class PuzzleHome extends Application {
         
         PuzzleGame game = new PuzzleGame();
         easyButton.setOnAction(actionEvent ->  {
-        	game.resetGame();
         	File f = new File("maps/easy_"+playerCount+"_1.txt");
         	if (f.exists() && !f.isDirectory()) {
         		primaryStage.setScene(game.Game(readMap(f), primaryStage, menu, playerCount, 3, f));

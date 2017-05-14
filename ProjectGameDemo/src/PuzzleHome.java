@@ -4,11 +4,17 @@ import java.io.FileReader;
 import java.util.Scanner;
 
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Screen;
@@ -176,41 +182,65 @@ public class PuzzleHome extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		// Init
 		Stage mainWindow = primaryStage;
-		FlowPane menuPane = new FlowPane();
-		// Rectangle2D screenSize = Screen.getPrimary().getVisualBounds();
-
+		
+		// Background style
+		String background = "-fx-background-image: url(file:images/background.jpg);" + "\n"
+		   					+ "-fx-background-repeat: stretch;" + "\n"
+		   					+ "-fx-background-size: 1000 1000";
+		
+		GridPane gridMain = new GridPane();
+		gridMain.setAlignment(Pos.CENTER);
+		gridMain.setHgap(25);
+		gridMain.setVgap(25);
+		
 		// Play button
 		Button playButton = new Button("Play Game");
-		menuPane.getChildren().addAll(playButton);
-
+	    playButton.setPrefSize(150, 100);
+	    gridMain.add(playButton, 1, 8);
+		
 		// Help button
-		Button helpButton = new Button("Help");
-		menuPane.getChildren().addAll(helpButton);
+    	Button helpButton = new Button("Instructions");
+    	helpButton.setPrefSize(150, 100);
+    	gridMain.add(helpButton, 1, 9);
 
 		// Test button
-		Button puzzleMakerButton = new Button("puzzleMaker");
+		Button puzzleMakerButton = new Button("Puzzle Maker");
+		puzzleMakerButton.setPrefSize(150, 100);
 		PuzzleMaker puzzleMaker = new PuzzleMaker();
-		menuPane.getChildren().addAll(puzzleMakerButton);
+		gridMain.add(puzzleMakerButton, 1, 10);
 
 		// Quit button
-		Button quitButton = new Button("Quit");
-		menuPane.getChildren().addAll(quitButton);
-
+    	Button quitButton = new Button("Quit");
+    	quitButton.setPrefSize(150, 100);
+    	gridMain.add(quitButton, 1, 11);
+    	
+    	// Set background (Main Menu)
+    	gridMain.setStyle(background);
+    	
 		// Set scene
-		Scene menuScene = new Scene(menuPane);// , screenSize.getWidth(), screenSize.getHeight());
+		Scene menuScene = new Scene(gridMain, 800, 800);// , screenSize.getWidth(), screenSize.getHeight());	
 
 		// Events
 		playButton.setOnAction(actionEvent -> {
 			mainWindow.setScene(selectPlayers(mainWindow, menuScene));
 		});
+		
 		helpButton.setOnAction(actionEvent -> {
 			mainWindow.setScene(helpPage(mainWindow, menuScene));
 		});
+		
 		puzzleMakerButton.setOnAction(actionEvent -> {
 			mainWindow.setScene(puzzleMaker.PuzzleMakerHome(mainWindow, menuScene));
 		});
+		
 		quitButton.setOnAction(actionEvent -> {
-			System.exit(0);
+        	Alert confirmExit = new Alert(AlertType.CONFIRMATION, "Would you like to exit Wacky Warehouse?", ButtonType.OK, ButtonType.CANCEL);
+        	confirmExit.setTitle("Exit Game");
+        	confirmExit.showAndWait();
+        	
+        	if (confirmExit.getResult() == ButtonType.OK) {
+        		Platform.exit();
+        	}
 		});
 
 		// Show final

@@ -5,14 +5,17 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 public class PuzzleMaker {
 	private int sizeX = 0;
 	private int sizeY = 0;
+	private Cell[][] map;
 	
 	public Scene PuzzleMakerHome(Stage primaryStage, Scene menu) {
 		//Add ui boxes
@@ -66,10 +69,23 @@ public class PuzzleMaker {
 			if (this.sizeX == 0 || this.sizeY == 0) {
 				return;
 			}
-			
+			gamePane.setMinSize(this.sizeX, this.sizeY);
+			map = new Cell[this.sizeX][this.sizeY];
 		});
-        	
-        	
+        
+        if (this.sizeX != 0 && this.sizeY != 0) {    	
+        	for (int x = 0; x < this.sizeX; x++) {
+            	for (int y = 0; y < this.sizeY; y++) {
+            		map[x][y] = new Cell(x, y, 0);
+    				HBox a = new HBox();
+    				ImageView ground = new ImageView(map[x][y].getFloorImage());
+    				ground.setFitHeight(64);
+    				ground.setFitWidth(64);
+    				a.getChildren().add(ground);
+    				gamePane.add(a, x, y);
+    	        }
+	        }
+        }	
         Scene Game = new Scene(center);
 		return Game;
 		

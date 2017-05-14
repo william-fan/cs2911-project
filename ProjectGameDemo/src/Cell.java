@@ -5,28 +5,31 @@ import javafx.scene.image.Image;
 public class Cell {
 	private int x;
 	private int y;
-	private int type; //0 floor, 1 wall, 2 target
+	private int type; // 0 floor, 1 wall, 2 target
 	private Image floorImage;
-	
-	public Cell (int x, int y, int type) {
+
+	public Cell(int x, int y, int type) {
 		this.x = x;
 		this.y = y;
-	  	this.type = 0;
-  		this.floorImage = new Image(new File("images/ground.png").toURI().toString());
+		this.type = 0;
+		this.floorImage = new Image(new File("images/ground.png").toURI().toString());
 	}
-	
+
 	/**
 	 * Gets the x value of the cell.
-	 * @return	The x value of the cell.
+	 * 
+	 * @return The x value of the cell.
 	 */
-	public int getx(){
+	public int getx() {
 		return this.x;
 	}
+
 	/**
 	 * Gets the y value of the cell.
-	 * @return	The y value of the cell.
+	 * 
+	 * @return The y value of the cell.
 	 */
-	public int gety(){
+	public int gety() {
 		return this.y;
 	}
 
@@ -37,7 +40,7 @@ public class Cell {
 	public void setFloorImage(Image floorImage) {
 		this.floorImage = floorImage;
 	}
-	
+
 	public void changeFloorImage() {
 		if (this.type == 0) {
 			this.floorImage = new Image(new File("images/ground.png").toURI().toString());
@@ -56,6 +59,5 @@ public class Cell {
 		this.type = type;
 		changeFloorImage();
 	}
-	
 
 }

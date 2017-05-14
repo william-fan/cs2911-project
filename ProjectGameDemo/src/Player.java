@@ -9,24 +9,24 @@ public class Player {
 	private int y;
 	private int ID;
 	private ImageView playerImage;
-	//private ArrayList<ArrayList<Image>> sprites;
-	
+	// private ArrayList<ArrayList<Image>> sprites;
+
 	public Player(int ID, int x, int y) {
 		this.x = x;
 		this.y = y;
 		this.ID = ID;
-	  	this.playerImage = initImage();
+		this.playerImage = initImage();
 	}
-	
+
 	public ImageView initImage() {
-		ImageView tempImage = new ImageView(new Image(new File("images/sprite"+this.ID+".png").toURI().toString()));
-	  	tempImage.setFitHeight(64);
-	  	tempImage.setFitWidth(64);
-	  	return tempImage;
+		ImageView tempImage = new ImageView(new Image(new File("images/sprite" + this.ID + ".png").toURI().toString()));
+		tempImage.setFitHeight(64);
+		tempImage.setFitWidth(64);
+		return tempImage;
 	}
-	
+
 	public Boolean moveDown(ArrayList<Block> blockList, Player otherPlayer, Cell[][] grid) {
-		if (y + 1 >= grid[0].length || grid[x][y+1].getType() == 1) {
+		if (y + 1 >= grid[0].length || grid[x][y + 1].getType() == 1) {
 			return false;
 		}
 		if (otherPlayer.getX() == this.getX() && otherPlayer.getY() == this.getY() + 1) {
@@ -40,7 +40,7 @@ public class Player {
 	}
 
 	public Boolean moveLeft(ArrayList<Block> blockList, Player otherPlayer, Cell[][] grid) {
-		if (x - 1 < 0 || grid[x-1][y].getType() == 1) {
+		if (x - 1 < 0 || grid[x - 1][y].getType() == 1) {
 			return false;
 		}
 		if (otherPlayer.getX() == this.getX() - 1 && otherPlayer.getY() == this.getY()) {
@@ -54,7 +54,7 @@ public class Player {
 	}
 
 	public Boolean moveUp(ArrayList<Block> blockList, Player otherPlayer, Cell[][] grid) {
-		if ((y - 1 < 0 || grid[x][y-1].getType() == 1)) {
+		if ((y - 1 < 0 || grid[x][y - 1].getType() == 1)) {
 			return false;
 		}
 		if (otherPlayer.getX() == this.getX() && otherPlayer.getY() == this.getY() - 1) {
@@ -68,7 +68,7 @@ public class Player {
 	}
 
 	public Boolean moveRight(ArrayList<Block> blockList, Player otherPlayer, Cell[][] grid) {
-		if (x + 1 >= grid.length || grid[x+1][y].getType() == 1) {
+		if (x + 1 >= grid.length || grid[x + 1][y].getType() == 1) {
 			return false;
 		}
 		if (otherPlayer.getX() == this.getX() + 1 && otherPlayer.getY() == this.getY()) {
@@ -104,24 +104,24 @@ public class Player {
 	public void setID(int iD) {
 		this.ID = iD;
 	}
-	
-	public void updateSprite (int newDirection) {
-		
+
+	public void updateSprite(int newDirection) {
+
 	}
-	
+
 	public ImageView getPlayerImage() {
 		return this.playerImage;
 	}
-	
-	//1 - up, 2 - right, 3 - down, 4 - left
+
+	// 1 - up, 2 - right, 3 - down, 4 - left
 	public Boolean checkCollision(ArrayList<Block> blockList, Player otherPlayer, int direction, Cell[][] grid) {
 		if (direction == 1) {
 			Block tempBlock = findBlock(blockList, this.getX(), this.getY() - 1);
 			Block tempBlockSecond = findBlock(blockList, this.getX(), this.getY() - 2);
-			if (tempBlock == null) { //no box
+			if (tempBlock == null) { // no box
 				return true;
 			}
-			if (tempBlockSecond == null) { //if no second box above the first
+			if (tempBlockSecond == null) { // if no second box above the first
 				if (otherPlayer.getX() == tempBlock.getX() && otherPlayer.getY() + 1 == tempBlock.getY()) {
 					return false;
 				} else if (grid[tempBlock.getX()][tempBlock.getY() - 1].getType() == 1) {
@@ -130,16 +130,16 @@ public class Player {
 					tempBlock.setY(this.getY() - 2);
 					return true;
 				}
-			} else { //dont allow two boxes to be pushed
+			} else { // don't allow two boxes to be pushed
 				return false;
 			}
 		} else if (direction == 2) {
 			Block tempBlock = findBlock(blockList, this.getX() + 1, this.getY());
 			Block tempBlockSecond = findBlock(blockList, this.getX() + 2, this.getY());
-			if (tempBlock == null) { //no box
+			if (tempBlock == null) { // no box
 				return true;
 			}
-			if (tempBlockSecond == null) { //if no second box above the first
+			if (tempBlockSecond == null) { // if no second box above the first
 				if (otherPlayer.getX() - 1 == tempBlock.getX() && otherPlayer.getY() == tempBlock.getY()) {
 					return false;
 				} else if (grid[tempBlock.getX() + 1][tempBlock.getY()].getType() == 1) {
@@ -148,16 +148,16 @@ public class Player {
 					tempBlock.setX(this.getX() + 2);
 					return true;
 				}
-			} else { //dont allow two boxes to be pushed
+			} else { // dont allow two boxes to be pushed
 				return false;
 			}
 		} else if (direction == 3) {
 			Block tempBlock = findBlock(blockList, this.getX(), this.getY() + 1);
 			Block tempBlockSecond = findBlock(blockList, this.getX(), this.getY() + 2);
-			if (tempBlock == null) { //no box
+			if (tempBlock == null) { // no box
 				return true;
 			}
-			if (tempBlockSecond == null) { //if no second box above the first
+			if (tempBlockSecond == null) { // if no second box above the first
 				if (otherPlayer.getX() == tempBlock.getX() && otherPlayer.getY() - 1 == tempBlock.getY()) {
 					return false;
 				} else if (grid[tempBlock.getX()][tempBlock.getY() + 1].getType() == 1) {
@@ -166,16 +166,16 @@ public class Player {
 					tempBlock.setY(this.getY() + 2);
 					return true;
 				}
-			} else { //dont allow two boxes to be pushed
+			} else { // dont allow two boxes to be pushed
 				return false;
 			}
 		} else if (direction == 4) {
 			Block tempBlock = findBlock(blockList, this.getX() - 1, this.getY());
 			Block tempBlockSecond = findBlock(blockList, this.getX() - 2, this.getY());
-			if (tempBlock == null) { //no box
+			if (tempBlock == null) { // no box
 				return true;
 			}
-			if (tempBlockSecond == null) { //if no second box above the first
+			if (tempBlockSecond == null) { // if no second box above the first
 				if (otherPlayer.getX() + 1 == tempBlock.getX() && otherPlayer.getY() == tempBlock.getY()) {
 					return false;
 				} else if (grid[tempBlock.getX() - 1][tempBlock.getY()].getType() == 1) {
@@ -184,13 +184,13 @@ public class Player {
 					tempBlock.setX(this.getX() - 2);
 					return true;
 				}
-			} else { //dont allow two boxes to be pushed
+			} else { // dont allow two boxes to be pushed
 				return false;
 			}
 		}
 		return false;
 	}
-	
+
 	public Block findBlock(ArrayList<Block> blockList, int x, int y) {
 		for (Block block : blockList) {
 			if (block.getX() == x && block.getY() == y) {

@@ -78,7 +78,7 @@ public class PuzzleGame {
 
 		// Rectangle2D screenSize = Screen.getPrimary().getVisualBounds(); //Get
 		// screen size
-		if (inputFile.exists() && !inputFile.isDirectory()) {
+		if (inputFile != null) {
 			findMapFeatures(inputFile);
 		} else {
 			for (int c = blockCount; c != 0; c--) { // generate blocks if no input given

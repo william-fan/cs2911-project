@@ -6,18 +6,22 @@ import java.util.Scanner;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class PuzzleHome extends Application {
@@ -184,9 +188,12 @@ public class PuzzleHome extends Application {
 		Stage mainWindow = primaryStage;
 		
 		// Background style
-		String background = "-fx-background-image: url(file:images/background.jpg);" + "\n"
+	
+		
+		String background = "-fx-background-image: url(file:images/background.png);" + "\n"
 		   					+ "-fx-background-repeat: stretch;" + "\n"
-		   					+ "-fx-background-size: 1000 1000";
+		   					+ "-fx-background-size: 610 610";
+		   					
 		
 		GridPane gridMain = new GridPane();
 		gridMain.setAlignment(Pos.CENTER);
@@ -194,32 +201,52 @@ public class PuzzleHome extends Application {
 		gridMain.setVgap(25);
 		
 		// Play button
-		Button playButton = new Button("Play Game");
-	    playButton.setPrefSize(150, 100);
+		
+		
+		Button playButton = new Button("");
+		BackgroundImage backgroundImage1 = new BackgroundImage( new Image(new File("images/1pBtn1.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+        Background background1 = new Background(backgroundImage1);
+        BackgroundImage backgroundImage2 = new BackgroundImage( new Image(new File("images/1pBtn2.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+        Background background2 = new Background(backgroundImage2);
+                
+	    playButton.setPrefSize(150, 50);
+	    playButton.setBackground(background1);
 	    gridMain.add(playButton, 1, 8);
+	    
+	    playButton.setOnMouseEntered(actionEvent -> {
+	        playButton.setBackground(background2);
+		});
+	    playButton.setOnMouseExited(actionEvent -> {
+	        playButton.setBackground(background1);
+		});
+
+	    
+	    
 		
 		// Help button
     	Button helpButton = new Button("Instructions");
-    	helpButton.setPrefSize(150, 100);
+    	helpButton.setPrefSize(150, 50);
     	gridMain.add(helpButton, 1, 9);
 
 		// Test button
 		Button puzzleMakerButton = new Button("Puzzle Maker");
-		puzzleMakerButton.setPrefSize(150, 100);
+		puzzleMakerButton.setPrefSize(150, 50);
 		PuzzleMaker puzzleMaker = new PuzzleMaker();
 		gridMain.add(puzzleMakerButton, 1, 10);
 
 		// Quit button
     	Button quitButton = new Button("Quit");
-    	quitButton.setPrefSize(150, 100);
+    	quitButton.setPrefSize(150, 50);
     	gridMain.add(quitButton, 1, 11);
     	
     	// Set background (Main Menu)
     	gridMain.setStyle(background);
     	
 		// Set scene
-		Scene menuScene = new Scene(gridMain, 800, 800);// , screenSize.getWidth(), screenSize.getHeight());	
-
+		Scene menuScene = new Scene(gridMain, 600, 600);// , screenSize.getWidth(), screenSize.getHeight());	
+		
+		//screenSize.getHeight();
+		
 		// Events
 		playButton.setOnAction(actionEvent -> {
 			mainWindow.setScene(selectPlayers(mainWindow, menuScene));
@@ -229,9 +256,9 @@ public class PuzzleHome extends Application {
 			mainWindow.setScene(helpPage(mainWindow, menuScene));
 		});
 		
-		puzzleMakerButton.setOnAction(actionEvent -> {
-			mainWindow.setScene(puzzleMaker.PuzzleMakerHome(mainWindow, menuScene));
-		});
+		//puzzleMakerButton.setOnAction(actionEvent -> {
+		//	mainWindow.setScene(puzzleMaker.PuzzleMakerHome(mainWindow, menuScene));
+		//});
 		
 		quitButton.setOnAction(actionEvent -> {
         	Alert confirmExit = new Alert(AlertType.CONFIRMATION, "Would you like to exit Wacky Warehouse?", ButtonType.OK, ButtonType.CANCEL);

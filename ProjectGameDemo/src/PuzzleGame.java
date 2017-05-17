@@ -6,7 +6,6 @@ import java.util.Scanner;
 
 import javafx.animation.AnimationTimer;
 import javafx.geometry.Pos;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -16,7 +15,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class PuzzleGame {
@@ -24,6 +22,8 @@ public class PuzzleGame {
 	private Player player2 = new Player(2, 0, 0);
 	private ArrayList<Block> blockList = new ArrayList<Block>();
 	private String timerString;
+	private GridPane gamePane = new GridPane();
+
 
 	// blockCount only for generation purposes
 	public Scene Game(Cell[][] grid, Stage primaryStage, Scene menu, int playerCount, int blockCount, File inputFile) {
@@ -31,10 +31,10 @@ public class PuzzleGame {
 		timeElapsed.setStyle("-fx-text-fill: white;");
 		
 		AnimationTimer timer = new AnimationTimer() { // every time a frame updates, we add to frame counter.
-			private long timestamp;
-			private int seconds = 0;
-			private int minutes = 0;
-			private int frames = 0;
+			long timestamp;
+			int seconds = 0;
+			int minutes = 0;
+			int frames = 0;
 
 			@Override
 			public void handle(long now) { // Every 60 frames, add one second
@@ -71,10 +71,9 @@ public class PuzzleGame {
 		gameUI.getChildren().add(timeElapsed);
 		gameUI.setAlignment(Pos.TOP_RIGHT);
 
-		GridPane gamePane = new GridPane();
-		gamePane.setMinSize(gameWidth, gameHeight);
-		// gamePane.setVgap(1);
-		// gamePane.setHgap(1);
+		this.gamePane.setMinSize(gameWidth, gameHeight);
+		// this.gamePane.setVgap(1);
+		// this.gamePane.setHgap(1);
 
 		// Rectangle2D screenSize = Screen.getPrimary().getVisualBounds(); //Get
 		// screen size
@@ -91,67 +90,66 @@ public class PuzzleGame {
 			for (int x = 0; x < gameWidth; x++) {
 				HBox a = new HBox();
 				ImageView ground = new ImageView(grid[x][y].getFloorImage());
-				ground.setFitHeight(64);
-				ground.setFitWidth(64);
+				//ground.setFitHeight(64);
+				//ground.setFitWidth(64);
 				a.getChildren().add(ground);
-				gamePane.add(a, x, y);
+				this.gamePane.add(a, x, y);
 			}
 		}
 
 		if (playerCount == 2) {
-			gamePane.add(this.player2.getPlayerImage(), this.player2.getX(), this.player2.getY());
+			this.gamePane.add(this.player2.getPlayerImage(), this.player2.getX(), this.player2.getY());
 		}
-		gamePane.add(this.player1.getPlayerImage(), this.player1.getX(), this.player1.getY());
+		this.gamePane.add(this.player1.getPlayerImage(), this.player1.getX(), this.player1.getY());
 
 		for (Block block : this.blockList) {
-			gamePane.add(block.getBlockImage(), block.getX(), block.getY());
+			this.gamePane.add(block.getBlockImage(), block.getX(), block.getY());
 		}
 
 		BorderPane center = new BorderPane();
 		// center.setPrefWidth(screenSize.getWidth());
 		// center.setPrefHeight(screenSize.getHeight());
-		center.setCenter(gamePane);
+		center.setCenter(this.gamePane);
 		center.setRight(gameUI);
 		center.setStyle("-fx-background-color: #3F3F3F;");
 
 		Scene Game = new Scene(center);// , screenSize.getWidth(), screenSize.getHeight());
 
 		Game.setOnKeyPressed((event) -> {
-			checkVictory(primaryStage, menu, grid, this.blockList);
 			if (event.getCode() == KeyCode.DOWN) {
 				if (this.player1.moveDown(this.getBlockList(), this.player2, grid)) {
-					gamePane.getChildren().remove(this.player1.getPlayerImage());
-					gamePane.add(this.player1.getPlayerImage(), this.player1.getX(), this.player1.getY());
+					this.gamePane.getChildren().remove(this.player1.getPlayerImage());
+					this.gamePane.add(this.player1.getPlayerImage(), this.player1.getX(), this.player1.getY());
 					for (Block block : this.blockList) {
-						gamePane.getChildren().remove(block.getBlockImage());
-						gamePane.add(block.getBlockImage(), block.getX(), block.getY());
+						this.gamePane.getChildren().remove(block.getBlockImage());
+						this.gamePane.add(block.getBlockImage(), block.getX(), block.getY());
 					}
 				}
 			} else if (event.getCode() == KeyCode.UP) {
 				if (this.player1.moveUp(this.getBlockList(), this.player2, grid)) {
-					gamePane.getChildren().remove(this.player1.getPlayerImage());
-					gamePane.add(this.player1.getPlayerImage(), this.player1.getX(), this.player1.getY());
+					this.gamePane.getChildren().remove(this.player1.getPlayerImage());
+					this.gamePane.add(this.player1.getPlayerImage(), this.player1.getX(), this.player1.getY());
 					for (Block block : this.blockList) {
-						gamePane.getChildren().remove(block.getBlockImage());
-						gamePane.add(block.getBlockImage(), block.getX(), block.getY());
+						this.gamePane.getChildren().remove(block.getBlockImage());
+						this.gamePane.add(block.getBlockImage(), block.getX(), block.getY());
 					}
 				}
 			} else if (event.getCode() == KeyCode.LEFT) {
 				if (this.player1.moveLeft(this.getBlockList(), this.player2, grid)) {
-					gamePane.getChildren().remove(this.player1.getPlayerImage());
-					gamePane.add(this.player1.getPlayerImage(), this.player1.getX(), this.player1.getY());
+					this.gamePane.getChildren().remove(this.player1.getPlayerImage());
+					this.gamePane.add(this.player1.getPlayerImage(), this.player1.getX(), this.player1.getY());
 					for (Block block : this.blockList) {
-						gamePane.getChildren().remove(block.getBlockImage());
-						gamePane.add(block.getBlockImage(), block.getX(), block.getY());
+						this.gamePane.getChildren().remove(block.getBlockImage());
+						this.gamePane.add(block.getBlockImage(), block.getX(), block.getY());
 					}
 				}
 			} else if (event.getCode() == KeyCode.RIGHT) {
 				if (this.player1.moveRight(this.getBlockList(), this.player2, grid)) {
-					gamePane.getChildren().remove(this.player1.getPlayerImage());
-					gamePane.add(this.player1.getPlayerImage(), this.player1.getX(), this.player1.getY());
+					this.gamePane.getChildren().remove(this.player1.getPlayerImage());
+					this.gamePane.add(this.player1.getPlayerImage(), this.player1.getX(), this.player1.getY());
 					for (Block block : this.blockList) {
-						gamePane.getChildren().remove(block.getBlockImage());
-						gamePane.add(block.getBlockImage(), block.getX(), block.getY());
+						this.gamePane.getChildren().remove(block.getBlockImage());
+						this.gamePane.add(block.getBlockImage(), block.getX(), block.getY());
 					}
 				}
 			} else if (event.getCode() == KeyCode.ESCAPE) {
@@ -165,44 +163,44 @@ public class PuzzleGame {
 			if (playerCount == 2) {
 				if (event.getCode() == KeyCode.S) {
 					if (this.player2.moveDown(this.getBlockList(), this.player1, grid)) {
-						gamePane.getChildren().remove(this.player2.getPlayerImage());
-						gamePane.add(this.player2.getPlayerImage(), this.player2.getX(), this.player2.getY());
+						this.gamePane.getChildren().remove(this.player2.getPlayerImage());
+						this.gamePane.add(this.player2.getPlayerImage(), this.player2.getX(), this.player2.getY());
 						for (Block block : this.blockList) {
-							gamePane.getChildren().remove(block.getBlockImage());
-							gamePane.add(block.getBlockImage(), block.getX(), block.getY());
+							this.gamePane.getChildren().remove(block.getBlockImage());
+							this.gamePane.add(block.getBlockImage(), block.getX(), block.getY());
 						}
 					}
 				} else if (event.getCode() == KeyCode.W) {
 					if (this.player2.moveUp(this.getBlockList(), this.player1, grid)) {
-						gamePane.getChildren().remove(this.player2.getPlayerImage());
-						gamePane.add(this.player2.getPlayerImage(), this.player2.getX(), this.player2.getY());
+						this.gamePane.getChildren().remove(this.player2.getPlayerImage());
+						this.gamePane.add(this.player2.getPlayerImage(), this.player2.getX(), this.player2.getY());
 						for (Block block : this.blockList) {
-							gamePane.getChildren().remove(block.getBlockImage());
-							gamePane.add(block.getBlockImage(), block.getX(), block.getY());
+							this.gamePane.getChildren().remove(block.getBlockImage());
+							this.gamePane.add(block.getBlockImage(), block.getX(), block.getY());
 						}
 					}
 				} else if (event.getCode() == KeyCode.A) {
 					if (this.player2.moveLeft(this.getBlockList(), this.player1, grid)) {
-						gamePane.getChildren().remove(this.player2.getPlayerImage());
-						gamePane.add(this.player2.getPlayerImage(), this.player2.getX(), this.player2.getY());
+						this.gamePane.getChildren().remove(this.player2.getPlayerImage());
+						this.gamePane.add(this.player2.getPlayerImage(), this.player2.getX(), this.player2.getY());
 						for (Block block : this.blockList) {
-							gamePane.getChildren().remove(block.getBlockImage());
-							gamePane.add(block.getBlockImage(), block.getX(), block.getY());
+							this.gamePane.getChildren().remove(block.getBlockImage());
+							this.gamePane.add(block.getBlockImage(), block.getX(), block.getY());
 						}
 					}
 				} else if (event.getCode() == KeyCode.D) {
 					if (this.player2.moveRight(this.getBlockList(), this.player1, grid)) {
-						gamePane.getChildren().remove(this.player2.getPlayerImage());
-						gamePane.add(this.player2.getPlayerImage(), this.player2.getX(), this.player2.getY());
+						this.gamePane.getChildren().remove(this.player2.getPlayerImage());
+						this.gamePane.add(this.player2.getPlayerImage(), this.player2.getX(), this.player2.getY());
 						for (Block block : this.blockList) {
-							gamePane.getChildren().remove(block.getBlockImage());
-							gamePane.add(block.getBlockImage(), block.getX(), block.getY());
+							this.gamePane.getChildren().remove(block.getBlockImage());
+							this.gamePane.add(block.getBlockImage(), block.getX(), block.getY());
 						}
 					}
 				}
 			}
+			checkVictory(primaryStage, menu, grid, this.blockList);
 		});
-		
 		return Game;
 
 	}
@@ -211,6 +209,21 @@ public class PuzzleGame {
 		int gameWidth = map.length;
 		int gameHeight = map[0].length;
 		ArrayList<Block> tempList = new ArrayList<Block>(blockList);
+		
+		//set block colors
+		for (Block tempBlock : blockList) {
+			if (map[tempBlock.getX()][tempBlock.getY()].getType() != 2) {
+				this.gamePane.getChildren().remove(tempBlock.getBlockImage());
+				tempBlock.setID(1);
+				this.gamePane.add(tempBlock.getBlockImage(), tempBlock.getX(), tempBlock.getY());
+			} else {
+				this.gamePane.getChildren().remove(tempBlock.getBlockImage());
+				tempBlock.setID(2);
+				this.gamePane.add(tempBlock.getBlockImage(), tempBlock.getX(), tempBlock.getY());
+			}
+		}
+		
+		//check if each target has a block on it, and remove the block from the temp list if there is
 		for (int y = 0; y < gameHeight; y++) {
 			for (int x = 0; x < gameWidth; x++) {
 				if (map[x][y].getType() == 2) {
@@ -223,6 +236,8 @@ public class PuzzleGame {
 				}
 			}
 		}
+		
+		//if list is empty, show the victory screen
 		if (tempList.isEmpty()) {
 			primaryStage.setScene(victoryScreen(primaryStage, menu));
 		}

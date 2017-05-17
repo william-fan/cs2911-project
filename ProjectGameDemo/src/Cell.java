@@ -20,7 +20,7 @@ public class Cell {
 	 * 
 	 * @return The x value of the cell.
 	 */
-	public int getx() {
+	public int getX() {
 		return this.x;
 	}
 
@@ -29,7 +29,7 @@ public class Cell {
 	 * 
 	 * @return The y value of the cell.
 	 */
-	public int gety() {
+	public int getY() {
 		return this.y;
 	}
 

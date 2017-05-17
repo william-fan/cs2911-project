@@ -190,7 +190,7 @@ public class PuzzleHome extends Application {
 		// Background style
 	
 		
-		String background = "-fx-background-image: url(file:images/background.png);" + "\n"
+		String background = "-fx-background-image: url(file:images/background.jpg);" + "\n"
 		   					+ "-fx-background-repeat: stretch;" + "\n"
 		   					+ "-fx-background-size: 610 610";
 		   					
@@ -205,24 +205,21 @@ public class PuzzleHome extends Application {
 		
 		Button playButton = new Button("");
 		BackgroundImage backgroundImage1 = new BackgroundImage( new Image(new File("images/1pBtn1.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-        Background background1 = new Background(backgroundImage1);
-        BackgroundImage backgroundImage2 = new BackgroundImage( new Image(new File("images/1pBtn2.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-        Background background2 = new Background(backgroundImage2);
+		Background background1 = new Background(backgroundImage1);
+		BackgroundImage backgroundImage2 = new BackgroundImage( new Image(new File("images/1pBtn2.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+		Background background2 = new Background(backgroundImage2);
                 
-	    playButton.setPrefSize(150, 50);
-	    playButton.setBackground(background1);
-	    gridMain.add(playButton, 1, 8);
+		playButton.setPrefSize(150, 50);
+		playButton.setBackground(background1);
+		gridMain.add(playButton, 1, 8);
 	    
-	    playButton.setOnMouseEntered(actionEvent -> {
-	        playButton.setBackground(background2);
+		playButton.setOnMouseEntered(actionEvent -> {
+			playButton.setBackground(background2);
 		});
-	    playButton.setOnMouseExited(actionEvent -> {
-	        playButton.setBackground(background1);
+		playButton.setOnMouseExited(actionEvent -> {
+			playButton.setBackground(background1);
 		});
 
-	    
-	    
-		
 		// Help button
     	Button helpButton = new Button("Instructions");
     	helpButton.setPrefSize(150, 50);
@@ -244,9 +241,7 @@ public class PuzzleHome extends Application {
     	
 		// Set scene
 		Scene menuScene = new Scene(gridMain, 600, 600);// , screenSize.getWidth(), screenSize.getHeight());	
-		
-		//screenSize.getHeight();
-		
+				
 		// Events
 		playButton.setOnAction(actionEvent -> {
 			mainWindow.setScene(selectPlayers(mainWindow, menuScene));
@@ -256,9 +251,9 @@ public class PuzzleHome extends Application {
 			mainWindow.setScene(helpPage(mainWindow, menuScene));
 		});
 		
-		//puzzleMakerButton.setOnAction(actionEvent -> {
-		//	mainWindow.setScene(puzzleMaker.PuzzleMakerHome(mainWindow, menuScene));
-		//});
+		puzzleMakerButton.setOnAction(actionEvent -> {
+			mainWindow.setScene(puzzleMaker.PuzzleMakerHome(mainWindow, menuScene));
+		});
 		
 		quitButton.setOnAction(actionEvent -> {
         	Alert confirmExit = new Alert(AlertType.CONFIRMATION, "Would you like to exit Wacky Warehouse?", ButtonType.OK, ButtonType.CANCEL);

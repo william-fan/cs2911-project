@@ -17,9 +17,9 @@ public class Block {
 	}
 
 	public ImageView imageInit() {
-		ImageView tempImage = new ImageView(new Image(new File("images/block" + ID + ".png").toURI().toString()));
-		tempImage.setFitHeight(64);
-		tempImage.setFitWidth(64);
+		ImageView tempImage = new ImageView(new Image(new File("images/block" + this.ID + ".png").toURI().toString()));
+		//tempImage.setFitHeight(64);
+		//tempImage.setFitWidth(64);
 		return tempImage;
 	}
 
@@ -59,10 +59,11 @@ public class Block {
 		return this.ID;
 	}
 
-	public void setID(int iD) {
-		this.ID = iD;
+	public void setID(int ID) {
+		this.ID = ID;
+		this.blockImage = this.imageInit();
 	}
-
+	
 	public ImageView getBlockImage() {
 		return this.blockImage;
 	}

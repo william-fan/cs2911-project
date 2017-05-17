@@ -20,8 +20,8 @@ public class Player {
 
 	public ImageView initImage() {
 		ImageView tempImage = new ImageView(new Image(new File("images/sprite" + this.ID + ".png").toURI().toString()));
-		tempImage.setFitHeight(64);
-		tempImage.setFitWidth(64);
+		//tempImage.setFitHeight(64);
+		//tempImage.setFitWidth(64);
 		return tempImage;
 	}
 

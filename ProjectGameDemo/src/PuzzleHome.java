@@ -204,10 +204,8 @@ public class PuzzleHome extends Application {
 		
 		
 		Button playButton = new Button("");
-		BackgroundImage backgroundImage1 = new BackgroundImage( new Image(new File("images/1pBtn1.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-		Background background1 = new Background(backgroundImage1);
-		BackgroundImage backgroundImage2 = new BackgroundImage( new Image(new File("images/1pBtn2.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-		Background background2 = new Background(backgroundImage2);
+		Background background1 = new Background(new BackgroundImage(new Image(new File("images/1pBtn1.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT));
+		Background background2 = new Background(new BackgroundImage( new Image(new File("images/1pBtn2.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT));
                 
 		playButton.setPrefSize(150, 50);
 		playButton.setBackground(background1);

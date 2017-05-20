@@ -8,9 +8,12 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
@@ -115,6 +118,8 @@ public class PuzzleMaker {
 	private void exportMap(Stage primaryStage) {
 		//Format export string
 		String map = "";
+		int blockCount = 0;
+		int targetCount = 0;
 		for (int y = 0; y < this.sizeY; y++) {
 			for (int x = 0; x < this.sizeX; x++) {
 				Button tempButton = ((Button)gamePane.getChildren().get(x*this.sizeX+y));
@@ -127,13 +132,22 @@ public class PuzzleMaker {
 					map += "1";
 				} else if (tempButton.getText().equals("2")) {
 					map += "2";
+					blockCount++;
 				} else if (tempButton.getText().equals("3")) {
 					map += "3";
 				} else if (tempButton.getText().equals("4")) {
 					map += "5";
+					targetCount++;
 				}
 			}
 			map += " #\r\n";
+		}
+		
+		if (blockCount != targetCount) {
+        	Alert confirmExit = new Alert(AlertType.ERROR, "Blocks amount must equal target amount", ButtonType.OK);
+        	confirmExit.setTitle("Exit Game");
+        	confirmExit.showAndWait();
+        	return;
 		}
 		
 		//Open file chooser, only allow text file saving

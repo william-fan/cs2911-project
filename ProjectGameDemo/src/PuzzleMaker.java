@@ -48,7 +48,8 @@ public class PuzzleMaker {
 		
 		Button exportMap = new Button("Export map");
 		Button setSizeButton = new Button("Set Size");
-		gameUI.getChildren().addAll(xLabel, xTextField, yLabel, yTextField, setSizeButton, exportMap);
+		Button mainMenu = new Button("Main Menu");
+		gameUI.getChildren().addAll(xLabel, xTextField, yLabel, yTextField, setSizeButton, exportMap, mainMenu);
 		
 		//Add text field restrictions, no text, cannot be > 20
 		xTextField.textProperty().addListener(new ChangeListener<String>() {
@@ -109,6 +110,10 @@ public class PuzzleMaker {
 		
 		exportMap.setOnAction(actionEvent -> {
 			exportMap(primaryStage);
+		});
+		
+		mainMenu.setOnAction(actionEvent -> {
+			primaryStage.setScene(menu);
 		});
 		
 		Scene Game = new Scene(center);

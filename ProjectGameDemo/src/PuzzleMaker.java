@@ -122,6 +122,7 @@ public class PuzzleMaker {
 		int blockCount = 0;
 		int targetCount = 0;
 		int playerCount = 0;
+		//Start from -1 as we want to add a surrounding wall around map
 		for (int y = -1; y < this.sizeY+1; y++) {
 			for (int x = -1; x < this.sizeX+1; x++) {
 				if (x == -1 || x == this.sizeX || y == -1 || y == this.sizeY) {
@@ -145,14 +146,15 @@ public class PuzzleMaker {
 						map += "3";
 						playerCount++;
 					} else if (tempButton.getText().equals("4")) {
-						map += "5";
+						map += "5"; //4 is used as void
 						targetCount++;
 					}
 				}
 			}
-			map += " #\r\n";
+			map += " #\r\n"; //Add new line
 		}
 		
+		//Add requirements
 		if (playerCount == 0) {
         	Alert confirmExit = new Alert(AlertType.ERROR, "Must be at least one player tile", ButtonType.OK);
         	confirmExit.setTitle("Exit Game");
@@ -196,9 +198,9 @@ public class PuzzleMaker {
 	
 	private class MapButtonHandler implements EventHandler<MouseEvent> {
 		public void handle(MouseEvent event) {
-			//set new button image when clicked
 			String oldText = ((Button) event.getSource()).getText();
 			int newVal = Integer.parseInt(oldText);
+			//change direction of next image tile based on mouse clicks
 			if (event.getButton() == MouseButton.PRIMARY) {
 				newVal++;
 			} else if (event.getButton() == MouseButton.SECONDARY) {
@@ -211,6 +213,8 @@ public class PuzzleMaker {
 				newVal = 0;
 			}
 			Background buttonBackground = null;
+			
+			//set button image
 			if (newVal == 0) {
 				buttonBackground = new Background(new BackgroundImage(
 						new Image(new File("images/ground.png").toURI().toString()), BackgroundRepeat.NO_REPEAT,
@@ -232,6 +236,8 @@ public class PuzzleMaker {
 						new Image(new File("images/target.png").toURI().toString()), BackgroundRepeat.NO_REPEAT,
 						BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT));
 			}
+			
+			//set new text
 			((Button) event.getSource()).setText(Integer.toString(newVal));
 			((Button) event.getSource()).setBackground(buttonBackground);
 		}

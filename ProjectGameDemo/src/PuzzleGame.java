@@ -36,7 +36,6 @@ public class PuzzleGame {
 			int minutes = 0;
 			int frames = 0;
 
-			@Override
 			public void handle(long now) { // Every 60 frames, add one second
 				long newTime = System.currentTimeMillis();
 				if (timestamp + 1000 <= newTime) {
@@ -205,7 +204,7 @@ public class PuzzleGame {
 
 	}
 
-	public void checkVictory(Stage primaryStage, Scene menu, Cell[][] map, ArrayList<Block> blockList) {
+	private void checkVictory(Stage primaryStage, Scene menu, Cell[][] map, ArrayList<Block> blockList) {
 		int gameWidth = map.length;
 		int gameHeight = map[0].length;
 		ArrayList<Block> tempList = new ArrayList<Block>(blockList);
@@ -243,7 +242,7 @@ public class PuzzleGame {
 		}
 	}
 
-	public Scene victoryScreen(Stage primaryStage, Scene menu) {
+	private Scene victoryScreen(Stage primaryStage, Scene menu) {
 		Label victoryText = new Label(timerString);
 		FlowPane victoryPane = new FlowPane();
 		victoryPane.getChildren().addAll(victoryText);
@@ -257,7 +256,7 @@ public class PuzzleGame {
 	}
 
 	// reset values to original
-	public void resetGame(Cell[][] grid, Stage primaryStage, Scene menu, int playerCount, int blockCount,
+	private void resetGame(Cell[][] grid, Stage primaryStage, Scene menu, int playerCount, int blockCount,
 			File inputFile) {
 		this.player1 = new Player(1, 0, 0); // assume 0, 0 is a wall and is invalid
 		this.player2 = new Player(2, 0, 0);
@@ -275,7 +274,7 @@ public class PuzzleGame {
 	 * @param input The input file name.
 	 * @return The scanner object of the input file.
 	 */
-	public Scanner scanFile(String input) {
+	private Scanner scanFile(String input) {
 		Scanner sc = null;
 		try {
 			sc = new Scanner(new FileReader(input));
@@ -285,7 +284,7 @@ public class PuzzleGame {
 		return sc;
 	}
 
-	public void findMapFeatures(File inputFile) {
+	private void findMapFeatures(File inputFile) {
 		if (inputFile != null) {
 			Scanner sc = scanFile(inputFile.getPath());
 			int x = 0;
@@ -318,7 +317,7 @@ public class PuzzleGame {
 		}
 	}
 
-	public Block findBlock(ArrayList<Block> tempBlockList, int x, int y) {
+	private Block findBlock(ArrayList<Block> tempBlockList, int x, int y) {
 		for (Block block : tempBlockList) {
 			if (block.getX() == x && block.getY() == y) {
 				return block;

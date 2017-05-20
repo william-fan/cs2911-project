@@ -26,7 +26,7 @@ import javafx.stage.Stage;
 
 public class PuzzleHome extends Application {
 
-	public Scene helpPage(Stage primaryStage, Scene menu) {
+	private Scene helpPage(Stage primaryStage, Scene menu) {
 		Label helpText = new Label("This is the help screen\nTEST");
 		FlowPane helpPane = new FlowPane();
 		helpPane.getChildren().addAll(helpText);
@@ -39,7 +39,7 @@ public class PuzzleHome extends Application {
 		return helpScene;
 	}
 
-	public Scene selectPlayers(Stage primaryStage, Scene menu) {
+	private Scene selectPlayers(Stage primaryStage, Scene menu) {
 		Label playersText = new Label("This is the select screen\nTEST");
 		FlowPane selectPane = new FlowPane();
 		Button onePlayer = new Button("One Player");
@@ -63,7 +63,7 @@ public class PuzzleHome extends Application {
 		return helpScene;
 	}
 
-	public Cell[][] generateMap(int difficulty) {
+	private Cell[][] generateMap(int difficulty) {
 		Cell[][] map = null;
 		if (difficulty == 0) {
 			map = new Cell[10][10];
@@ -92,11 +92,13 @@ public class PuzzleHome extends Application {
 		return map;
 	}
 
-	public Cell[][] readMap(File f) {
+	private Cell[][] readMap(File f) {
 		Scanner scanChars = scanFile(f.getPath());
 		Scanner scanLines = scanFile(f.getPath());
 		Scanner scanMap = scanFile(f.getPath());
 		int charCount = 0;
+		
+		// Get how many characters in a line
 		while (scanChars.hasNext()) {
 			String next = scanChars.next();
 			if (next.equals("#")) {
@@ -104,6 +106,8 @@ public class PuzzleHome extends Application {
 			}
 			charCount++;
 		}
+		
+		// Get number of lines
 		int lineCount = 0;
 		while (scanLines.hasNext()) {
 			String next = scanLines.next();
@@ -114,6 +118,7 @@ public class PuzzleHome extends Application {
 		Cell[][] map = new Cell[charCount][lineCount];
 		int x = 0;
 		int y = 0;
+		// Set cell types
 		while (scanMap.hasNext()) {
 			String next = scanMap.next();
 			Cell current = new Cell(x, y, 0);
@@ -143,7 +148,7 @@ public class PuzzleHome extends Application {
 		return map;
 	}
 
-	public Scene selectDifficulty(Stage primaryStage, Scene menu, int playerCount) {
+	private Scene selectDifficulty(Stage primaryStage, Scene menu, int playerCount) {
 		// Rectangle2D screenSize = Screen.getPrimary().getVisualBounds(); 
 		// Get screen size
 		Label label = new Label("This is the difficulty screen\nTEST");
@@ -184,12 +189,9 @@ public class PuzzleHome extends Application {
 	}
 
 	public void start(Stage primaryStage) throws Exception {
-		// Init
 		Stage mainWindow = primaryStage;
 		
-		// Background style
-	
-		
+		// Background style	
 		String background = "-fx-background-image: url(file:images/background.jpg);" + "\n"
 		   					+ "-fx-background-repeat: stretch;" + "\n"
 		   					+ "-fx-background-size: 610 610";
@@ -201,16 +203,15 @@ public class PuzzleHome extends Application {
 		gridMain.setVgap(25);
 		
 		// Play button
-		
-		
 		Button playButton = new Button("");
 		Background background1 = new Background(new BackgroundImage(new Image(new File("images/1pBtn1.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT));
-		Background background2 = new Background(new BackgroundImage( new Image(new File("images/1pBtn2.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT));
+		Background background2 = new Background(new BackgroundImage(new Image(new File("images/1pBtn2.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT));
                 
 		playButton.setPrefSize(150, 50);
 		playButton.setBackground(background1);
 		gridMain.add(playButton, 1, 8);
 	    
+		// Set hover effects
 		playButton.setOnMouseEntered(actionEvent -> {
 			playButton.setBackground(background2);
 		});
@@ -253,6 +254,7 @@ public class PuzzleHome extends Application {
 			mainWindow.setScene(puzzleMaker.PuzzleMakerHome(mainWindow, menuScene));
 		});
 		
+		// Exit confirmation
 		quitButton.setOnAction(actionEvent -> {
         	Alert confirmExit = new Alert(AlertType.CONFIRMATION, "Would you like to exit Wacky Warehouse?", ButtonType.OK, ButtonType.CANCEL);
         	confirmExit.setTitle("Exit Game");
@@ -276,7 +278,7 @@ public class PuzzleHome extends Application {
 	 * @param input The input file name.
 	 * @return The scanner object of the input file.
 	 */
-	public Scanner scanFile(String input) {
+	private Scanner scanFile(String input) {
 		Scanner sc = null;
 		try {
 			sc = new Scanner(new FileReader(input));

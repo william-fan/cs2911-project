@@ -114,7 +114,7 @@ public class Player {
 	}
 
 	// 1 - up, 2 - right, 3 - down, 4 - left
-	public Boolean checkCollision(ArrayList<Block> blockList, Player otherPlayer, int direction, Cell[][] grid) {
+	private Boolean checkCollision(ArrayList<Block> blockList, Player otherPlayer, int direction, Cell[][] grid) {
 		if (direction == 1) {
 			Block tempBlock = findBlock(blockList, this.getX(), this.getY() - 1);
 			Block tempBlockSecond = findBlock(blockList, this.getX(), this.getY() - 2);
@@ -191,7 +191,7 @@ public class Player {
 		return false;
 	}
 
-	public Block findBlock(ArrayList<Block> blockList, int x, int y) {
+	private Block findBlock(ArrayList<Block> blockList, int x, int y) {
 		for (Block block : blockList) {
 			if (block.getX() == x && block.getY() == y) {
 				return block;

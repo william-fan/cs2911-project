@@ -16,7 +16,7 @@ public class Block {
 		this.blockImage = imageInit();
 	}
 
-	public ImageView imageInit() {
+	private ImageView imageInit() {
 		ImageView tempImage = new ImageView(new Image(new File("images/block" + this.ID + ".png").toURI().toString()));
 		//tempImage.setFitHeight(64);
 		//tempImage.setFitWidth(64);

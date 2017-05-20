@@ -41,7 +41,7 @@ public class Cell {
 		this.floorImage = floorImage;
 	}
 
-	public void changeFloorImage() {
+	private void changeFloorImage() {
 		if (this.type == 0) {
 			this.floorImage = new Image(new File("images/ground.png").toURI().toString());
 		} else if (this.type == 1) {

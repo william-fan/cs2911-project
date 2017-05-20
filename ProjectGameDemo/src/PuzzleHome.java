@@ -13,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
@@ -20,6 +21,9 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
@@ -189,88 +193,181 @@ public class PuzzleHome extends Application {
 	}
 
 	public void start(Stage primaryStage) throws Exception {
-		Stage mainWindow = primaryStage;
-		
-		// Background style	
-		String background = "-fx-background-image: url(file:images/background.jpg);" + "\n"
-		   					+ "-fx-background-repeat: stretch;" + "\n"
-		   					+ "-fx-background-size: 610 610";
-		   					
-		
-		GridPane gridMain = new GridPane();
-		gridMain.setAlignment(Pos.CENTER);
-		gridMain.setHgap(25);
-		gridMain.setVgap(25);
-		
-		// Play button
-		Button playButton = new Button("");
-		Background background1 = new Background(new BackgroundImage(new Image(new File("images/1pBtn1.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT));
-		Background background2 = new Background(new BackgroundImage(new Image(new File("images/1pBtn2.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT));
-                
-		playButton.setPrefSize(150, 50);
-		playButton.setBackground(background1);
-		gridMain.add(playButton, 1, 8);
-	    
-		// Set hover effects
-		playButton.setOnMouseEntered(actionEvent -> {
-			playButton.setBackground(background2);
-		});
-		playButton.setOnMouseExited(actionEvent -> {
-			playButton.setBackground(background1);
-		});
-
-		// Help button
-    	Button helpButton = new Button("Instructions");
-    	helpButton.setPrefSize(150, 50);
-    	gridMain.add(helpButton, 1, 9);
-
-		// Test button
-		Button puzzleMakerButton = new Button("Puzzle Maker");
-		puzzleMakerButton.setPrefSize(150, 50);
-		PuzzleMaker puzzleMaker = new PuzzleMaker();
-		gridMain.add(puzzleMakerButton, 1, 10);
-
-		// Quit button
-    	Button quitButton = new Button("Quit");
-    	quitButton.setPrefSize(150, 50);
-    	gridMain.add(quitButton, 1, 11);
-    	
-    	// Set background (Main Menu)
-    	gridMain.setStyle(background);
-    	
-		// Set scene
-		Scene menuScene = new Scene(gridMain, 600, 600);// , screenSize.getWidth(), screenSize.getHeight());	
+		// Init
+				Stage mainWindow = primaryStage;
 				
-		// Events
-		playButton.setOnAction(actionEvent -> {
-			mainWindow.setScene(selectPlayers(mainWindow, menuScene));
-		});
-		
-		helpButton.setOnAction(actionEvent -> {
-			mainWindow.setScene(helpPage(mainWindow, menuScene));
-		});
-		
-		puzzleMakerButton.setOnAction(actionEvent -> {
-			mainWindow.setScene(puzzleMaker.PuzzleMakerHome(mainWindow, menuScene));
-		});
-		
-		// Exit confirmation
-		quitButton.setOnAction(actionEvent -> {
-        	Alert confirmExit = new Alert(AlertType.CONFIRMATION, "Would you like to exit Wacky Warehouse?", ButtonType.OK, ButtonType.CANCEL);
-        	confirmExit.setTitle("Exit Game");
-        	confirmExit.showAndWait();
-        	
-        	if (confirmExit.getResult() == ButtonType.OK) {
-        		Platform.exit();
-        	}
-		});
+				// Background style
+				
+				/* Background has been replaced with full black
+				String background = "-fx-background-image: url(file:images/background.jpg);" + "\n"
+				   					+ "-fx-background-repeat: stretch;" + "\n"
+				   					+ "-fx-background-size: 1000 1000";
+				   					
+				*/
+				
+				GridPane gridMain = new GridPane();
+				gridMain.setAlignment(Pos.CENTER);
+				gridMain.setHgap(25);
+				gridMain.setVgap(25);
+				
+				/**
+				 * Adding title - "Wacky Warehouse"
+				 */
+				Text title = new Text();
+				title.setText("Wacky Warehouse");
+				title.setFont(Font.font ("Fixedsys Excelsior 3.01", 60));
+				title.setFill(Color.WHITE);
+				gridMain.add(title, 1, 2);
+				
+				/**
+				 * Adding main image to gridMain
+				 */
+				
+				Image main = new Image("File:images/main.png");
+				gridMain.add(new ImageView(main), 1, 3);
+				
+				
+				/** 
+				 * 	Adding my additions -- hover over buttons
+				 */
+			
+			    Button onePlayerButton = new Button("");
+				BackgroundImage backgroundImage1 = new BackgroundImage( new Image(new File("images/1Player.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+		        Background background1 = new Background(backgroundImage1);
+		        BackgroundImage backgroundImage2 = new BackgroundImage( new Image(new File("images/1Player_arrow.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+		        Background background2 = new Background(backgroundImage2);
+		                
+			    onePlayerButton.setPrefSize(183, 59);
+			    onePlayerButton.setBackground(background1);
+			    gridMain.add(onePlayerButton, 1, 4);
+			    
+			    onePlayerButton.setOnMouseEntered(actionEvent -> {
+			        onePlayerButton.setBackground(background2);
+				});
+			    onePlayerButton.setOnMouseExited(actionEvent -> {
+			        onePlayerButton.setBackground(background1);
+				});
+			    
+			    /**
+			     * Adding my additions -- 2 player mode
+			     */
+			    
+			    // Creating the player two button
+			    Button twoPlayerButton = new Button ("");
+			    //  the player two button has a different display when the mouse hovers or does not hover over the button
+			    BackgroundImage twoPlayerBackgroundWithoutArrow = new BackgroundImage(new Image(new File("images/2Player.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+			    Background twoPlayerWithoutArrow = new Background(twoPlayerBackgroundWithoutArrow);
+			    
+			    BackgroundImage twoPlayerBackgroundWithArrow = new BackgroundImage(new Image(new File("images/2Player_arrow.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+			    Background twoPlayerWithArrow = new Background(twoPlayerBackgroundWithArrow);
+			    
+			    twoPlayerButton.setPrefSize(183, 59);
+			    gridMain.add(twoPlayerButton, 1, 5);
+			    twoPlayerButton.setBackground(twoPlayerWithoutArrow);
+			    
+			    twoPlayerButton.setOnMouseEntered(actionEvent -> {
+			    	twoPlayerButton.setBackground(twoPlayerWithArrow);
+			    });
+			    
+			    twoPlayerButton.setOnMouseExited(actionEvent -> {
+			    	twoPlayerButton.setBackground(twoPlayerWithoutArrow);
+			    });
+				
+				/**
+				 * Adding instructions page
+				 */
+		    	Button helpButton = new Button("");
+		    	BackgroundImage instructionBackgroundWithoutArrow = new BackgroundImage( new Image(new File("images/instructions.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+		        Background instructionWithoutArrow = new Background(instructionBackgroundWithoutArrow);
+		        BackgroundImage instructionBackgroundWithArrow = new BackgroundImage( new Image(new File("images/instructions_arrow.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+		        Background instructionWithArrow = new Background(instructionBackgroundWithArrow);
+		                
+			    helpButton.setBackground(instructionWithoutArrow);
+			    helpButton.setPrefSize(241, 59);
+		    	gridMain.add(helpButton, 1, 6);
+		    	
+			    helpButton.setOnMouseEntered(actionEvent -> {
+			        helpButton.setBackground(instructionWithArrow);
+				});
+			    helpButton.setOnMouseExited(actionEvent -> {
+			        helpButton.setBackground(instructionWithoutArrow);
+				});
+		    	
+		    	
+		/* Custom Map creation is not used
+				// Test button
+				Button puzzleMakerButton = new Button("Puzzle Maker");
+				puzzleMakerButton.setPrefSize(150, 100);
+				PuzzleMaker puzzleMaker = new PuzzleMaker();
+				gridMain.add(puzzleMakerButton, 1, 11);
+		*/
+				// Quit button
+		    	Button quitButton = new Button("");
+		    	BackgroundImage quitBackgroundWithoutArrow = new BackgroundImage( new Image(new File("images/quit.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+		        Background quitWithoutArrow = new Background(quitBackgroundWithoutArrow);
+		        BackgroundImage quitBackgroundWithArrow = new BackgroundImage( new Image(new File("images/quit_arrow.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+		        Background quitWithArrow = new Background(quitBackgroundWithArrow);
+		    	quitButton.setPrefSize(106, 59);
+		    	quitButton.setBackground(quitWithoutArrow);
+		    	
+		    	quitButton.setOnMouseEntered(actionEvent -> {
+		    		quitButton.setBackground(quitWithArrow);
+		    	});
+		    	
+		    	quitButton.setOnMouseExited(actionEvent -> {
+		    		quitButton.setBackground(quitWithoutArrow);
+		    	});
+		 
+		    	gridMain.add(quitButton, 1, 7);
+		    	
+		    	
+		    	
+		    	// Set background (Main Menu)
+		    	gridMain.setStyle("-fx-background-color: #000000");
+		    	
+				// Set scene
+				Scene menuScene = new Scene(gridMain, 960, 800);// , screenSize.getWidth(), screenSize.getHeight());	
 
-		// Show final
-		primaryStage.setTitle("Puzzle Game");
-		primaryStage.setResizable(false);
-		primaryStage.setScene(menuScene);
-		// primaryStage.setMaximized(true);
-		primaryStage.show();
+				/**
+				 * Handle Events for the above buttons
+				 */
+				// When onePlayerButton is clicked, then move to difficulty screen
+				onePlayerButton.setOnAction(actionEvent -> {
+					primaryStage.setScene(selectDifficulty(primaryStage, menuScene, 1));
+				});
+				
+				// When twoPlayerButton is clicked, then move to difficulty screen
+				twoPlayerButton.setOnAction(actionEvent -> {
+					primaryStage.setScene(selectDifficulty(primaryStage, menuScene, 2));
+				});
+				
+				// When helpButton is clicked, then move to instructions screen
+				helpButton.setOnAction(actionEvent -> {
+					mainWindow.setScene(helpPage(mainWindow, menuScene));
+				});
+				
+				/*
+				puzzleMakerButton.setOnAction(actionEvent -> {
+					mainWindow.setScene(puzzleMaker.PuzzleMakerHome(mainWindow, menuScene));
+				});
+				*/
+				
+				quitButton.setOnAction(actionEvent -> {
+		        	Alert confirmExit = new Alert(AlertType.CONFIRMATION, "Would you like to exit Wacky Warehouse?", ButtonType.OK, ButtonType.CANCEL);
+		        	confirmExit.setTitle("Exit Game");
+		        	confirmExit.showAndWait();
+		        	
+		        	if (confirmExit.getResult() == ButtonType.OK) {
+		        		Platform.exit();
+		        	}
+				});
+
+				// Show final
+				primaryStage.setTitle("Puzzle Game");
+				primaryStage.setResizable(false);
+				primaryStage.setScene(menuScene);
+				// primaryStage.setMaximized(true);
+				primaryStage.show();
 	}
 
 	/**

@@ -5,7 +5,6 @@ import java.io.IOException;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -15,6 +14,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
@@ -94,13 +95,13 @@ public class PuzzleMaker {
 			if (this.sizeX != 0 && this.sizeY != 0) {
 				for (int x = 0; x < this.sizeX; x++) {
 					for (int y = 0; y < this.sizeY; y++) {
-						Button ground = new Button("0");
-						ground.setStyle("-fx-text-fill: white");
-						ground.setBackground(new Background(new BackgroundImage(
+						Button tile = new Button("0");
+						tile.setStyle("-fx-text-fill: white");
+						tile.setBackground(new Background(new BackgroundImage(
 								new Image(new File("images/ground.png").toURI().toString()), BackgroundRepeat.NO_REPEAT,
 								BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT)));
-						ground.setOnAction(new NumberButtonHandler());
-						this.gamePane.add(ground, x, y);
+						tile.setOnMouseClicked(new MapButtonHandler());
+						this.gamePane.add(tile, x, y);
 					}
 				}
 			}
@@ -120,31 +121,54 @@ public class PuzzleMaker {
 		String map = "";
 		int blockCount = 0;
 		int targetCount = 0;
-		for (int y = 0; y < this.sizeY; y++) {
-			for (int x = 0; x < this.sizeX; x++) {
-				Button tempButton = ((Button)gamePane.getChildren().get(x*this.sizeX+y));
-				if (x != 0) {
-					map += " ";
-				}
-				if (tempButton.getText().equals("0")) {
-					map += "0";
-				} else if (tempButton.getText().equals("1")) {
-					map += "1";
-				} else if (tempButton.getText().equals("2")) {
-					map += "2";
-					blockCount++;
-				} else if (tempButton.getText().equals("3")) {
-					map += "3";
-				} else if (tempButton.getText().equals("4")) {
-					map += "5";
-					targetCount++;
+		int playerCount = 0;
+		for (int y = -1; y < this.sizeY+1; y++) {
+			for (int x = -1; x < this.sizeX+1; x++) {
+				if (x == -1 || x == this.sizeX || y == -1 || y == this.sizeY) {
+					if (x != -1) {
+						map += " ";
+					}
+					map += "4";
+				} else {
+					Button tempButton = ((Button)gamePane.getChildren().get(x*this.sizeX+y));
+					if (x != -1) {
+						map += " ";
+					}
+					if (tempButton.getText().equals("0")) {
+						map += "0";
+					} else if (tempButton.getText().equals("1")) {
+						map += "1";
+					} else if (tempButton.getText().equals("2")) {
+						map += "2";
+						blockCount++;
+					} else if (tempButton.getText().equals("3")) {
+						map += "3";
+						playerCount++;
+					} else if (tempButton.getText().equals("4")) {
+						map += "5";
+						targetCount++;
+					}
 				}
 			}
 			map += " #\r\n";
 		}
 		
+		if (playerCount == 0) {
+        	Alert confirmExit = new Alert(AlertType.ERROR, "Must be at least one player tile", ButtonType.OK);
+        	confirmExit.setTitle("Exit Game");
+        	confirmExit.showAndWait();
+        	return;
+		}
+		
+		if (blockCount == 0 || targetCount == 0) {
+        	Alert confirmExit = new Alert(AlertType.ERROR, "Must be at least one block or target tile", ButtonType.OK);
+        	confirmExit.setTitle("Exit Game");
+        	confirmExit.showAndWait();
+        	return;
+		}
+		
 		if (blockCount != targetCount) {
-        	Alert confirmExit = new Alert(AlertType.ERROR, "Blocks amount must equal target amount", ButtonType.OK);
+        	Alert confirmExit = new Alert(AlertType.ERROR, "Blocks amount must equal target amount.", ButtonType.OK);
         	confirmExit.setTitle("Exit Game");
         	confirmExit.showAndWait();
         	return;
@@ -170,12 +194,19 @@ public class PuzzleMaker {
 
 	}
 	
-	private class NumberButtonHandler implements EventHandler<ActionEvent> {
-		public void handle(ActionEvent event) {
+	private class MapButtonHandler implements EventHandler<MouseEvent> {
+		public void handle(MouseEvent event) {
 			//set new button image when clicked
 			String oldText = ((Button) event.getSource()).getText();
 			int newVal = Integer.parseInt(oldText);
-			newVal++;
+			if (event.getButton() == MouseButton.PRIMARY) {
+				newVal++;
+			} else if (event.getButton() == MouseButton.SECONDARY) {
+				newVal--;
+			}
+			if (newVal == -1) {
+				newVal = 4;
+			}
 			if (newVal == 5) {
 				newVal = 0;
 			}

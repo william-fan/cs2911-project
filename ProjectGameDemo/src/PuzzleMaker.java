@@ -128,8 +128,8 @@ public class PuzzleMaker {
 		int targetCount = 0;
 		int playerCount = 0;
 		//Start from -1 as we want to add a surrounding wall around map
-		for (int y = -1; y < this.sizeY+1; y++) {
-			for (int x = -1; x < this.sizeX+1; x++) {
+		for (int y = -1; y < this.sizeY + 1; y++) {
+			for (int x = -1; x < this.sizeX + 1; x++) {
 				if (x == -1 || x == this.sizeX || y == -1 || y == this.sizeY) {
 					if (x != -1) {
 						map += " ";
@@ -143,7 +143,7 @@ public class PuzzleMaker {
 					if (tempButton.getText().equals("0")) {
 						map += "0";
 					} else if (tempButton.getText().equals("1")) {
-						map += "1";
+						map += "4"; //1 is used as void
 					} else if (tempButton.getText().equals("2")) {
 						map += "2";
 						blockCount++;
@@ -151,7 +151,7 @@ public class PuzzleMaker {
 						map += "3";
 						playerCount++;
 					} else if (tempButton.getText().equals("4")) {
-						map += "5"; //4 is used as void
+						map += "5";
 						targetCount++;
 					}
 				}

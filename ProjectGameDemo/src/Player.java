@@ -184,7 +184,7 @@ public class Player {
 					tempBlock.setX(this.getX() - 2);
 					return true;
 				}
-			} else { // dont allow two boxes to be pushed
+			} else { // Don't allow two boxes to be pushed
 				return false;
 			}
 		}

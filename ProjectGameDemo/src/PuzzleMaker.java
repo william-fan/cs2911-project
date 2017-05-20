@@ -183,7 +183,8 @@ public class PuzzleMaker {
 		
 		//Open file chooser, only allow text file saving
         FileChooser fileChooser = new FileChooser();
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
+        fileChooser.setTitle("Save Map File");
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Map files", "*.map");
         fileChooser.getExtensionFilters().add(extFilter);
         File file = fileChooser.showSaveDialog(primaryStage);
         
@@ -198,7 +199,6 @@ public class PuzzleMaker {
     	        e.printStackTrace();
     	    }
         }
-
 	}
 	
 	private class MapButtonHandler implements EventHandler<MouseEvent> {

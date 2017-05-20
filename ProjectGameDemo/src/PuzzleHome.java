@@ -142,7 +142,11 @@ public class PuzzleHome extends Application {
 			} else if (next.equals("#")) {
 
 			} else {
-				map[x][y] = current;
+				try {
+					map[x][y] = current;
+				} catch (ArrayIndexOutOfBoundsException exception) {
+		        	return null;
+				}
 				x++;
 			}
 		}
@@ -168,7 +172,13 @@ public class PuzzleHome extends Application {
 		easyButton.setOnAction(actionEvent -> {
 			File f = new File("maps/easy_" + playerCount + "_1.txt");
 			if (f.exists() && !f.isDirectory()) {
-				primaryStage.setScene(game.Game(readMap(f), primaryStage, menu, playerCount, 3, f));
+				if (readMap(f) == null ) {
+		        	Alert confirmExit = new Alert(AlertType.ERROR, "File must be of correct type", ButtonType.OK);
+		        	confirmExit.setTitle("Exit Game");
+		        	confirmExit.showAndWait();
+				} else {
+					primaryStage.setScene(game.Game(readMap(f), primaryStage, menu, playerCount, 3, f));
+				}
 			} else {
 				primaryStage.setScene(game.Game(generateMap(0), primaryStage, menu, playerCount, 3, null));
 			}
@@ -176,11 +186,17 @@ public class PuzzleHome extends Application {
 
 		customMap.setOnAction(actionEvent -> {
 			FileChooser fileChooser = new FileChooser();
-			fileChooser.setTitle("Open Resource File");
-			fileChooser.getExtensionFilters().addAll(new ExtensionFilter("Text Files", "*.txt"));
+			fileChooser.setTitle("Open Map File");
+			fileChooser.getExtensionFilters().addAll(new ExtensionFilter("Map Files", "*.map"));
 			File f = fileChooser.showOpenDialog(primaryStage);
 			if (f != null) {
-				primaryStage.setScene(game.Game(readMap(f), primaryStage, menu, playerCount, 3, f));
+				if (readMap(f) == null ) {
+		        	Alert confirmExit = new Alert(AlertType.ERROR, "File must be of correct type", ButtonType.OK);
+		        	confirmExit.setTitle("Exit Game");
+		        	confirmExit.showAndWait();
+				} else {
+					primaryStage.setScene(game.Game(readMap(f), primaryStage, menu, playerCount, 3, f));
+				}
 			}
 		});
 

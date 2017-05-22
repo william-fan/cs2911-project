@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -22,31 +23,23 @@ import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 
 public class PuzzleHome extends Application {
 
-	private Scene helpPage(Stage primaryStage, Scene menu) {
-		/*
-		Label helpText = new Label("This is the help screen\nTEST");
-		FlowPane helpPane = new FlowPane();
-		helpPane.getChildren().addAll(helpText);
-		Button menuButton = new Button("Main menu");
-		helpPane.getChildren().addAll(menuButton);
-		Scene helpScene = new Scene(helpPane);// , screenSize.getWidth(), screenSize.getHeight());
-		menuButton.setOnAction(actionEvent -> {
-			primaryStage.setScene(menu);
-		});
-		*/
-		
+	private Scene helpPage(Stage primaryStage, Scene menu) {	
 		// Create helpPane
 		BorderPane helpPane = new BorderPane();
+		// Create the scene to display the helpPane
+		Scene helpScene = new Scene(helpPane);
 		// Set the size of the windows
 		helpPane.setPrefSize(960, 800);
 		// Add black background
@@ -54,8 +47,8 @@ public class PuzzleHome extends Application {
 		
 		// Create title called instructions
 		Text title = new Text();
-		title.setText("Instructions");
-		title.setFont(Font.font ("Fixedsys Excelsior 3.01", 60));
+		title.setText("Instructions\n");
+		title.setFont(Font.font ("Fixedsys Excelsior 3.01", 80));
 		title.setFill(Color.WHITE);
 		
 		// Position the title at the top
@@ -63,26 +56,116 @@ public class PuzzleHome extends Application {
 		BorderPane.setAlignment(title, Pos.CENTER);
 		
 		// Left pane will contain the Player 1 control keys
-		VBox leftBox = new VBox();
+		VBox leftBox = new VBox(4);
 		Text onePlayer = new Text();
-		onePlayer.setText("\n \n Player 1: \n Arrow Keys \n \n");
+		onePlayer.setText(" Player 1: \n Arrow Keys \n ");
 		onePlayer.setFont(Font.font ("Fixedsys Excelsior 3.01", 30));
 		onePlayer.setFill(Color.WHITE);
 		
-		// Store the onePlayerSprite as image
+			// Store the onePlayerSprite as image
 		Image onePlayerSprite = new Image("File:images/sprite1.png");
 		
-		// Store the onePlayerControls image
+			// Store the onePlayerControls image
 		Image onePlayerControls = new Image("File:images/1Player_controls.png");
 		
-		// Add the onePlayer text and image to the leftBox
+			// Add the onePlayer text and image to the leftBox
 		leftBox.getChildren().addAll(new ImageView(onePlayerSprite), onePlayer, new ImageView(onePlayerControls));
 		leftBox.setAlignment(Pos.TOP_CENTER);
+		leftBox.setSpacing(10);
 		
-		// Add leftBox to helpPane
-		helpPane.setLeft(leftBox);
-		// Create the scene to display the helpPane
-		Scene helpScene = new Scene(helpPane);
+		// Right pane will contain the Player 2 control keys
+		VBox rightBox = new VBox(2);
+		Text twoPlayer = new Text();
+		
+			// Store the twoPlayerSprite image
+		Image twoPlayerSprite = new Image("File:images/sprite2.png");
+		
+			// Player 2 help instructions
+		twoPlayer.setText("Player 2: \nWASD keys \n");
+		twoPlayer.setFont(Font.font ("Fixedsys Excelsior 3.01", 30));
+		twoPlayer.setFill(Color.WHITE);
+		
+			// W 
+		Text twoPlayerControlUp = new Text();
+		twoPlayerControlUp.setText("W");
+		twoPlayerControlUp.setFont(Font.font ("Fixedsys Excelsior 3.01", 50));
+		twoPlayerControlUp.setFill(Color.WHITE);
+		twoPlayerControlUp.setTextAlignment(TextAlignment.CENTER);
+		
+			// A S D
+		Text twoPlayerControlsLeftDownRight = new Text();
+		twoPlayerControlsLeftDownRight.setText("A S D\n");
+		twoPlayerControlsLeftDownRight.setFont(Font.font ("Fixedsys Excelsior 3.01", 50));
+		twoPlayerControlsLeftDownRight.setFill(Color.WHITE);
+		twoPlayerControlsLeftDownRight.setTextAlignment(TextAlignment.CENTER);
+		
+			// Add the twoPlayer instructions to the rightBox
+		rightBox.getChildren().addAll(new ImageView(twoPlayerSprite), twoPlayer, twoPlayerControlUp, twoPlayerControlsLeftDownRight);
+		rightBox.setAlignment(Pos.TOP_CENTER);
+		rightBox.setSpacing(10);
+		
+		// Create a HBox with three columns that will contain the leftBox, centerBox and rightBox
+		HBox centerBox = new HBox(3);
+	
+		// Create a VBox that will serve as the container for content for the center
+		VBox centerContent = new VBox(2);
+		
+		// Center image
+		Image centerImage = new Image("File:images/main.png");
+		ImageView centerImageNode = new ImageView(centerImage);
+		
+		Text info = new Text();
+		info.setText("\n \n \n Your goal is to push all the boxes to the goal squares.\n \n Be careful, because you cannot pull boxes.");
+		info.setFont(Font.font ("Fixedsys Excelsior 3.01", 30));
+		info.setFill(Color.WHITE);
+		info.setTextAlignment(TextAlignment.LEFT);
+		
+		
+		centerContent.getChildren().add(0, centerImageNode);
+		centerContent.getChildren().add(1, info);
+		centerContent.setAlignment(Pos.TOP_CENTER);
+		centerContent.setSpacing(10);
+		
+		centerBox.getChildren().addAll(leftBox, centerContent, rightBox);
+		
+		// Modifying the margins for the three VBoxes that are contained within the centerBox.
+		HBox.setMargin(leftBox, new Insets(-10, -160, 12, 50));
+		HBox.setMargin(centerBox, new Insets(12, 15, 12, 15));
+		HBox.setMargin(rightBox, new Insets(-10, 50, 12, -160));
+		helpPane.setCenter(centerBox);
+		
+		// Adding the main menu button to the instruction page
+		HBox bottomBox = new HBox();
+		
+		
+		Button mainMenuButton = new Button("");
+    	BackgroundImage mainMenuBackgroundWithoutArrow = new BackgroundImage( new Image(new File("images/mainMenu.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+        Background mainMenuWithoutArrow = new Background(mainMenuBackgroundWithoutArrow);
+        BackgroundImage mainMenuBackgroundWithArrow = new BackgroundImage( new Image(new File("images/mainMenu_arrow.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+        Background mainMenuWithArrow = new Background(mainMenuBackgroundWithArrow);
+    	mainMenuButton.setPrefSize(177, 59);
+    	mainMenuButton.setBackground(mainMenuWithoutArrow);
+    	
+    	mainMenuButton.setOnMouseEntered(actionEvent -> {
+    		mainMenuButton.setBackground(mainMenuWithArrow);
+    	});
+    	
+    	mainMenuButton.setOnMouseExited(actionEvent -> {
+    		mainMenuButton.setBackground(mainMenuWithoutArrow);
+    	});
+    	
+    	mainMenuButton.setOnAction(actionEvent -> {
+    		primaryStage.setScene(menu);
+    	});
+    	
+		bottomBox.getChildren().add(mainMenuButton);
+		bottomBox.setAlignment(Pos.BOTTOM_RIGHT);
+		helpPane.setBottom(bottomBox);
+		
+	
+		
+		
+		
 		
 		
 		return helpScene;
@@ -180,6 +263,12 @@ public class PuzzleHome extends Application {
 			if (next.equals("4")) {
 				current.setType(1);
 			}
+			if (next.equals("3")) {
+				current.setType(3);
+			}
+			if (next.equals("2")) {
+				current.setType(4);
+			}
 			if (next.equals("#") && scanMap.hasNext()) {
 				scanMap.nextLine();
 				y++;
@@ -268,8 +357,8 @@ public class PuzzleHome extends Application {
 				
 				GridPane gridMain = new GridPane();
 				gridMain.setAlignment(Pos.CENTER);
-				gridMain.setHgap(25);
-				gridMain.setVgap(25);
+				gridMain.setHgap(10);
+				gridMain.setVgap(10);
 				
 				/**
 				 * Adding title - "Wacky Warehouse"
@@ -300,7 +389,7 @@ public class PuzzleHome extends Application {
 		                
 			    onePlayerButton.setPrefSize(183, 59);
 			    onePlayerButton.setBackground(background1);
-			    gridMain.add(onePlayerButton, 1, 4);
+			    gridMain.add(onePlayerButton, 2, 4);
 			    
 			    onePlayerButton.setOnMouseEntered(actionEvent -> {
 			        onePlayerButton.setBackground(background2);
@@ -353,15 +442,30 @@ public class PuzzleHome extends Application {
 			    helpButton.setOnMouseExited(actionEvent -> {
 			        helpButton.setBackground(instructionWithoutArrow);
 				});
+		    	   	
+				// Puzzle Maker button
+				Button puzzleMakerButton = new Button("");
+				puzzleMakerButton.setPrefSize(224, 59);
+				
+				BackgroundImage puzzleMakerBackgroundWithoutArrow = new BackgroundImage( new Image(new File("images/puzzleMaker.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+		        Background puzzleMakerWithoutArrow = new Background(puzzleMakerBackgroundWithoutArrow);
+		        BackgroundImage puzzleMakerBackgroundWithArrow = new BackgroundImage( new Image(new File("images/puzzleMaker_arrow.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+		        Background puzzleMakerWithArrow = new Background(puzzleMakerBackgroundWithArrow);
+		    	puzzleMakerButton.setBackground(puzzleMakerWithoutArrow);
+				
+		    	puzzleMakerButton.setOnMouseEntered(actionEvent -> {
+		    		puzzleMakerButton.setBackground(puzzleMakerWithArrow);
+		    	});
+		    	
+		    	puzzleMakerButton.setOnMouseExited(actionEvent -> {
+		    		puzzleMakerButton.setBackground(puzzleMakerWithoutArrow);
+		    	});
 		    	
 		    	
-		/* Custom Map creation is not used
-				// Test button
-				Button puzzleMakerButton = new Button("Puzzle Maker");
-				puzzleMakerButton.setPrefSize(150, 100);
+		    	
 				PuzzleMaker puzzleMaker = new PuzzleMaker();
-				gridMain.add(puzzleMakerButton, 1, 11);
-		*/
+				gridMain.add(puzzleMakerButton, 1, 7);
+
 				// Quit button
 		    	Button quitButton = new Button("");
 		    	BackgroundImage quitBackgroundWithoutArrow = new BackgroundImage( new Image(new File("images/quit.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
@@ -379,7 +483,7 @@ public class PuzzleHome extends Application {
 		    		quitButton.setBackground(quitWithoutArrow);
 		    	});
 		 
-		    	gridMain.add(quitButton, 1, 7);
+		    	gridMain.add(quitButton, 1, 8);
 		    	
 		    	
 		    	
@@ -407,11 +511,11 @@ public class PuzzleHome extends Application {
 					mainWindow.setScene(helpPage(mainWindow, menuScene));
 				});
 				
-				/*
+				
 				puzzleMakerButton.setOnAction(actionEvent -> {
 					mainWindow.setScene(puzzleMaker.PuzzleMakerHome(mainWindow, menuScene));
 				});
-				*/
+				
 				
 				quitButton.setOnAction(actionEvent -> {
 		        	Alert confirmExit = new Alert(AlertType.CONFIRMATION, "Would you like to exit Wacky Warehouse?", ButtonType.OK, ButtonType.CANCEL);

@@ -357,8 +357,8 @@ public class PuzzleHome extends Application {
 				
 				GridPane gridMain = new GridPane();
 				gridMain.setAlignment(Pos.CENTER);
-				gridMain.setHgap(10);
-				gridMain.setVgap(10);
+				//gridMain.setHgap(10);
+				//gridMain.setVgap(10);
 				
 				/**
 				 * Adding title - "Wacky Warehouse"

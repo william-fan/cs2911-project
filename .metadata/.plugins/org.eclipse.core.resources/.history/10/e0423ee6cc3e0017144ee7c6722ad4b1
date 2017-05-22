@@ -357,8 +357,8 @@ public class PuzzleHome extends Application {
 				
 				GridPane gridMain = new GridPane();
 				gridMain.setAlignment(Pos.CENTER);
-				gridMain.setHgap(10);
-				gridMain.setVgap(10);
+				gridMain.setHgap(25);
+				gridMain.setVgap(25);
 				
 				/**
 				 * Adding title - "Wacky Warehouse"
@@ -443,26 +443,18 @@ public class PuzzleHome extends Application {
 			        helpButton.setBackground(instructionWithoutArrow);
 				});
 		    	   	
-				// Puzzle Maker button
-				Button puzzleMakerButton = new Button("");
-				puzzleMakerButton.setPrefSize(224, 59);
+				// Test button
+				Button puzzleMakerButton = new Button("Puzzle Maker");
+				puzzleMakerButton.setPrefSize(150, 59);
 				
 				BackgroundImage puzzleMakerBackgroundWithoutArrow = new BackgroundImage( new Image(new File("images/puzzleMaker.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 		        Background puzzleMakerWithoutArrow = new Background(puzzleMakerBackgroundWithoutArrow);
 		        BackgroundImage puzzleMakerBackgroundWithArrow = new BackgroundImage( new Image(new File("images/puzzleMaker_arrow.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-		        Background puzzleMakerWithArrow = new Background(puzzleMakerBackgroundWithArrow);
-		    	puzzleMakerButton.setBackground(puzzleMakerWithoutArrow);
+		        Background quitWithArrow = new Background(quitBackgroundWithArrow);
+		    	quitButton.setPrefSize(106, 59);
+		    	quitButton.setBackground(quitWithoutArrow);
 				
-		    	puzzleMakerButton.setOnMouseEntered(actionEvent -> {
-		    		puzzleMakerButton.setBackground(puzzleMakerWithArrow);
-		    	});
-		    	
-		    	puzzleMakerButton.setOnMouseExited(actionEvent -> {
-		    		puzzleMakerButton.setBackground(puzzleMakerWithoutArrow);
-		    	});
-		    	
-		    	
-		    	
+				
 				PuzzleMaker puzzleMaker = new PuzzleMaker();
 				gridMain.add(puzzleMakerButton, 1, 7);
 

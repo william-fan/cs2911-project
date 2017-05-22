@@ -23,8 +23,9 @@ public class PuzzleGame {
 	private ArrayList<Block> blockList = new ArrayList<Block>();
 	private String timerString;
 	private GridPane gamePane = new GridPane();
-
-
+	private int moveCountP1 = 0;
+	private int moveCountP2 = 0;
+	
 	// blockCount only for generation purposes
 	public Scene Game(Cell[][] grid, Stage primaryStage, Scene menu, int playerCount, int blockCount, File inputFile) {
 		Label timeElapsed = new Label("");
@@ -123,6 +124,7 @@ public class PuzzleGame {
 						this.gamePane.getChildren().remove(block.getBlockImage());
 						this.gamePane.add(block.getBlockImage(), block.getX(), block.getY());
 					}
+					this.moveCountP1++;
 				}
 			} else if (event.getCode() == KeyCode.UP) {
 				if (this.player1.moveUp(this.getBlockList(), this.player2, grid)) {
@@ -132,6 +134,7 @@ public class PuzzleGame {
 						this.gamePane.getChildren().remove(block.getBlockImage());
 						this.gamePane.add(block.getBlockImage(), block.getX(), block.getY());
 					}
+					this.moveCountP1++;
 				}
 			} else if (event.getCode() == KeyCode.LEFT) {
 				if (this.player1.moveLeft(this.getBlockList(), this.player2, grid)) {
@@ -141,6 +144,7 @@ public class PuzzleGame {
 						this.gamePane.getChildren().remove(block.getBlockImage());
 						this.gamePane.add(block.getBlockImage(), block.getX(), block.getY());
 					}
+					this.moveCountP1++;
 				}
 			} else if (event.getCode() == KeyCode.RIGHT) {
 				if (this.player1.moveRight(this.getBlockList(), this.player2, grid)) {
@@ -150,6 +154,7 @@ public class PuzzleGame {
 						this.gamePane.getChildren().remove(block.getBlockImage());
 						this.gamePane.add(block.getBlockImage(), block.getX(), block.getY());
 					}
+					this.moveCountP1++;
 				}
 			} else if (event.getCode() == KeyCode.ESCAPE) {
 				primaryStage.setScene(menu);
@@ -168,6 +173,7 @@ public class PuzzleGame {
 							this.gamePane.getChildren().remove(block.getBlockImage());
 							this.gamePane.add(block.getBlockImage(), block.getX(), block.getY());
 						}
+						this.moveCountP2++;
 					}
 				} else if (event.getCode() == KeyCode.W) {
 					if (this.player2.moveUp(this.getBlockList(), this.player1, grid)) {
@@ -177,6 +183,7 @@ public class PuzzleGame {
 							this.gamePane.getChildren().remove(block.getBlockImage());
 							this.gamePane.add(block.getBlockImage(), block.getX(), block.getY());
 						}
+						this.moveCountP2++;
 					}
 				} else if (event.getCode() == KeyCode.A) {
 					if (this.player2.moveLeft(this.getBlockList(), this.player1, grid)) {
@@ -186,6 +193,7 @@ public class PuzzleGame {
 							this.gamePane.getChildren().remove(block.getBlockImage());
 							this.gamePane.add(block.getBlockImage(), block.getX(), block.getY());
 						}
+						this.moveCountP2++;
 					}
 				} else if (event.getCode() == KeyCode.D) {
 					if (this.player2.moveRight(this.getBlockList(), this.player1, grid)) {
@@ -195,10 +203,12 @@ public class PuzzleGame {
 							this.gamePane.getChildren().remove(block.getBlockImage());
 							this.gamePane.add(block.getBlockImage(), block.getX(), block.getY());
 						}
+						this.moveCountP2++;
 					}
 				}
 			}
 			checkVictory(primaryStage, menu, grid, this.blockList);
+			System.out.println(""+moveCountP1+" "+moveCountP2);
 		});
 		return Game;
 

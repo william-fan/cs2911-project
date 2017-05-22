@@ -366,11 +366,11 @@ public class PuzzleHome extends Application {
 					mainWindow.setScene(helpPage(mainWindow, menuScene));
 				});
 				
-				/*
+				
 				puzzleMakerButton.setOnAction(actionEvent -> {
 					mainWindow.setScene(puzzleMaker.PuzzleMakerHome(mainWindow, menuScene));
 				});
-				*/
+				
 				
 				quitButton.setOnAction(actionEvent -> {
 		        	Alert confirmExit = new Alert(AlertType.CONFIRMATION, "Would you like to exit Wacky Warehouse?", ButtonType.OK, ButtonType.CANCEL);

@@ -35,17 +35,26 @@ public class PuzzleMaker {
 
 	public Scene PuzzleMakerHome(Stage primaryStage, Scene menu) {
 		// Add ui boxes
+		this.gamePane.setAlignment(Pos.CENTER);
+		this.gamePane.setVgap(0.5);
+		this.gamePane.setHgap(0.5);
+		
 		BorderPane center = new BorderPane();
 		center.setPrefSize(800, 800);
+		
 		FlowPane gameUI = new FlowPane();
-		this.gamePane.setAlignment(Pos.CENTER);
+		
 		center.setCenter(this.gamePane);
 		center.setBottom(gameUI);
-
+		center.setStyle("-fx-background-color: #000000");
+		
 		// Text fields, buttons
 		Label xLabel = new Label("x size: (Must be less than 20)");
+		xLabel.setStyle("-fx-text-fill: white");
 		TextField xTextField = new TextField();
+		
 		Label yLabel = new Label("y size: (Must be less than 20)");
+		yLabel.setStyle("-fx-text-fill: white");
 		TextField yTextField = new TextField();
 		
 		Button exportMap = new Button("Export map");

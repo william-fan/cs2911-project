@@ -23,6 +23,8 @@ public class PuzzleGame {
 	
 	// blockCount only for generation purposes
 	public Scene Game(Cell[][] grid, Stage primaryStage, Scene menu, int playerCount, int blockCount, File inputFile) {
+		this.gamePane.setAlignment(Pos.CENTER);
+
 		Label timeElapsed = new Label("");
 		timeElapsed.setStyle("-fx-text-fill: white;");
 		

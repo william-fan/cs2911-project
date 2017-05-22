@@ -196,14 +196,14 @@ public class PuzzleGame {
 					}
 				}
 			}
-			checkVictory(primaryStage, menu, grid, this.blockList);
+			checkVictory(primaryStage, menu, grid, this.blockList, playerCount);
 			System.out.println(player1.getBlockMoveCount()+" "+player1.getMoveCount());
 		});
 		return Game;
 
 	}
 
-	private void checkVictory(Stage primaryStage, Scene menu, Cell[][] map, ArrayList<Block> blockList) {
+	private void checkVictory(Stage primaryStage, Scene menu, Cell[][] map, ArrayList<Block> blockList, int playerCount) {
 		int gameWidth = map.length;
 		int gameHeight = map[0].length;
 		ArrayList<Block> tempList = new ArrayList<Block>(blockList);
@@ -237,20 +237,39 @@ public class PuzzleGame {
 		
 		//if list is empty, show the victory screen
 		if (tempList.isEmpty()) {
-			primaryStage.setScene(victoryScreen(primaryStage, menu));
+			primaryStage.setScene(victoryScreen(primaryStage, menu, playerCount));
 		}
 	}
 
-	private Scene victoryScreen(Stage primaryStage, Scene menu) {
-		Label victoryText = new Label(timerString);
-		FlowPane victoryPane = new FlowPane();
-		victoryPane.getChildren().addAll(victoryText);
-		Button menuButton = new Button("Main menu");
-		victoryPane.getChildren().addAll(menuButton);
-		Scene helpScene = new Scene(victoryPane);// , screenSize.getWidth(), screenSize.getHeight());
-		menuButton.setOnAction(actionEvent -> {
-			primaryStage.setScene(menu);
-		});
+	private Scene victoryScreen(Stage primaryStage, Scene menu, int playerCount) {
+		Scene helpScene = null;
+		if (playerCount == 1) {
+			Label victoryText = new Label(timerString);
+			Label player1MoveCount = new Label("Player 1 Moves: " + this.player1.getMoveCount());
+			Label player1BoxCount = new Label("Player 1 Box Moves: " + this.player1.getBlockMoveCount());
+			FlowPane victoryPane = new FlowPane();
+			victoryPane.getChildren().addAll(victoryText, player1MoveCount, player1BoxCount);
+			Button menuButton = new Button("Main menu");
+			victoryPane.getChildren().addAll(menuButton);
+			helpScene = new Scene(victoryPane);// , screenSize.getWidth(), screenSize.getHeight());
+			menuButton.setOnAction(actionEvent -> {
+				primaryStage.setScene(menu);
+			});
+		} else {
+			Label victoryText = new Label(timerString);
+			Label player1MoveCount = new Label("Player 1 Moves: " + this.player1.getMoveCount());
+			Label player1BoxCount = new Label("Player 1 Box Moves: " + this.player1.getBlockMoveCount());
+			Label player2MoveCount = new Label("Player 2 Moves: " + this.player2.getMoveCount());
+			Label player2BoxCount = new Label("Player 2 Box Moves: " + this.player2.getBlockMoveCount());
+			FlowPane victoryPane = new FlowPane();
+			victoryPane.getChildren().addAll(victoryText, player1MoveCount, player1BoxCount, player2MoveCount, player2BoxCount);
+			Button menuButton = new Button("Main menu");
+			victoryPane.getChildren().addAll(menuButton);
+			helpScene = new Scene(victoryPane);// , screenSize.getWidth(), screenSize.getHeight());
+			menuButton.setOnAction(actionEvent -> {
+				primaryStage.setScene(menu);
+			});
+		}
 		return helpScene;
 	}
 

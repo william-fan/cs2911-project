@@ -124,6 +124,7 @@ public class PuzzleMaker {
 		});
 		
 		mainMenu.setOnAction(actionEvent -> {
+			this.gamePane.getChildren().clear();
 			primaryStage.setScene(menu);
 		});
 		

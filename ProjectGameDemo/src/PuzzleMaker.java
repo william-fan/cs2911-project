@@ -99,7 +99,7 @@ public class PuzzleMaker {
 				for (int x = 0; x < this.sizeX; x++) {
 					for (int y = 0; y < this.sizeY; y++) {
 						Button tile = new Button("0");
-						tile.setStyle("-fx-text-fill: white");
+						tile.setStyle("-fx-text-fill: transparent");
 						tile.setBackground(new Background(new BackgroundImage(
 								new Image(new File("images/ground.png").toURI().toString()), BackgroundRepeat.NO_REPEAT,
 								BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT)));

@@ -5,7 +5,7 @@ import javafx.scene.image.Image;
 public class Cell {
 	private int x;
 	private int y;
-	private int type; // 0 floor, 1 wall, 2 target
+	private int type; // 0 floor, 1 wall, 2 target, 3 player, 4 block (3 & 4 are placeholders for starting locations)
 	private Image floorImage;
 
 	public Cell(int x, int y, int type) {
@@ -17,7 +17,6 @@ public class Cell {
 
 	/**
 	 * Gets the x value of the cell.
-	 * 
 	 * @return The x value of the cell.
 	 */
 	public int getX() {
@@ -26,7 +25,6 @@ public class Cell {
 
 	/**
 	 * Gets the y value of the cell.
-	 * 
 	 * @return The y value of the cell.
 	 */
 	public int getY() {
@@ -48,6 +46,8 @@ public class Cell {
 			this.floorImage = new Image(new File("images/wall.png").toURI().toString());
 		} else if (this.type == 2) {
 			this.floorImage = new Image(new File("images/target.png").toURI().toString());
+		} else {
+			this.floorImage = new Image(new File("images/ground.png").toURI().toString());
 		}
 	}
 

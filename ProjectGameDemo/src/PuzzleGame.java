@@ -1,8 +1,5 @@
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 import javafx.animation.AnimationTimer;
 import javafx.geometry.Pos;
@@ -23,10 +20,11 @@ public class PuzzleGame {
 	private ArrayList<Block> blockList = new ArrayList<Block>();
 	private String timerString;
 	private GridPane gamePane = new GridPane();
-
-
+	
 	// blockCount only for generation purposes
 	public Scene Game(Cell[][] grid, Stage primaryStage, Scene menu, int playerCount, int blockCount, File inputFile) {
+		this.gamePane.setAlignment(Pos.CENTER);
+
 		Label timeElapsed = new Label("");
 		timeElapsed.setStyle("-fx-text-fill: white;");
 		
@@ -77,7 +75,7 @@ public class PuzzleGame {
 		// Rectangle2D screenSize = Screen.getPrimary().getVisualBounds(); //Get
 		// screen size
 		if (inputFile != null) {
-			findMapFeatures(inputFile);
+			findMapFeatures(grid);
 		} else {
 			for (int c = blockCount; c != 0; c--) { // generate blocks if no input given
 				Block tempBlock = new Block(1, c, 3);
@@ -198,13 +196,14 @@ public class PuzzleGame {
 					}
 				}
 			}
-			checkVictory(primaryStage, menu, grid, this.blockList);
+			checkVictory(primaryStage, menu, grid, this.blockList, playerCount);
+			System.out.println(player1.getBlockMoveCount()+" "+player1.getMoveCount());
 		});
 		return Game;
 
 	}
 
-	private void checkVictory(Stage primaryStage, Scene menu, Cell[][] map, ArrayList<Block> blockList) {
+	private void checkVictory(Stage primaryStage, Scene menu, Cell[][] map, ArrayList<Block> blockList, int playerCount) {
 		int gameWidth = map.length;
 		int gameHeight = map[0].length;
 		ArrayList<Block> tempList = new ArrayList<Block>(blockList);
@@ -238,20 +237,39 @@ public class PuzzleGame {
 		
 		//if list is empty, show the victory screen
 		if (tempList.isEmpty()) {
-			primaryStage.setScene(victoryScreen(primaryStage, menu));
+			primaryStage.setScene(victoryScreen(primaryStage, menu, playerCount));
 		}
 	}
 
-	private Scene victoryScreen(Stage primaryStage, Scene menu) {
-		Label victoryText = new Label(timerString);
-		FlowPane victoryPane = new FlowPane();
-		victoryPane.getChildren().addAll(victoryText);
-		Button menuButton = new Button("Main menu");
-		victoryPane.getChildren().addAll(menuButton);
-		Scene helpScene = new Scene(victoryPane);// , screenSize.getWidth(), screenSize.getHeight());
-		menuButton.setOnAction(actionEvent -> {
-			primaryStage.setScene(menu);
-		});
+	private Scene victoryScreen(Stage primaryStage, Scene menu, int playerCount) {
+		Scene helpScene = null;
+		if (playerCount == 1) {
+			Label victoryText = new Label(timerString);
+			Label player1MoveCount = new Label("Player 1 Moves: " + this.player1.getMoveCount());
+			Label player1BoxCount = new Label("Player 1 Box Moves: " + this.player1.getBlockMoveCount());
+			FlowPane victoryPane = new FlowPane();
+			victoryPane.getChildren().addAll(victoryText, player1MoveCount, player1BoxCount);
+			Button menuButton = new Button("Main menu");
+			victoryPane.getChildren().addAll(menuButton);
+			helpScene = new Scene(victoryPane);// , screenSize.getWidth(), screenSize.getHeight());
+			menuButton.setOnAction(actionEvent -> {
+				primaryStage.setScene(menu);
+			});
+		} else {
+			Label victoryText = new Label(timerString);
+			Label player1MoveCount = new Label("Player 1 Moves: " + this.player1.getMoveCount());
+			Label player1BoxCount = new Label("Player 1 Box Moves: " + this.player1.getBlockMoveCount());
+			Label player2MoveCount = new Label("Player 2 Moves: " + this.player2.getMoveCount());
+			Label player2BoxCount = new Label("Player 2 Box Moves: " + this.player2.getBlockMoveCount());
+			FlowPane victoryPane = new FlowPane();
+			victoryPane.getChildren().addAll(victoryText, player1MoveCount, player1BoxCount, player2MoveCount, player2BoxCount);
+			Button menuButton = new Button("Main menu");
+			victoryPane.getChildren().addAll(menuButton);
+			helpScene = new Scene(victoryPane);// , screenSize.getWidth(), screenSize.getHeight());
+			menuButton.setOnAction(actionEvent -> {
+				primaryStage.setScene(menu);
+			});
+		}
 		return helpScene;
 	}
 
@@ -269,29 +287,12 @@ public class PuzzleGame {
 		return this.blockList;
 	}
 
-	/**
-	 * Read the input file as a scanner.
-	 * @param input The input file name.
-	 * @return The scanner object of the input file.
-	 */
-	private Scanner scanFile(String input) {
-		Scanner sc = null;
-		try {
-			sc = new Scanner(new FileReader(input));
-		} catch (FileNotFoundException e) {
-			System.err.println("File not found");
-		}
-		return sc;
-	}
-
-	private void findMapFeatures(File inputFile) {
-		if (inputFile != null) {
-			Scanner sc = scanFile(inputFile.getPath());
-			int x = 0;
-			int y = 0;
-			while (sc.hasNext()) {
-				String next = sc.next();
-				if (next.equals("3")) {
+	private void findMapFeatures(Cell[][] map) {
+		int gameWidth = map.length;
+		int gameHeight = map[0].length;
+		for (int y = 0; y < gameHeight; y++) {
+			for (int x = 0; x < gameWidth; x++) {
+				if (map[x][y].getType() == 3) {
 					if (this.player1.getX() == 0 && this.player1.getY() == 0) { //0, 0 is the default location
 						this.player1.setX(x);
 						this.player1.setY(y);
@@ -300,18 +301,9 @@ public class PuzzleGame {
 						this.player2.setY(y);
 					}
 				}
-				if (next.equals("2")) {
+				if (map[x][y].getType() == 4) {
 					Block block = new Block(1, x, y);
 					this.blockList.add(block);
-				}
-				if (next.equals("#") && sc.hasNext()) {
-					sc.nextLine();
-					y++;
-					x = 0;
-				} else if (next.equals("#")) {
-
-				} else {
-					x++;
 				}
 			}
 		}
@@ -325,4 +317,5 @@ public class PuzzleGame {
 		}
 		return null;
 	}
+
 }

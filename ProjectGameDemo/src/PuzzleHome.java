@@ -263,6 +263,12 @@ public class PuzzleHome extends Application {
 			if (next.equals("4")) {
 				current.setType(1);
 			}
+			if (next.equals("3")) {
+				current.setType(3);
+			}
+			if (next.equals("2")) {
+				current.setType(4);
+			}
 			if (next.equals("#") && scanMap.hasNext()) {
 				scanMap.nextLine();
 				y++;
@@ -436,15 +442,13 @@ public class PuzzleHome extends Application {
 			    helpButton.setOnMouseExited(actionEvent -> {
 			        helpButton.setBackground(instructionWithoutArrow);
 				});
-		    	
-		    	
-		/* Custom Map creation is not used
+		    	   	
 				// Test button
 				Button puzzleMakerButton = new Button("Puzzle Maker");
 				puzzleMakerButton.setPrefSize(150, 100);
 				PuzzleMaker puzzleMaker = new PuzzleMaker();
 				gridMain.add(puzzleMakerButton, 1, 11);
-		*/
+
 				// Quit button
 		    	Button quitButton = new Button("");
 		    	BackgroundImage quitBackgroundWithoutArrow = new BackgroundImage( new Image(new File("images/quit.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
@@ -490,11 +494,11 @@ public class PuzzleHome extends Application {
 					mainWindow.setScene(helpPage(mainWindow, menuScene));
 				});
 				
-				/*
+				
 				puzzleMakerButton.setOnAction(actionEvent -> {
 					mainWindow.setScene(puzzleMaker.PuzzleMakerHome(mainWindow, menuScene));
 				});
-				*/
+				
 				
 				quitButton.setOnAction(actionEvent -> {
 		        	Alert confirmExit = new Alert(AlertType.CONFIRMATION, "Would you like to exit Wacky Warehouse?", ButtonType.OK, ButtonType.CANCEL);

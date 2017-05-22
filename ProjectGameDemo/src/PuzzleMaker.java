@@ -6,6 +6,7 @@ import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -37,6 +38,7 @@ public class PuzzleMaker {
 		BorderPane center = new BorderPane();
 		center.setPrefSize(800, 800);
 		FlowPane gameUI = new FlowPane();
+		this.gamePane.setAlignment(Pos.CENTER);
 		center.setCenter(this.gamePane);
 		center.setBottom(gameUI);
 

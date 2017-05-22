@@ -8,6 +8,8 @@ public class Player {
 	private int x;
 	private int y;
 	private int ID;
+	private int moveCount;
+	private int blockMoveCount;
 	private ImageView playerImage;
 	// private ArrayList<ArrayList<Image>> sprites;
 
@@ -36,6 +38,7 @@ public class Player {
 			return false;
 		}
 		y += 1;
+		this.moveCount++;
 		return true;
 	}
 
@@ -50,6 +53,7 @@ public class Player {
 			return false;
 		}
 		x -= 1;
+		this.moveCount++;
 		return true;
 	}
 
@@ -64,6 +68,7 @@ public class Player {
 			return false;
 		}
 		y -= 1;
+		this.moveCount++;
 		return true;
 	}
 
@@ -78,6 +83,7 @@ public class Player {
 			return false;
 		}
 		x += 1;
+		this.moveCount++;
 		return true;
 	}
 
@@ -101,8 +107,8 @@ public class Player {
 		return this.ID;
 	}
 
-	public void setID(int iD) {
-		this.ID = iD;
+	public void setID(int ID) {
+		this.ID = ID;
 	}
 
 	public void updateSprite(int newDirection) {
@@ -128,6 +134,7 @@ public class Player {
 					return false;
 				} else {
 					tempBlock.setY(this.getY() - 2);
+					this.blockMoveCount++;
 					return true;
 				}
 			} else { // don't allow two boxes to be pushed
@@ -146,6 +153,7 @@ public class Player {
 					return false;
 				} else {
 					tempBlock.setX(this.getX() + 2);
+					this.blockMoveCount++;
 					return true;
 				}
 			} else { // dont allow two boxes to be pushed
@@ -164,6 +172,7 @@ public class Player {
 					return false;
 				} else {
 					tempBlock.setY(this.getY() + 2);
+					this.blockMoveCount++;
 					return true;
 				}
 			} else { // dont allow two boxes to be pushed
@@ -182,6 +191,7 @@ public class Player {
 					return false;
 				} else {
 					tempBlock.setX(this.getX() - 2);
+					this.blockMoveCount++;
 					return true;
 				}
 			} else { // Don't allow two boxes to be pushed
@@ -198,5 +208,21 @@ public class Player {
 			}
 		}
 		return null;
+	}
+
+	public int getMoveCount() {
+		return this.moveCount;
+	}
+
+	public void setMoveCount(int moveCount) {
+		this.moveCount = moveCount;
+	}
+
+	public int getBlockMoveCount() {
+		return this.blockMoveCount;
+	}
+
+	public void setBlockMoveCount(int blockMoveCount) {
+		this.blockMoveCount = blockMoveCount;
 	}
 }

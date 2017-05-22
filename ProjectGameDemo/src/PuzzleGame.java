@@ -77,7 +77,7 @@ public class PuzzleGame {
 		// Rectangle2D screenSize = Screen.getPrimary().getVisualBounds(); //Get
 		// screen size
 		if (inputFile != null) {
-			findMapFeatures(inputFile);
+			findMapFeatures(grid);
 		} else {
 			for (int c = blockCount; c != 0; c--) { // generate blocks if no input given
 				Block tempBlock = new Block(1, c, 3);
@@ -269,29 +269,12 @@ public class PuzzleGame {
 		return this.blockList;
 	}
 
-	/**
-	 * Read the input file as a scanner.
-	 * @param input The input file name.
-	 * @return The scanner object of the input file.
-	 */
-	private Scanner scanFile(String input) {
-		Scanner sc = null;
-		try {
-			sc = new Scanner(new FileReader(input));
-		} catch (FileNotFoundException e) {
-			System.err.println("File not found");
-		}
-		return sc;
-	}
-
-	private void findMapFeatures(File inputFile) {
-		if (inputFile != null) {
-			Scanner sc = scanFile(inputFile.getPath());
-			int x = 0;
-			int y = 0;
-			while (sc.hasNext()) {
-				String next = sc.next();
-				if (next.equals("3")) {
+	private void findMapFeatures(Cell[][] map) {
+		int gameWidth = map.length;
+		int gameHeight = map[0].length;
+		for (int y = 0; y < gameHeight; y++) {
+			for (int x = 0; x < gameWidth; x++) {
+				if (map[x][y].getType() == 3) {
 					if (this.player1.getX() == 0 && this.player1.getY() == 0) { //0, 0 is the default location
 						this.player1.setX(x);
 						this.player1.setY(y);
@@ -300,18 +283,9 @@ public class PuzzleGame {
 						this.player2.setY(y);
 					}
 				}
-				if (next.equals("2")) {
+				if (map[x][y].getType() == 4) {
 					Block block = new Block(1, x, y);
 					this.blockList.add(block);
-				}
-				if (next.equals("#") && sc.hasNext()) {
-					sc.nextLine();
-					y++;
-					x = 0;
-				} else if (next.equals("#")) {
-
-				} else {
-					x++;
 				}
 			}
 		}

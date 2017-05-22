@@ -35,6 +35,7 @@ public class PuzzleMaker {
 
 	public Scene PuzzleMakerHome(Stage primaryStage, Scene menu) {
 		// Add ui boxes
+		resetMap();
 		this.gamePane.setAlignment(Pos.CENTER);
 		this.gamePane.setVgap(0.5);
 		this.gamePane.setHgap(0.5);
@@ -124,7 +125,6 @@ public class PuzzleMaker {
 		});
 		
 		mainMenu.setOnAction(actionEvent -> {
-			this.gamePane.getChildren().clear();
 			primaryStage.setScene(menu);
 		});
 		
@@ -132,7 +132,13 @@ public class PuzzleMaker {
 		return Game;
 
 	}
-
+	
+	private void resetMap() {
+		this.sizeX = 0;
+		this.sizeY = 0;
+		this.gamePane = new GridPane();
+	}
+	
 	private void exportMap(Stage primaryStage) {
 		//Format export string
 		String map = "";

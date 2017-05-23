@@ -1,4 +1,6 @@
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -25,6 +27,7 @@ import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -34,6 +37,11 @@ public class PuzzleMaker {
 	private GridPane gamePane = new GridPane();
 
 	public Scene PuzzleMakerHome(Stage primaryStage, Scene menu) {
+		try {
+			Font.loadFont(new FileInputStream(new File("fonts/FSEX300.ttf")), 36);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 		// Add ui boxes
 		// Background style
 		String background = "-fx-background-image: url(file:images/background.png);" + "\n"
@@ -45,7 +53,7 @@ public class PuzzleMaker {
 		this.gamePane.setHgap(0.5);
 		
 		BorderPane center = new BorderPane();
-		center.setPrefSize(800, 800);
+		center.setPrefSize(960, 800);
 		
 		FlowPane gameUI = new FlowPane();
 		

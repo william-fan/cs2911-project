@@ -1,4 +1,6 @@
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import javafx.animation.AnimationTimer;
@@ -36,12 +38,16 @@ public class PuzzleGame {
 	
 	// blockCount only for generation purposes
 	public Scene Game(Cell[][] grid, Stage primaryStage, Scene menu, int playerCount, int blockCount, File inputFile) {
+		try {
+			Font.loadFont(new FileInputStream(new File("fonts/FSEX300.ttf")), 36);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 		this.gamePane.setAlignment(Pos.CENTER);
-		Font.loadFont(PuzzleGame.class.getResource("FSEX300.ttf").toExternalForm(), 36); // ADDED
 		Label timeElapsed = new Label("");
 		timeElapsed.setStyle("-fx-text-fill: white;" + "\n" +
 							 "-fx-font-family: \"Fixedsys Excelsior 3.01\";"  + "\n" +
-							 "-fx-font-size: 72;" + "\n"); // ADDED
+							 "-fx-font-size: 72;" + "\n");
 		
 		AnimationTimer timer = new AnimationTimer() { // every time a frame updates, we add to frame counter.
 			long timestamp;
@@ -213,7 +219,6 @@ public class PuzzleGame {
 				}
 			}
 			checkVictory(primaryStage, menu, grid, this.blockList, playerCount, inputFile, grid, blockCount);
-			System.out.println(player1.getBlockMoveCount()+" "+player1.getMoveCount());
 		});
 		return Game;
 

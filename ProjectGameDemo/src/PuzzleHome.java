@@ -1,4 +1,5 @@
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.Scanner;
@@ -40,7 +41,12 @@ public class PuzzleHome extends Application {
 	   					+ "-fx-background-size: stretch;" + "\n"
 	   					+ "-fx-background-repeat: no-repeat;";
 	
-	private Scene helpPage(Stage primaryStage, Scene menu) {	
+	private Scene helpPage(Stage primaryStage, Scene menu) {
+		try {
+			Font.loadFont(new FileInputStream(new File("fonts/FSEX300.ttf")), 11);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 		// Create helpPane
 		BorderPane helpPane = new BorderPane();
 		// Create the scene to display the helpPane
@@ -1453,12 +1459,12 @@ PuzzleGame game = new PuzzleGame();
 		 */
 		// When onePlayerButton is clicked, then move to difficulty screen
 		onePlayerButton.setOnAction(actionEvent -> {
-			primaryStage.setScene(selectDifficulty(primaryStage, menuScene, 1));
+			mainWindow.setScene(selectDifficulty(mainWindow, menuScene, 1));
 		});
 		
 		// When twoPlayerButton is clicked, then move to difficulty screen
 		twoPlayerButton.setOnAction(actionEvent -> {
-			primaryStage.setScene(selectDifficulty(primaryStage, menuScene, 2));
+			mainWindow.setScene(selectDifficulty(mainWindow, menuScene, 2));
 		});
 		
 		// When helpButton is clicked, then move to instructions screen
@@ -1483,11 +1489,10 @@ PuzzleGame game = new PuzzleGame();
 		});
 
 		// Show final
-		primaryStage.setTitle("Puzzle Game");
-		primaryStage.setResizable(false);
-		primaryStage.setScene(menuScene);
-		//primaryStage.setMaximized(true);
-		primaryStage.show();
+		mainWindow.setTitle("Puzzle Game");
+		mainWindow.setResizable(false);
+		mainWindow.setScene(menuScene);
+		mainWindow.show();
 	}
 
 	/**

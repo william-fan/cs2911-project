@@ -18,8 +18,8 @@ public class Block {
 
 	private ImageView imageInit() {
 		ImageView tempImage = new ImageView(new Image(new File("images/block" + this.ID + ".png").toURI().toString()));
-		//tempImage.setFitHeight(64);
-		//tempImage.setFitWidth(64);
+		tempImage.setFitHeight(48);
+		tempImage.setFitWidth(48);
 		return tempImage;
 	}
 

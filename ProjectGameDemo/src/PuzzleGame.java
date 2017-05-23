@@ -6,12 +6,20 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class PuzzleGame {
@@ -21,12 +29,19 @@ public class PuzzleGame {
 	private String timerString;
 	private GridPane gamePane = new GridPane();
 	
+	// Background style
+	String background = "-fx-background-image: url(file:images/background.png);" + "\n"
+	   					 + "-fx-background-size: stretch;" + "\n"
+	   					 + "-fx-background-repeat: no-repeat;";
+	
 	// blockCount only for generation purposes
 	public Scene Game(Cell[][] grid, Stage primaryStage, Scene menu, int playerCount, int blockCount, File inputFile) {
 		this.gamePane.setAlignment(Pos.CENTER);
-
+		Font.loadFont(PuzzleGame.class.getResource("FSEX300.ttf").toExternalForm(), 36); // ADDED
 		Label timeElapsed = new Label("");
-		timeElapsed.setStyle("-fx-text-fill: white;");
+		timeElapsed.setStyle("-fx-text-fill: white;" + "\n" +
+							 "-fx-font-family: \"Fixedsys Excelsior 3.01\";"  + "\n" +
+							 "-fx-font-size: 72;" + "\n"); // ADDED
 		
 		AnimationTimer timer = new AnimationTimer() { // every time a frame updates, we add to frame counter.
 			long timestamp;
@@ -87,8 +102,8 @@ public class PuzzleGame {
 			for (int x = 0; x < gameWidth; x++) {
 				HBox a = new HBox();
 				ImageView ground = new ImageView(grid[x][y].getFloorImage());
-				//ground.setFitHeight(64);
-				//ground.setFitWidth(64);
+				ground.setFitHeight(48);
+				ground.setFitWidth(48);
 				a.getChildren().add(ground);
 				this.gamePane.add(a, x, y);
 			}
@@ -107,7 +122,8 @@ public class PuzzleGame {
 		// center.setPrefWidth(screenSize.getWidth());
 		// center.setPrefHeight(screenSize.getHeight());
 		center.setCenter(this.gamePane);
-		center.setRight(gameUI);
+		center.setTop(gameUI);
+		gameUI.setAlignment(Pos.CENTER);
 		center.setStyle("-fx-background-color: #3F3F3F;");
 
 		Scene Game = new Scene(center);// , screenSize.getWidth(), screenSize.getHeight());
@@ -196,14 +212,14 @@ public class PuzzleGame {
 					}
 				}
 			}
-			checkVictory(primaryStage, menu, grid, this.blockList, playerCount);
+			checkVictory(primaryStage, menu, grid, this.blockList, playerCount, inputFile, grid, blockCount);
 			System.out.println(player1.getBlockMoveCount()+" "+player1.getMoveCount());
 		});
 		return Game;
 
 	}
 
-	private void checkVictory(Stage primaryStage, Scene menu, Cell[][] map, ArrayList<Block> blockList, int playerCount) {
+	private void checkVictory(Stage primaryStage, Scene menu, Cell[][] map, ArrayList<Block> blockList, int playerCount, File inputFile, Cell[][] grid, int blockCount) {
 		int gameWidth = map.length;
 		int gameHeight = map[0].length;
 		ArrayList<Block> tempList = new ArrayList<Block>(blockList);
@@ -237,39 +253,144 @@ public class PuzzleGame {
 		
 		//if list is empty, show the victory screen
 		if (tempList.isEmpty()) {
-			primaryStage.setScene(victoryScreen(primaryStage, menu, playerCount));
+			primaryStage.setScene(victoryScreen(primaryStage, menu, playerCount, inputFile, grid, blockCount));
 		}
 	}
 
-	private Scene victoryScreen(Stage primaryStage, Scene menu, int playerCount) {
-		Scene helpScene = null;
-		if (playerCount == 1) {
-			Label victoryText = new Label(timerString);
-			Label player1MoveCount = new Label("Player 1 Moves: " + this.player1.getMoveCount());
-			Label player1BoxCount = new Label("Player 1 Box Moves: " + this.player1.getBlockMoveCount());
-			FlowPane victoryPane = new FlowPane();
-			victoryPane.getChildren().addAll(victoryText, player1MoveCount, player1BoxCount);
-			Button menuButton = new Button("Main menu");
-			victoryPane.getChildren().addAll(menuButton);
-			helpScene = new Scene(victoryPane);// , screenSize.getWidth(), screenSize.getHeight());
-			menuButton.setOnAction(actionEvent -> {
-				primaryStage.setScene(menu);
-			});
-		} else {
-			Label victoryText = new Label(timerString);
-			Label player1MoveCount = new Label("Player 1 Moves: " + this.player1.getMoveCount());
-			Label player1BoxCount = new Label("Player 1 Box Moves: " + this.player1.getBlockMoveCount());
-			Label player2MoveCount = new Label("Player 2 Moves: " + this.player2.getMoveCount());
-			Label player2BoxCount = new Label("Player 2 Box Moves: " + this.player2.getBlockMoveCount());
-			FlowPane victoryPane = new FlowPane();
-			victoryPane.getChildren().addAll(victoryText, player1MoveCount, player1BoxCount, player2MoveCount, player2BoxCount);
-			Button menuButton = new Button("Main menu");
-			victoryPane.getChildren().addAll(menuButton);
-			helpScene = new Scene(victoryPane);// , screenSize.getWidth(), screenSize.getHeight());
-			menuButton.setOnAction(actionEvent -> {
-				primaryStage.setScene(menu);
-			});
-		}
+	private Scene victoryScreen(Stage primaryStage, Scene menu, int playerCount, File inputFile, Cell[][] grid, int blockCount) {
+		AnchorPane victoryPane = new AnchorPane();
+		
+		Label victoryText = new Label("Level Complete!");
+		victoryText.setStyle("-fx-text-fill: white;" + "\n" +
+				 			 "-fx-font-family: \"Fixedsys Excelsior 3.01\";"  + "\n" +
+				 			 "-fx-font-size: 72;" + "\n"); // ADDED
+		
+		AnchorPane.setTopAnchor(victoryText, 75d);
+		AnchorPane.setLeftAnchor(victoryText, 220d);
+		
+		Label summaryText = new Label("Summary");
+		summaryText.setUnderline(true);
+		summaryText.setStyle("-fx-text-fill: white;" + "\n" +
+				 			 "-fx-font-family: \"Fixedsys Excelsior 3.01\";"  + "\n" +
+				 			 "-fx-font-size: 72;" + "\n"); // ADDED
+		
+		AnchorPane.setTopAnchor(summaryText, 175d);
+		AnchorPane.setLeftAnchor(summaryText, 360d);
+		
+		timerString = timerString.replaceAll("\\s+", "");
+
+		Label timeText = new Label("Time Taken: " + timerString);
+		timeText.setStyle("-fx-text-fill: white;" + "\n" +
+				 			 "-fx-font-family: \"Fixedsys Excelsior 3.01\";"  + "\n" +
+				 			 "-fx-font-size: 72;" + "\n"); // ADDED
+		
+		AnchorPane.setTopAnchor(timeText, 280d);
+		AnchorPane.setLeftAnchor(timeText, 145d);
+		
+		Label moveText = new Label("Moves: "+ player1.getMoveCount());
+		moveText.setStyle("-fx-text-fill: white;" + "\n" +
+				 			 "-fx-font-family: \"Fixedsys Excelsior 3.01\";"  + "\n" +
+				 			 "-fx-font-size: 72;" + "\n"); // ADDED
+		
+		AnchorPane.setTopAnchor(moveText, 360d);
+		AnchorPane.setLeftAnchor(moveText, 150d);
+		
+		Label pushesText = new Label("Pushes: "+ player1.getBlockMoveCount());
+		pushesText.setStyle("-fx-text-fill: white;" + "\n" +
+				 			 "-fx-font-family: \"Fixedsys Excelsior 3.01\";"  + "\n" +
+				 			 "-fx-font-size: 72;" + "\n"); // ADDED
+		
+		AnchorPane.setTopAnchor(pushesText, 440d);
+		AnchorPane.setLeftAnchor(pushesText, 150d);
+		
+		// play again button
+		Button replayButton = new Button("");
+	    BackgroundImage replayButtonBackground = new BackgroundImage(new Image(new File("images/replay.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+	    Background replayButtonImage = new Background(replayButtonBackground);
+	    replayButton.setBackground(replayButtonImage);
+	    replayButton.setPrefSize(300, 100);
+	    
+	    BackgroundImage replayButtonBackgroundHover = new BackgroundImage(new Image(new File("images/replay_arrow.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+	    Background replayButtonImageHover = new Background(replayButtonBackgroundHover);
+	    replayButton.setBackground(replayButtonImage);
+	    
+	    replayButton.setOnAction(actionEvent -> {
+	    	resetGame(grid, primaryStage, menu, playerCount, blockCount, inputFile);
+	    });
+	    
+	    replayButton.setOnMouseEntered(actionEvent -> {
+	    	replayButton.setBackground(replayButtonImageHover);
+	    	replayButton.setPrefSize(300, 100);
+		});
+	    
+	    replayButton.setOnMouseExited(actionEvent -> {
+	    	replayButton.setBackground(replayButtonImage);
+		});
+	    
+    	AnchorPane.setBottomAnchor(replayButton, 20d);
+	    AnchorPane.setLeftAnchor(replayButton, 100d);
+	    
+	    // level select button
+	    Button levelButton = new Button("");
+	    BackgroundImage levelButtonBackground = new BackgroundImage(new Image(new File("images/level_select.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+	    Background levelButtonImage = new Background(levelButtonBackground);
+	    levelButton.setBackground(levelButtonImage);
+	    levelButton.setPrefSize(300, 100);
+	    
+	    BackgroundImage levelButtonBackgroundHover = new BackgroundImage(new Image(new File("images/level_select_arrow.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+	    Background levelButtonImageHover = new Background(levelButtonBackgroundHover);
+	    levelButton.setBackground(levelButtonImage);
+	    
+	    levelButton.setOnAction(actionEvent -> {
+	    	PuzzleHome levelSelect = new PuzzleHome();
+			primaryStage.setScene(levelSelect.easyDifficulty(primaryStage, menu, playerCount));
+	    });
+	    
+	    levelButton.setOnMouseEntered(actionEvent -> {
+	    	levelButton.setBackground(levelButtonImageHover);
+	    	levelButton.setPrefSize(300, 100);
+		});
+	    
+	    levelButton.setOnMouseExited(actionEvent -> {
+	    	levelButton.setBackground(levelButtonImage);
+		});
+	    
+    	AnchorPane.setBottomAnchor(levelButton, 18d);
+	    AnchorPane.setLeftAnchor(levelButton, 360d);
+	    
+	    // menu select button
+		Button menuButton = new Button("");
+	    BackgroundImage menuButtonBackground = new BackgroundImage(new Image(new File("images/main.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+	    Background menuButtonImage = new Background(menuButtonBackground);
+	    menuButton.setBackground(menuButtonImage);
+	    menuButton.setPrefSize(200, 100);
+	    
+	    BackgroundImage menuButtonBackgroundHover = new BackgroundImage(new Image(new File("images/main_arrow.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+	    Background menuButtonImageHover = new Background(menuButtonBackgroundHover);
+	    menuButton.setBackground(menuButtonImage);
+	    menuButton.setPrefSize(200, 100);
+	    
+	    menuButton.setOnAction(actionEvent -> {
+	    	primaryStage.setScene(menu);
+	    });
+	    
+	    menuButton.setOnMouseEntered(actionEvent -> {
+	    	menuButton.setBackground(menuButtonImageHover);
+	    	menuButton.setPrefSize(300, 100);
+		});
+	    
+	    menuButton.setOnMouseExited(actionEvent -> {
+	    	menuButton.setBackground(menuButtonImage);
+		});
+	    
+    	AnchorPane.setBottomAnchor(menuButton, 20d);
+	    AnchorPane.setLeftAnchor(menuButton, 650d);
+
+	    victoryPane.getChildren().addAll(victoryText, timeText, moveText, pushesText, summaryText, replayButton, levelButton, menuButton);
+	    
+		Scene helpScene = new Scene(victoryPane, 960, 800);
+		victoryPane.setStyle(background);
+		
 		return helpScene;
 	}
 

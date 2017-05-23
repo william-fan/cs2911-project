@@ -114,6 +114,7 @@ public class PuzzleMaker {
 								new Image(new File("images/ground.png").toURI().toString()), BackgroundRepeat.NO_REPEAT,
 								BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT)));
 						tile.setOnMouseClicked(new MapButtonHandler());
+						tile.setPrefSize(32, 32);
 						this.gamePane.add(tile, x, y);
 					}
 				}

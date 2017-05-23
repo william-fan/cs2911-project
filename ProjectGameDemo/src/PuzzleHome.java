@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -12,16 +13,15 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -35,6 +35,11 @@ import javafx.stage.Stage;
 
 public class PuzzleHome extends Application {
 
+	// Background style
+	String background = "-fx-background-image: url(file:images/background.png);" + "\n"
+	   					+ "-fx-background-size: stretch;" + "\n"
+	   					+ "-fx-background-repeat: no-repeat;";
+	
 	private Scene helpPage(Stage primaryStage, Scene menu) {	
 		// Create helpPane
 		BorderPane helpPane = new BorderPane();
@@ -171,30 +176,6 @@ public class PuzzleHome extends Application {
 		return helpScene;
 	}
 
-	private Scene selectPlayers(Stage primaryStage, Scene menu) {
-		Label playersText = new Label("This is the select screen\nTEST");
-		FlowPane selectPane = new FlowPane();
-		Button onePlayer = new Button("One Player");
-		Button twoPlayer = new Button("Two Player");
-		Button menuButton = new Button("Main Menu");
-		selectPane.getChildren().addAll(playersText, onePlayer, twoPlayer, menuButton);
-		Scene helpScene = new Scene(selectPane);// , screenSize.getWidth(), screenSize.getHeight());
-		
-		onePlayer.setOnAction(actionEvent -> {
-			primaryStage.setScene(selectDifficulty(primaryStage, menu, 1));
-		});
-		
-		twoPlayer.setOnAction(actionEvent -> {
-			primaryStage.setScene(selectDifficulty(primaryStage, menu, 2));
-		});
-		
-		menuButton.setOnAction(actionEvent -> {
-			primaryStage.setScene(menu);
-		});
-		
-		return helpScene;
-	}
-
 	private Cell[][] generateMap(int difficulty) {
 		Cell[][] map = null;
 		if (difficulty == 0) {
@@ -291,32 +272,133 @@ public class PuzzleHome extends Application {
 	}
 
 	private Scene selectDifficulty(Stage primaryStage, Scene menu, int playerCount) {
-		// Rectangle2D screenSize = Screen.getPrimary().getVisualBounds(); 
-		// Get screen size
-		Label label = new Label("This is the difficulty screen\nTEST");
-		FlowPane difficultyPane = new FlowPane();
-		difficultyPane.getChildren().addAll(label);
-
-		Button easyButton = new Button("Easy");
-		Button customMap = new Button("Custom Map");
-		Button menuButton = new Button("Main Menu");
-		difficultyPane.getChildren().addAll(menuButton, easyButton, customMap);
-
-		PuzzleGame game = new PuzzleGame();
+PuzzleGame game = new PuzzleGame();
+		
+		AnchorPane difficultyPane = new AnchorPane();
+		difficultyPane.setStyle(background);
+		
+		Image singleTitle = new Image(new File("images/1Player_title.png").toURI().toString());
+		ImageView singleTitleShow = new ImageView(singleTitle);
+		singleTitleShow.setFitWidth(300);
+		singleTitleShow.setPreserveRatio(true);
+    	
+	    AnchorPane.setTopAnchor(singleTitleShow, 85d);
+	    AnchorPane.setLeftAnchor(singleTitleShow, 335d);	    
+	    difficultyPane.getChildren().add(singleTitleShow); 
+	    
+		Image singlePicture = new Image(new File("images/player1_difficulty.png").toURI().toString());
+		ImageView singlePictureShow = new ImageView(singlePicture);
+		singlePictureShow.setFitWidth(350);
+		singlePictureShow.setPreserveRatio(true);
+    	
+	    AnchorPane.setTopAnchor(singlePictureShow, 180d);
+	    AnchorPane.setLeftAnchor(singlePictureShow, 300d);	    
+	    difficultyPane.getChildren().add(singlePictureShow); 
+	    
+		Button easyButton = new Button("");
+		BackgroundImage easyButtonBackground = new BackgroundImage(new Image(new File("images/easy_selection.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+	    Background easyButtonImage = new Background(easyButtonBackground);
+	    easyButton.setBackground(easyButtonImage);
+	    easyButton.setPrefSize(240, 100);
+	    
+	    BackgroundImage easyButtonBackgroundHover = new BackgroundImage(new Image(new File("images/easy_selection_arrow.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+	    Background easyButtonImageHover = new Background(easyButtonBackgroundHover);
+    	
 		easyButton.setOnAction(actionEvent -> {
-			File f = new File("maps/easy_" + playerCount + "_1.txt");
-			if (f.exists() && !f.isDirectory()) {
-				if (readMap(f) == null ) {
-		        	Alert confirmExit = new Alert(AlertType.ERROR, "File must be of correct type", ButtonType.OK);
-		        	confirmExit.setTitle("Exit Game");
-		        	confirmExit.showAndWait();
-				} else {
-					primaryStage.setScene(game.Game(readMap(f), primaryStage, menu, playerCount, 3, f));
-				}
-			} else {
-				primaryStage.setScene(game.Game(generateMap(0), primaryStage, menu, playerCount, 3, null));
-			}
+			primaryStage.setScene(easyDifficulty(primaryStage, menu, playerCount));
 		});
+
+     	easyButton.setOnMouseEntered(actionEvent -> {
+     		easyButton.setBackground(easyButtonImageHover);
+		});
+	    
+     	easyButton.setOnMouseExited(actionEvent -> {
+     		easyButton.setBackground(easyButtonImage);
+		});
+	    
+	    AnchorPane.setTopAnchor(easyButton, 430d);
+	    AnchorPane.setLeftAnchor(easyButton, 310d);	    
+	    difficultyPane.getChildren().add(easyButton); 
+	    
+	    Button mediumButton = new Button("");
+		BackgroundImage mediumButtonBackground = new BackgroundImage(new Image(new File("images/medium_selection.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+	    Background mediumButtonImage = new Background(mediumButtonBackground);
+	    mediumButton.setBackground(mediumButtonImage);
+	    mediumButton.setPrefSize(300, 100);
+	    
+	    BackgroundImage mediumButtonBackgroundHover = new BackgroundImage(new Image(new File("images/medium_selection_arrow.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+	    Background mediumButtonImageHover = new Background(mediumButtonBackgroundHover);
+    	
+	    mediumButton.setOnAction(actionEvent -> {
+			primaryStage.setScene(mediumDifficulty(primaryStage, menu, playerCount));
+		});
+
+	    mediumButton.setOnMouseEntered(actionEvent -> {
+	    	mediumButton.setBackground(mediumButtonImageHover);
+		});
+	    
+	    mediumButton.setOnMouseExited(actionEvent -> {
+	    	mediumButton.setBackground(mediumButtonImage);
+		});
+	    
+	    AnchorPane.setTopAnchor(mediumButton, 520d);
+	    AnchorPane.setLeftAnchor(mediumButton, 330d);	    
+	    difficultyPane.getChildren().add(mediumButton); 
+	    
+	    Button hardButton = new Button("");
+		BackgroundImage hardButtonBackground = new BackgroundImage(new Image(new File("images/hard_selection.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+	    Background hardButtonImage = new Background(hardButtonBackground);
+	    hardButton.setBackground(hardButtonImage);
+	    hardButton.setPrefSize(300, 100);
+	    
+	    BackgroundImage hardButtonBackgroundHover = new BackgroundImage(new Image(new File("images/hard_selection_arrow.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+	    Background hardButtonImageHover = new Background(hardButtonBackgroundHover);
+    	
+	    hardButton.setOnAction(actionEvent -> {
+			primaryStage.setScene(hardDifficulty(primaryStage, menu, playerCount));
+		});
+
+	    hardButton.setOnMouseEntered(actionEvent -> {
+	    	hardButton.setBackground(hardButtonImageHover);
+		});
+	    
+	    hardButton.setOnMouseExited(actionEvent -> {
+	    	hardButton.setBackground(hardButtonImage);
+		});
+	    
+	    AnchorPane.setTopAnchor(hardButton, 610d);
+	    AnchorPane.setLeftAnchor(hardButton, 330d);	    
+	    difficultyPane.getChildren().add(hardButton); 
+	    
+	    Button menuButton = new Button("");
+	    BackgroundImage menuButtonBackground = new BackgroundImage(new Image(new File("images/main.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+	    Background menuButtonImage = new Background(menuButtonBackground);
+	    menuButton.setBackground(menuButtonImage);
+	    menuButton.setPrefSize(200, 100);
+	    
+	    BackgroundImage menuButtonBackgroundHover = new BackgroundImage(new Image(new File("images/main_arrow.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+	    Background menuButtonImageHover = new Background(menuButtonBackgroundHover);
+	    menuButton.setBackground(menuButtonImage);
+	    menuButton.setPrefSize(200, 100);
+	    
+	    menuButton.setOnAction(actionEvent -> {
+	    	primaryStage.setScene(menu);
+	    });
+	    
+	    menuButton.setOnMouseEntered(actionEvent -> {
+	    	menuButton.setBackground(menuButtonImageHover);
+	    	menuButton.setPrefSize(300, 100);
+		});
+	    
+	    menuButton.setOnMouseExited(actionEvent -> {
+	    	menuButton.setBackground(menuButtonImage);
+		});
+	    
+    	AnchorPane.setBottomAnchor(menuButton, 20d);
+	    AnchorPane.setLeftAnchor(menuButton, 700d);
+	    difficultyPane.getChildren().add(menuButton);
+	    
+		Button customMap = new Button("Custom Map");
 
 		customMap.setOnAction(actionEvent -> {
 			FileChooser fileChooser = new FileChooser();
@@ -334,205 +416,1078 @@ public class PuzzleHome extends Application {
 			}
 		});
 
-		menuButton.setOnAction(actionEvent -> {
-			primaryStage.setScene(menu);
-		});
-
-		Scene difficultyScene = new Scene(difficultyPane);// , screenSize.getWidth(),screenSize.getHeight());
+		Scene difficultyScene = new Scene(difficultyPane, 960, 800);
 		return difficultyScene;
+	}
+	
+	// 
+	// DIFFICULTY SELECTION SCREENS
+	//
+	public Scene easyDifficulty(Stage primaryStage, Scene menu, int playerCount) {
+		
+		PuzzleGame game = new PuzzleGame();
+	
+		Image easyTitle = new Image(new File("images/easy.png").toURI().toString());
+		ImageView easyTitleShow = new ImageView(easyTitle);
+	    AnchorPane.setTopAnchor(easyTitleShow, 40d);
+	    AnchorPane.setLeftAnchor(easyTitleShow, 400d);
+	    
+	    Button menuButton = new Button("");
+	    BackgroundImage menuButtonBackground = new BackgroundImage(new Image(new File("images/main.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+	    Background menuButtonImage = new Background(menuButtonBackground);
+	    menuButton.setBackground(menuButtonImage);
+	    menuButton.setPrefSize(200, 100);
+	    
+	    BackgroundImage menuButtonBackgroundHover = new BackgroundImage(new Image(new File("images/main_arrow.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+	    Background menuButtonImageHover = new Background(menuButtonBackgroundHover);
+	    menuButton.setBackground(menuButtonImage);
+	    menuButton.setPrefSize(200, 100);
+	    
+	    menuButton.setOnAction(actionEvent -> {
+	    	primaryStage.setScene(menu);
+	    });
+	    
+	    menuButton.setOnMouseEntered(actionEvent -> {
+	    	menuButton.setBackground(menuButtonImageHover);
+	    	menuButton.setPrefSize(300, 100);
+		});
+	    
+	    menuButton.setOnMouseExited(actionEvent -> {
+	    	menuButton.setBackground(menuButtonImage);
+		});
+	    
+    	AnchorPane.setBottomAnchor(menuButton, 20d);
+	    AnchorPane.setLeftAnchor(menuButton, 390d);
+	    	
+		HBox levelSelect = new HBox();
+		levelSelect.setSpacing(10);
+		
+		Button levelOne = new Button("");
+	    BackgroundImage levelOneBackground = new BackgroundImage(new Image(new File("images/level1.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+	    Background levelOneImage = new Background(levelOneBackground);
+
+	    levelOne.setPrefSize(100, 100);
+	    levelOne.setBackground(levelOneImage);
+	    
+	    levelOne.setOnAction(actionEvent -> {
+			File f = new File("maps/easy_" + playerCount + "_1.txt");		
+			if (f.exists() && !f.isDirectory()) {
+				primaryStage.setScene(game.Game(readMap(f), primaryStage, menu, playerCount, 3, f));
+			} else {
+				primaryStage.setScene(game.Game(generateMap(0), primaryStage, menu, playerCount, 3, null));
+			}
+		});
+	    
+		Button levelTwo = new Button("");
+	    BackgroundImage levelTwoBackground = new BackgroundImage(new Image(new File("images/level2.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+	    Background levelTwoImage = new Background(levelTwoBackground);
+	    
+	    levelTwo.setPrefSize(100, 100);
+	    levelTwo.setBackground(levelTwoImage);
+	    
+	    levelTwo.setOnAction(actionEvent -> {
+			File f = new File("maps/easy_" + playerCount + "_2.txt");		
+			if (f.exists() && !f.isDirectory()) {
+				primaryStage.setScene(game.Game(readMap(f), primaryStage, menu, playerCount, 3, f));
+			} else {
+				primaryStage.setScene(game.Game(generateMap(0), primaryStage, menu, playerCount, 3, null));
+			}
+		});
+	    
+		Button levelThree = new Button("");
+	    BackgroundImage levelThreeBackground = new BackgroundImage(new Image(new File("images/level3.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+	    Background levelThreeImage = new Background(levelThreeBackground);
+	    
+	    levelThree.setPrefSize(100, 100);
+	    levelThree.setBackground(levelThreeImage);
+	    
+	    levelThree.setOnAction(actionEvent -> {
+			File f = new File("maps/easy_" + playerCount + "_3.txt");		
+			if (f.exists() && !f.isDirectory()) {
+				primaryStage.setScene(game.Game(readMap(f), primaryStage, menu, playerCount, 3, f));
+			} else {
+				primaryStage.setScene(game.Game(generateMap(0), primaryStage, menu, playerCount, 3, null));
+			}
+		});
+	    
+		Button levelFour = new Button("");
+	    BackgroundImage levelFourBackground = new BackgroundImage(new Image(new File("images/level4.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+	    Background levelFourImage = new Background(levelFourBackground);
+	    
+	    levelFour.setPrefSize(100, 100);
+	    levelFour.setBackground(levelFourImage);
+	    
+	    levelFour.setOnAction(actionEvent -> {
+			File f = new File("maps/easy_" + playerCount + "_4.txt");		
+			if (f.exists() && !f.isDirectory()) {
+				primaryStage.setScene(game.Game(readMap(f), primaryStage, menu, playerCount, 3, f));
+			} else {
+				primaryStage.setScene(game.Game(generateMap(0), primaryStage, menu, playerCount, 3, null));
+			}
+		});
+	    
+		Button levelFive = new Button("");
+	    BackgroundImage levelFiveBackground = new BackgroundImage(new Image(new File("images/level5.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+	    Background levelFiveImage = new Background(levelFiveBackground);
+	    
+	    levelFive.setPrefSize(100, 100);
+	    levelFive.setBackground(levelFiveImage);
+
+	    levelFive.setOnAction(actionEvent -> {
+			File f = new File("maps/easy_" + playerCount + "_5.txt");		
+			if (f.exists() && !f.isDirectory()) {
+				primaryStage.setScene(game.Game(readMap(f), primaryStage, menu, playerCount, 3, f));
+			} else {
+				primaryStage.setScene(game.Game(generateMap(0), primaryStage, menu, playerCount, 3, null));
+			}
+		});
+	    
+		AnchorPane easyPane = new AnchorPane();
+		easyPane.setStyle(background);
+	    easyPane.getChildren().addAll(easyTitleShow, levelOne, levelTwo, levelThree, levelFour, levelFive, menuButton);
+	    
+	    AnchorPane.setTopAnchor(levelOne, 125d);
+	    AnchorPane.setLeftAnchor(levelOne, 160d);
+	    
+	    Image levelOneMap = new Image(new File("images/easy_1_preview.png").toURI().toString());
+    	ImageView levelOnePreview = new ImageView(levelOneMap);
+    	levelOnePreview.setFitWidth(500);
+    	levelOnePreview.setPreserveRatio(true);
+    	
+    	Image levelOneMap2P = new Image(new File("images/easy2p_1_preview.png").toURI().toString());
+     	ImageView levelOnePreview2P = new ImageView(levelOneMap2P);
+     	levelOnePreview2P.setFitWidth(500);
+     	levelOnePreview2P.setPreserveRatio(true);
+    	
+	    levelOne.setOnMouseEntered(actionEvent -> {
+	    	if (playerCount == 1) {
+	    		easyPane.getChildren().add(levelOnePreview);
+	    		AnchorPane.setBottomAnchor(levelOnePreview, 150d);
+		    	AnchorPane.setLeftAnchor(levelOnePreview, 240d);
+	    	} else {
+	    		easyPane.getChildren().add(levelOnePreview2P);
+	    		AnchorPane.setBottomAnchor(levelOnePreview2P, 150d);
+		    	AnchorPane.setLeftAnchor(levelOnePreview2P, 240d);
+	    	}
+		});
+	    
+	    levelOne.setOnMouseExited(actionEvent -> {
+	    	if (playerCount == 1) {
+	    		easyPane.getChildren().remove(levelOnePreview);
+	    	} else {
+	    		easyPane.getChildren().remove(levelOnePreview2P);
+	    	}
+		});
+	    
+	    AnchorPane.setTopAnchor(levelTwo, 125d);
+	    AnchorPane.setLeftAnchor(levelTwo, 295d);
+	    
+	    Image levelTwoMap = new Image(new File("images/easy_2_preview.png").toURI().toString());
+    	ImageView levelTwoPreview = new ImageView(levelTwoMap);
+    	levelTwoPreview.setFitWidth(500);
+    	levelTwoPreview.setPreserveRatio(true);
+    	
+    	//Image levelTwoMap2P = new Image(new File("images/easy2p_2_preview.png").toURI().toString());
+     	//ImageView levelTwoPreview2P = new ImageView(levelTwoMap2P);
+     	//levelTwoPreview2P.setFitWidth(500);
+     	//levelTwoPreview2P.setPreserveRatio(true);
+    	
+	    levelTwo.setOnMouseEntered(actionEvent -> {
+	    	if (playerCount == 1) {
+	    		easyPane.getChildren().add(levelTwoPreview);
+	    		AnchorPane.setBottomAnchor(levelTwoPreview, 150d);
+		    	AnchorPane.setLeftAnchor(levelTwoPreview, 240d);
+	    	}// else {
+	    		//easyPane.getChildren().add(levelOnePreview2P);
+	    		//AnchorPane.setBottomAnchor(levelOnePreview2P, 150d);
+		    	//AnchorPane.setLeftAnchor(levelOnePreview2P, 240d);
+	    	//}
+		});
+	    
+	    levelTwo.setOnMouseExited(actionEvent -> {
+	    	if (playerCount == 1) {
+	    		easyPane.getChildren().remove(levelTwoPreview);
+	    	}// else {
+	    	//	easyPane.getChildren().remove(levelOnePreview2P);
+	    	//}
+		});
+	    
+	    AnchorPane.setTopAnchor(levelThree, 125d);
+	    AnchorPane.setLeftAnchor(levelThree, 430d);
+	    
+	    Image levelThreeMap = new Image(new File("images/easy_3_preview.png").toURI().toString());
+    	ImageView levelThreePreview = new ImageView(levelThreeMap);
+    	levelThreePreview.setFitWidth(500);
+    	levelThreePreview.setPreserveRatio(true);
+    	
+    	//Image levelTwoMap2P = new Image(new File("images/easy2p_2_preview.png").toURI().toString());
+     	//ImageView levelTwoPreview2P = new ImageView(levelTwoMap2P);
+     	//levelTwoPreview2P.setFitWidth(500);
+     	//levelTwoPreview2P.setPreserveRatio(true);
+    	
+	    levelThree.setOnMouseEntered(actionEvent -> {
+	    	if (playerCount == 1) {
+	    		easyPane.getChildren().add(levelThreePreview);
+	    		AnchorPane.setBottomAnchor(levelThreePreview, 150d);
+		    	AnchorPane.setLeftAnchor(levelThreePreview, 240d);
+	    	}// else {
+	    		//easyPane.getChildren().add(levelOnePreview2P);
+	    		//AnchorPane.setBottomAnchor(levelOnePreview2P, 150d);
+		    	//AnchorPane.setLeftAnchor(levelOnePreview2P, 240d);
+	    	//}
+		});
+	    
+	    levelThree.setOnMouseExited(actionEvent -> {
+	    	if (playerCount == 1) {
+	    		easyPane.getChildren().remove(levelThreePreview);
+	    	}// else {
+	    	//	easyPane.getChildren().remove(levelOnePreview2P);
+	    	//}
+		});
+	    
+	    
+	    AnchorPane.setTopAnchor(levelFour, 125d);
+	    AnchorPane.setLeftAnchor(levelFour, 565d);
+	    
+	    Image levelFourMap = new Image(new File("images/easy_4_preview.png").toURI().toString());
+    	ImageView levelFourPreview = new ImageView(levelFourMap);
+    	levelFourPreview.setFitWidth(500);
+    	levelFourPreview.setPreserveRatio(true);
+    	
+    	//Image levelTwoMap2P = new Image(new File("images/easy2p_2_preview.png").toURI().toString());
+     	//ImageView levelTwoPreview2P = new ImageView(levelTwoMap2P);
+     	//levelTwoPreview2P.setFitWidth(500);
+     	//levelTwoPreview2P.setPreserveRatio(true);
+    	
+	    levelFour.setOnMouseEntered(actionEvent -> {
+	    	if (playerCount == 1) {
+	    		easyPane.getChildren().add(levelFourPreview);
+	    		AnchorPane.setBottomAnchor(levelFourPreview, 150d);
+		    	AnchorPane.setLeftAnchor(levelFourPreview, 240d);
+	    	}// else {
+	    		//easyPane.getChildren().add(levelOnePreview2P);
+	    		//AnchorPane.setBottomAnchor(levelOnePreview2P, 150d);
+		    	//AnchorPane.setLeftAnchor(levelOnePreview2P, 240d);
+	    	//}
+		});
+	    
+	    levelFour.setOnMouseExited(actionEvent -> {
+	    	if (playerCount == 1) {
+	    		easyPane.getChildren().remove(levelFourPreview);
+	    	}// else {
+	    	//	easyPane.getChildren().remove(levelOnePreview2P);
+	    	//}
+		});
+	    
+	    AnchorPane.setTopAnchor(levelFive, 125d);
+	    AnchorPane.setLeftAnchor(levelFive, 700d);
+	    
+	    Image levelFiveMap = new Image(new File("images/easy_5_preview.png").toURI().toString());
+    	ImageView levelFivePreview = new ImageView(levelFiveMap);
+    	levelFivePreview.setFitWidth(500);
+    	levelFivePreview.setPreserveRatio(true);
+    	
+    	//Image levelTwoMap2P = new Image(new File("images/easy2p_2_preview.png").toURI().toString());
+     	//ImageView levelTwoPreview2P = new ImageView(levelTwoMap2P);
+     	//levelTwoPreview2P.setFitWidth(500);
+     	//levelTwoPreview2P.setPreserveRatio(true);
+    	
+	    levelFive.setOnMouseEntered(actionEvent -> {
+	    	if (playerCount == 1) {
+	    		easyPane.getChildren().add(levelFivePreview);
+	    		AnchorPane.setBottomAnchor(levelFivePreview, 150d);
+		    	AnchorPane.setLeftAnchor(levelFivePreview, 240d);
+	    	}// else {
+	    		//easyPane.getChildren().add(levelOnePreview2P);
+	    		//AnchorPane.setBottomAnchor(levelOnePreview2P, 150d);
+		    	//AnchorPane.setLeftAnchor(levelOnePreview2P, 240d);
+	    	//}
+		});
+	    
+	    levelFive.setOnMouseExited(actionEvent -> {
+	    	if (playerCount == 1) {
+	    		easyPane.getChildren().remove(levelFivePreview);
+	    	}// else {
+	    	//	easyPane.getChildren().remove(levelOnePreview2P);
+	    	//}
+		});
+	    
+		Scene layoutDisplay = new Scene(easyPane, 960, 800);
+		return layoutDisplay;
+	}
+	
+	public Scene mediumDifficulty(Stage primaryStage, Scene menu, int playerCount) {
+		
+		PuzzleGame game = new PuzzleGame();
+	
+		Image mediumTitle = new Image(new File("images/medium.png").toURI().toString());
+		ImageView mediumTitleShow = new ImageView(mediumTitle);
+	    AnchorPane.setTopAnchor(mediumTitleShow, 40d);
+	    AnchorPane.setLeftAnchor(mediumTitleShow, 360d);
+	    
+	    Button menuButton = new Button("");
+	    BackgroundImage menuButtonBackground = new BackgroundImage(new Image(new File("images/main.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+	    Background menuButtonImage = new Background(menuButtonBackground);
+	    menuButton.setBackground(menuButtonImage);
+	    menuButton.setPrefSize(200, 100);
+	    
+	    BackgroundImage menuButtonBackgroundHover = new BackgroundImage(new Image(new File("images/main_arrow.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+	    Background menuButtonImageHover = new Background(menuButtonBackgroundHover);
+	    menuButton.setBackground(menuButtonImage);
+	    menuButton.setPrefSize(200, 100);
+	    
+	    menuButton.setOnAction(actionEvent -> {
+	    	primaryStage.setScene(menu);
+	    });
+	    
+	    menuButton.setOnMouseEntered(actionEvent -> {
+	    	menuButton.setBackground(menuButtonImageHover);
+	    	menuButton.setPrefSize(300, 100);
+		});
+	    
+	    menuButton.setOnMouseExited(actionEvent -> {
+	    	menuButton.setBackground(menuButtonImage);
+		});
+	    
+    	AnchorPane.setBottomAnchor(menuButton, 20d);
+	    AnchorPane.setLeftAnchor(menuButton, 390d);
+	    	
+		HBox levelSelect = new HBox();
+		levelSelect.setSpacing(10);
+		
+		Button levelOne = new Button("");
+	    BackgroundImage levelOneBackground = new BackgroundImage(new Image(new File("images/level1.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+	    Background levelOneImage = new Background(levelOneBackground);
+
+	    levelOne.setPrefSize(100, 100);
+	    levelOne.setBackground(levelOneImage);
+	    
+	    levelOne.setOnAction(actionEvent -> {
+			File f = new File("maps/medium_" + playerCount + "_1.txt");		
+			if (f.exists() && !f.isDirectory()) {
+				primaryStage.setScene(game.Game(readMap(f), primaryStage, menu, playerCount, 3, f));
+			} else {
+				primaryStage.setScene(game.Game(generateMap(0), primaryStage, menu, playerCount, 3, null));
+			}
+		});
+	    
+		Button levelTwo = new Button("");
+	    BackgroundImage levelTwoBackground = new BackgroundImage(new Image(new File("images/level2.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+	    Background levelTwoImage = new Background(levelTwoBackground);
+	    
+	    levelTwo.setPrefSize(100, 100);
+	    levelTwo.setBackground(levelTwoImage);
+	    
+	    levelTwo.setOnAction(actionEvent -> {
+			File f = new File("maps/medium_" + playerCount + "_2.txt");		
+			if (f.exists() && !f.isDirectory()) {
+				primaryStage.setScene(game.Game(readMap(f), primaryStage, menu, playerCount, 3, f));
+			} else {
+				primaryStage.setScene(game.Game(generateMap(0), primaryStage, menu, playerCount, 3, null));
+			}
+		});
+	    
+		Button levelThree = new Button("");
+	    BackgroundImage levelThreeBackground = new BackgroundImage(new Image(new File("images/level3.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+	    Background levelThreeImage = new Background(levelThreeBackground);
+	    
+	    levelThree.setPrefSize(100, 100);
+	    levelThree.setBackground(levelThreeImage);
+	    
+	    levelThree.setOnAction(actionEvent -> {
+			File f = new File("maps/medium_" + playerCount + "_3.txt");		
+			if (f.exists() && !f.isDirectory()) {
+				primaryStage.setScene(game.Game(readMap(f), primaryStage, menu, playerCount, 3, f));
+			} else {
+				primaryStage.setScene(game.Game(generateMap(0), primaryStage, menu, playerCount, 3, null));
+			}
+		});
+	    
+		Button levelFour = new Button("");
+	    BackgroundImage levelFourBackground = new BackgroundImage(new Image(new File("images/level4.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+	    Background levelFourImage = new Background(levelFourBackground);
+	    
+	    levelFour.setPrefSize(100, 100);
+	    levelFour.setBackground(levelFourImage);
+	    
+	    levelFour.setOnAction(actionEvent -> {
+			File f = new File("maps/medium_" + playerCount + "_4.txt");		
+			if (f.exists() && !f.isDirectory()) {
+				primaryStage.setScene(game.Game(readMap(f), primaryStage, menu, playerCount, 3, f));
+			} else {
+				primaryStage.setScene(game.Game(generateMap(0), primaryStage, menu, playerCount, 3, null));
+			}
+		});
+	    
+		Button levelFive = new Button("");
+	    BackgroundImage levelFiveBackground = new BackgroundImage(new Image(new File("images/level5.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+	    Background levelFiveImage = new Background(levelFiveBackground);
+	    
+	    levelFive.setPrefSize(100, 100);
+	    levelFive.setBackground(levelFiveImage);
+
+	    levelFive.setOnAction(actionEvent -> {
+			File f = new File("maps/medium_" + playerCount + "_5.txt");		
+			if (f.exists() && !f.isDirectory()) {
+				primaryStage.setScene(game.Game(readMap(f), primaryStage, menu, playerCount, 3, f));
+			} else {
+				primaryStage.setScene(game.Game(generateMap(0), primaryStage, menu, playerCount, 3, null));
+			}
+		});
+	    
+		AnchorPane mediumPane = new AnchorPane();
+		mediumPane.setStyle(background);
+		mediumPane.getChildren().addAll(mediumTitleShow, levelOne, levelTwo, levelThree, levelFour, levelFive, menuButton);
+	    
+	    AnchorPane.setTopAnchor(levelOne, 125d);
+	    AnchorPane.setLeftAnchor(levelOne, 160d);
+	    
+	    Image levelOneMap = new Image(new File("images/medium_1_preview.png").toURI().toString());
+    	ImageView levelOnePreview = new ImageView(levelOneMap);
+    	levelOnePreview.setFitWidth(500);
+    	levelOnePreview.setPreserveRatio(true);
+    	
+    	Image levelOneMap2P = new Image(new File("images/medium2p_1_preview.png").toURI().toString());
+     	ImageView levelOnePreview2P = new ImageView(levelOneMap2P);
+     	levelOnePreview2P.setFitWidth(500);
+     	levelOnePreview2P.setPreserveRatio(true);
+    	
+	    levelOne.setOnMouseEntered(actionEvent -> {
+	    	if (playerCount == 1) {
+	    		mediumPane.getChildren().add(levelOnePreview);
+	    		AnchorPane.setBottomAnchor(levelOnePreview, 150d);
+		    	AnchorPane.setLeftAnchor(levelOnePreview, 240d);
+	    	} else {
+	    		mediumPane.getChildren().add(levelOnePreview2P);
+	    		AnchorPane.setBottomAnchor(levelOnePreview2P, 150d);
+		    	AnchorPane.setLeftAnchor(levelOnePreview2P, 240d);
+	    	}
+		});
+	    
+	    levelOne.setOnMouseExited(actionEvent -> {
+	    	if (playerCount == 1) {
+	    		mediumPane.getChildren().remove(levelOnePreview);
+	    	} else {
+	    		mediumPane.getChildren().remove(levelOnePreview2P);
+	    	}
+		});
+	    
+	    AnchorPane.setTopAnchor(levelTwo, 125d);
+	    AnchorPane.setLeftAnchor(levelTwo, 295d);
+	    
+	    Image levelTwoMap = new Image(new File("images/medium_2_preview.png").toURI().toString());
+    	ImageView levelTwoPreview = new ImageView(levelTwoMap);
+    	levelTwoPreview.setFitWidth(500);
+    	levelTwoPreview.setPreserveRatio(true);
+    	
+    	//Image levelTwoMap2P = new Image(new File("images/easy2p_2_preview.png").toURI().toString());
+     	//ImageView levelTwoPreview2P = new ImageView(levelTwoMap2P);
+     	//levelTwoPreview2P.setFitWidth(500);
+     	//levelTwoPreview2P.setPreserveRatio(true);
+    	
+	    levelTwo.setOnMouseEntered(actionEvent -> {
+	    	if (playerCount == 1) {
+	    		mediumPane.getChildren().add(levelTwoPreview);
+	    		AnchorPane.setBottomAnchor(levelTwoPreview, 150d);
+		    	AnchorPane.setLeftAnchor(levelTwoPreview, 240d);
+	    	}// else {
+	    		//easyPane.getChildren().add(levelOnePreview2P);
+	    		//AnchorPane.setBottomAnchor(levelOnePreview2P, 150d);
+		    	//AnchorPane.setLeftAnchor(levelOnePreview2P, 240d);
+	    	//}
+		});
+	    
+	    levelTwo.setOnMouseExited(actionEvent -> {
+	    	if (playerCount == 1) {
+	    		mediumPane.getChildren().remove(levelTwoPreview);
+	    	}// else {
+	    	//	easyPane.getChildren().remove(levelOnePreview2P);
+	    	//}
+		});
+	    
+	    AnchorPane.setTopAnchor(levelThree, 125d);
+	    AnchorPane.setLeftAnchor(levelThree, 430d);
+	    
+	    Image levelThreeMap = new Image(new File("images/medium_3_preview.png").toURI().toString());
+    	ImageView levelThreePreview = new ImageView(levelThreeMap);
+    	levelThreePreview.setFitWidth(500);
+    	levelThreePreview.setPreserveRatio(true);
+    	
+    	//Image levelTwoMap2P = new Image(new File("images/easy2p_2_preview.png").toURI().toString());
+     	//ImageView levelTwoPreview2P = new ImageView(levelTwoMap2P);
+     	//levelTwoPreview2P.setFitWidth(500);
+     	//levelTwoPreview2P.setPreserveRatio(true);
+    	
+	    levelThree.setOnMouseEntered(actionEvent -> {
+	    	if (playerCount == 1) {
+	    		mediumPane.getChildren().add(levelThreePreview);
+	    		AnchorPane.setBottomAnchor(levelThreePreview, 150d);
+		    	AnchorPane.setLeftAnchor(levelThreePreview, 240d);
+	    	}// else {
+	    		//easyPane.getChildren().add(levelOnePreview2P);
+	    		//AnchorPane.setBottomAnchor(levelOnePreview2P, 150d);
+		    	//AnchorPane.setLeftAnchor(levelOnePreview2P, 240d);
+	    	//}
+		});
+	    
+	    levelThree.setOnMouseExited(actionEvent -> {
+	    	if (playerCount == 1) {
+	    		mediumPane.getChildren().remove(levelThreePreview);
+	    	}// else {
+	    	//	easyPane.getChildren().remove(levelOnePreview2P);
+	    	//}
+		});
+	    
+	    AnchorPane.setTopAnchor(levelFour, 125d);
+	    AnchorPane.setLeftAnchor(levelFour, 565d);
+	    
+	    Image levelFourMap = new Image(new File("images/medium_4_preview.png").toURI().toString());
+    	ImageView levelFourPreview = new ImageView(levelFourMap);
+    	levelFourPreview.setFitWidth(500);
+    	levelFourPreview.setPreserveRatio(true);
+    	
+    	//Image levelTwoMap2P = new Image(new File("images/easy2p_2_preview.png").toURI().toString());
+     	//ImageView levelTwoPreview2P = new ImageView(levelTwoMap2P);
+     	//levelTwoPreview2P.setFitWidth(500);
+     	//levelTwoPreview2P.setPreserveRatio(true);
+    	
+	    levelFour.setOnMouseEntered(actionEvent -> {
+	    	if (playerCount == 1) {
+	    		mediumPane.getChildren().add(levelFourPreview);
+	    		AnchorPane.setBottomAnchor(levelFourPreview, 150d);
+		    	AnchorPane.setLeftAnchor(levelFourPreview, 240d);
+	    	}// else {
+	    		//easyPane.getChildren().add(levelOnePreview2P);
+	    		//AnchorPane.setBottomAnchor(levelOnePreview2P, 150d);
+		    	//AnchorPane.setLeftAnchor(levelOnePreview2P, 240d);
+	    	//}
+		});
+	    
+	    levelFour.setOnMouseExited(actionEvent -> {
+	    	if (playerCount == 1) {
+	    		mediumPane.getChildren().remove(levelFourPreview);
+	    	}// else {
+	    	//	easyPane.getChildren().remove(levelOnePreview2P);
+	    	//}
+		});
+	    
+	    AnchorPane.setTopAnchor(levelFive, 125d);
+	    AnchorPane.setLeftAnchor(levelFive, 700d);
+	    
+	    Image levelFiveMap = new Image(new File("images/medium_5_preview.png").toURI().toString());
+    	ImageView levelFivePreview = new ImageView(levelFiveMap);
+    	levelFivePreview.setFitWidth(500);
+    	levelFivePreview.setPreserveRatio(true);
+    	
+    	//Image levelTwoMap2P = new Image(new File("images/easy2p_2_preview.png").toURI().toString());
+     	//ImageView levelTwoPreview2P = new ImageView(levelTwoMap2P);
+     	//levelTwoPreview2P.setFitWidth(500);
+     	//levelTwoPreview2P.setPreserveRatio(true);
+    	
+	    levelFive.setOnMouseEntered(actionEvent -> {
+	    	if (playerCount == 1) {
+	    		mediumPane.getChildren().add(levelFivePreview);
+	    		AnchorPane.setBottomAnchor(levelFivePreview, 150d);
+		    	AnchorPane.setLeftAnchor(levelFivePreview, 240d);
+	    	}// else {
+	    		//easyPane.getChildren().add(levelOnePreview2P);
+	    		//AnchorPane.setBottomAnchor(levelOnePreview2P, 150d);
+		    	//AnchorPane.setLeftAnchor(levelOnePreview2P, 240d);
+	    	//}
+		});
+	    
+	    levelFive.setOnMouseExited(actionEvent -> {
+	    	if (playerCount == 1) {
+	    		mediumPane.getChildren().remove(levelFivePreview);
+	    	}// else {
+	    	//	easyPane.getChildren().remove(levelOnePreview2P);
+	    	//}
+		});
+	    
+		Scene layoutDisplay = new Scene(mediumPane, 960, 800);
+		return layoutDisplay;
+	}
+	
+	public Scene hardDifficulty(Stage primaryStage, Scene menu, int playerCount) {
+		
+		PuzzleGame game = new PuzzleGame();
+	
+		Image hardTitle = new Image(new File("images/hard.png").toURI().toString());
+		ImageView hardTitleShow = new ImageView(hardTitle);
+	    AnchorPane.setTopAnchor(hardTitleShow, 40d);
+	    AnchorPane.setLeftAnchor(hardTitleShow, 400d);
+	    
+	    Button menuButton = new Button("");
+	    BackgroundImage menuButtonBackground = new BackgroundImage(new Image(new File("images/main.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+	    Background menuButtonImage = new Background(menuButtonBackground);
+	    menuButton.setBackground(menuButtonImage);
+	    menuButton.setPrefSize(200, 100);
+	    
+	    BackgroundImage menuButtonBackgroundHover = new BackgroundImage(new Image(new File("images/main_arrow.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+	    Background menuButtonImageHover = new Background(menuButtonBackgroundHover);
+	    menuButton.setBackground(menuButtonImage);
+	    menuButton.setPrefSize(200, 100);
+	    
+	    menuButton.setOnAction(actionEvent -> {
+	    	primaryStage.setScene(menu);
+	    });
+	    
+	    menuButton.setOnMouseEntered(actionEvent -> {
+	    	menuButton.setBackground(menuButtonImageHover);
+	    	menuButton.setPrefSize(300, 100);
+		});
+	    
+	    menuButton.setOnMouseExited(actionEvent -> {
+	    	menuButton.setBackground(menuButtonImage);
+		});
+	    
+    	AnchorPane.setBottomAnchor(menuButton, 20d);
+	    AnchorPane.setLeftAnchor(menuButton, 390d);
+	    	
+		HBox levelSelect = new HBox();
+		levelSelect.setSpacing(10);
+		
+		Button levelOne = new Button("");
+	    BackgroundImage levelOneBackground = new BackgroundImage(new Image(new File("images/level1.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+	    Background levelOneImage = new Background(levelOneBackground);
+
+	    levelOne.setPrefSize(100, 100);
+	    levelOne.setBackground(levelOneImage);
+	    
+	    levelOne.setOnAction(actionEvent -> {
+			File f = new File("maps/hard_" + playerCount + "_1.txt");		
+			if (f.exists() && !f.isDirectory()) {
+				primaryStage.setScene(game.Game(readMap(f), primaryStage, menu, playerCount, 3, f));
+			} else {
+				primaryStage.setScene(game.Game(generateMap(0), primaryStage, menu, playerCount, 3, null));
+			}
+		});
+	    
+		Button levelTwo = new Button("");
+	    BackgroundImage levelTwoBackground = new BackgroundImage(new Image(new File("images/level2.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+	    Background levelTwoImage = new Background(levelTwoBackground);
+	    
+	    levelTwo.setPrefSize(100, 100);
+	    levelTwo.setBackground(levelTwoImage);
+	    
+	    levelTwo.setOnAction(actionEvent -> {
+			File f = new File("maps/hard_" + playerCount + "_2.txt");		
+			if (f.exists() && !f.isDirectory()) {
+				primaryStage.setScene(game.Game(readMap(f), primaryStage, menu, playerCount, 3, f));
+			} else {
+				primaryStage.setScene(game.Game(generateMap(0), primaryStage, menu, playerCount, 3, null));
+			}
+		});
+	    
+		Button levelThree = new Button("");
+	    BackgroundImage levelThreeBackground = new BackgroundImage(new Image(new File("images/level3.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+	    Background levelThreeImage = new Background(levelThreeBackground);
+	    
+	    levelThree.setPrefSize(100, 100);
+	    levelThree.setBackground(levelThreeImage);
+	    
+	    levelThree.setOnAction(actionEvent -> {
+			File f = new File("maps/hard_" + playerCount + "_3.txt");		
+			if (f.exists() && !f.isDirectory()) {
+				primaryStage.setScene(game.Game(readMap(f), primaryStage, menu, playerCount, 3, f));
+			} else {
+				primaryStage.setScene(game.Game(generateMap(0), primaryStage, menu, playerCount, 3, null));
+			}
+		});
+	    
+		Button levelFour = new Button("");
+	    BackgroundImage levelFourBackground = new BackgroundImage(new Image(new File("images/level4.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+	    Background levelFourImage = new Background(levelFourBackground);
+	    
+	    levelFour.setPrefSize(100, 100);
+	    levelFour.setBackground(levelFourImage);
+	    
+	    levelFour.setOnAction(actionEvent -> {
+			File f = new File("maps/hard_" + playerCount + "_4.txt");		
+			if (f.exists() && !f.isDirectory()) {
+				primaryStage.setScene(game.Game(readMap(f), primaryStage, menu, playerCount, 3, f));
+			} else {
+				primaryStage.setScene(game.Game(generateMap(0), primaryStage, menu, playerCount, 3, null));
+			}
+		});
+	    
+		Button levelFive = new Button("");
+	    BackgroundImage levelFiveBackground = new BackgroundImage(new Image(new File("images/level5.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+	    Background levelFiveImage = new Background(levelFiveBackground);
+	    
+	    levelFive.setPrefSize(100, 100);
+	    levelFive.setBackground(levelFiveImage);
+
+	    levelFive.setOnAction(actionEvent -> {
+			File f = new File("maps/hard_" + playerCount + "_5.txt");		
+			if (f.exists() && !f.isDirectory()) {
+				primaryStage.setScene(game.Game(readMap(f), primaryStage, menu, playerCount, 3, f));
+			} else {
+				primaryStage.setScene(game.Game(generateMap(0), primaryStage, menu, playerCount, 3, null));
+			}
+		});
+	    
+		AnchorPane hardPane = new AnchorPane();
+		hardPane.setStyle(background);
+		hardPane.getChildren().addAll(hardTitleShow, levelOne, levelTwo, levelThree, levelFour, levelFive, menuButton);
+	    
+	    AnchorPane.setTopAnchor(levelOne, 125d);
+	    AnchorPane.setLeftAnchor(levelOne, 160d);
+	    
+	    Image levelOneMap = new Image(new File("images/hard_1_preview.png").toURI().toString());
+    	ImageView levelOnePreview = new ImageView(levelOneMap);
+    	levelOnePreview.setFitWidth(500);
+    	levelOnePreview.setPreserveRatio(true);
+    	
+    	Image levelOneMap2P = new Image(new File("images/hard2p_1_preview.png").toURI().toString());
+     	ImageView levelOnePreview2P = new ImageView(levelOneMap2P);
+     	levelOnePreview2P.setFitWidth(500);
+     	levelOnePreview2P.setPreserveRatio(true);
+    	
+	    levelOne.setOnMouseEntered(actionEvent -> {
+	    	if (playerCount == 1) {
+	    		hardPane.getChildren().add(levelOnePreview);
+	    		AnchorPane.setBottomAnchor(levelOnePreview, 150d);
+		    	AnchorPane.setLeftAnchor(levelOnePreview, 240d);
+	    	} else {
+	    		hardPane.getChildren().add(levelOnePreview2P);
+	    		AnchorPane.setBottomAnchor(levelOnePreview2P, 150d);
+		    	AnchorPane.setLeftAnchor(levelOnePreview2P, 240d);
+	    	}
+		});
+	    
+	    levelOne.setOnMouseExited(actionEvent -> {
+	    	if (playerCount == 1) {
+	    		hardPane.getChildren().remove(levelOnePreview);
+	    	} else {
+	    		hardPane.getChildren().remove(levelOnePreview2P);
+	    	}
+		});
+	    
+	    AnchorPane.setTopAnchor(levelTwo, 125d);
+	    AnchorPane.setLeftAnchor(levelTwo, 295d);
+	    
+	    Image levelTwoMap = new Image(new File("images/hard_2_preview.png").toURI().toString());
+    	ImageView levelTwoPreview = new ImageView(levelTwoMap);
+    	levelTwoPreview.setFitWidth(500);
+    	levelTwoPreview.setPreserveRatio(true);
+    	
+    	//Image levelTwoMap2P = new Image(new File("images/easy2p_2_preview.png").toURI().toString());
+     	//ImageView levelTwoPreview2P = new ImageView(levelTwoMap2P);
+     	//levelTwoPreview2P.setFitWidth(500);
+     	//levelTwoPreview2P.setPreserveRatio(true);
+    	
+	    levelTwo.setOnMouseEntered(actionEvent -> {
+	    	if (playerCount == 1) {
+	    		hardPane.getChildren().add(levelTwoPreview);
+	    		AnchorPane.setBottomAnchor(levelTwoPreview, 150d);
+		    	AnchorPane.setLeftAnchor(levelTwoPreview, 240d);
+	    	}// else {
+	    		//easyPane.getChildren().add(levelOnePreview2P);
+	    		//AnchorPane.setBottomAnchor(levelOnePreview2P, 150d);
+		    	//AnchorPane.setLeftAnchor(levelOnePreview2P, 240d);
+	    	//}
+		});
+	    
+	    levelTwo.setOnMouseExited(actionEvent -> {
+	    	if (playerCount == 1) {
+	    		hardPane.getChildren().remove(levelTwoPreview);
+	    	}// else {
+	    	//	easyPane.getChildren().remove(levelOnePreview2P);
+	    	//}
+		});
+	    
+	    AnchorPane.setTopAnchor(levelThree, 125d);
+	    AnchorPane.setLeftAnchor(levelThree, 430d);
+	    
+	    Image levelThreeMap = new Image(new File("images/hard_3_preview.png").toURI().toString());
+    	ImageView levelThreePreview = new ImageView(levelThreeMap);
+    	levelThreePreview.setFitWidth(500);
+    	levelThreePreview.setPreserveRatio(true);
+    	
+    	//Image levelTwoMap2P = new Image(new File("images/easy2p_2_preview.png").toURI().toString());
+     	//ImageView levelTwoPreview2P = new ImageView(levelTwoMap2P);
+     	//levelTwoPreview2P.setFitWidth(500);
+     	//levelTwoPreview2P.setPreserveRatio(true);
+    	
+	    levelThree.setOnMouseEntered(actionEvent -> {
+	    	if (playerCount == 1) {
+	    		hardPane.getChildren().add(levelThreePreview);
+	    		AnchorPane.setBottomAnchor(levelThreePreview, 150d);
+		    	AnchorPane.setLeftAnchor(levelThreePreview, 240d);
+	    	}// else {
+	    		//easyPane.getChildren().add(levelOnePreview2P);
+	    		//AnchorPane.setBottomAnchor(levelOnePreview2P, 150d);
+		    	//AnchorPane.setLeftAnchor(levelOnePreview2P, 240d);
+	    	//}
+		});
+	    
+	    levelThree.setOnMouseExited(actionEvent -> {
+	    	if (playerCount == 1) {
+	    		hardPane.getChildren().remove(levelThreePreview);
+	    	}// else {
+	    	//	easyPane.getChildren().remove(levelOnePreview2P);
+	    	//}
+		});
+	    
+	    
+	    AnchorPane.setTopAnchor(levelFour, 125d);
+	    AnchorPane.setLeftAnchor(levelFour, 565d);
+	    
+	    Image levelFourMap = new Image(new File("images/hard_4_preview.png").toURI().toString());
+    	ImageView levelFourPreview = new ImageView(levelFourMap);
+    	levelFourPreview.setFitWidth(500);
+    	levelFourPreview.setPreserveRatio(true);
+    	
+    	//Image levelTwoMap2P = new Image(new File("images/easy2p_2_preview.png").toURI().toString());
+     	//ImageView levelTwoPreview2P = new ImageView(levelTwoMap2P);
+     	//levelTwoPreview2P.setFitWidth(500);
+     	//levelTwoPreview2P.setPreserveRatio(true);
+    	
+	    levelFour.setOnMouseEntered(actionEvent -> {
+	    	if (playerCount == 1) {
+	    		hardPane.getChildren().add(levelFourPreview);
+	    		AnchorPane.setBottomAnchor(levelFourPreview, 150d);
+		    	AnchorPane.setLeftAnchor(levelFourPreview, 240d);
+	    	}// else {
+	    		//easyPane.getChildren().add(levelOnePreview2P);
+	    		//AnchorPane.setBottomAnchor(levelOnePreview2P, 150d);
+		    	//AnchorPane.setLeftAnchor(levelOnePreview2P, 240d);
+	    	//}
+		});
+	    
+	    levelFour.setOnMouseExited(actionEvent -> {
+	    	if (playerCount == 1) {
+	    		hardPane.getChildren().remove(levelFourPreview);
+	    	}// else {
+	    	//	easyPane.getChildren().remove(levelOnePreview2P);
+	    	//}
+		});
+	    
+	    AnchorPane.setTopAnchor(levelFive, 125d);
+	    AnchorPane.setLeftAnchor(levelFive, 700d);
+	    
+	    Image levelFiveMap = new Image(new File("images/hard_5_preview.png").toURI().toString());
+    	ImageView levelFivePreview = new ImageView(levelFiveMap);
+    	levelFivePreview.setFitWidth(500);
+    	levelFivePreview.setPreserveRatio(true);
+    	
+    	//Image levelTwoMap2P = new Image(new File("images/easy2p_2_preview.png").toURI().toString());
+     	//ImageView levelTwoPreview2P = new ImageView(levelTwoMap2P);
+     	//levelTwoPreview2P.setFitWidth(500);
+     	//levelTwoPreview2P.setPreserveRatio(true);
+    	
+	    levelFive.setOnMouseEntered(actionEvent -> {
+	    	if (playerCount == 1) {
+	    		hardPane.getChildren().add(levelFivePreview);
+	    		AnchorPane.setBottomAnchor(levelFivePreview, 150d);
+		    	AnchorPane.setLeftAnchor(levelFivePreview, 240d);
+	    	}// else {
+	    		//easyPane.getChildren().add(levelOnePreview2P);
+	    		//AnchorPane.setBottomAnchor(levelOnePreview2P, 150d);
+		    	//AnchorPane.setLeftAnchor(levelOnePreview2P, 240d);
+	    	//}
+		});
+	    
+	    levelFive.setOnMouseExited(actionEvent -> {
+	    	if (playerCount == 1) {
+	    		hardPane.getChildren().remove(levelFivePreview);
+	    	}// else {
+	    	//	easyPane.getChildren().remove(levelOnePreview2P);
+	    	//}
+		});
+	    
+		Scene layoutDisplay = new Scene(hardPane, 960, 800);
+		return layoutDisplay;
 	}
 
 	public void start(Stage primaryStage) throws Exception {
 		// Init
-				Stage mainWindow = primaryStage;
-				
-				// Background style
-				
-				/* Background has been replaced with full black
-				String background = "-fx-background-image: url(file:images/background.jpg);" + "\n"
-				   					+ "-fx-background-repeat: stretch;" + "\n"
-				   					+ "-fx-background-size: 1000 1000";
-				   					
-				*/
-				
-				GridPane gridMain = new GridPane();
-				gridMain.setAlignment(Pos.CENTER);
-				gridMain.setHgap(10);
-				gridMain.setVgap(10);
-				
-				/**
-				 * Adding title - "Wacky Warehouse"
-				 */
-				Text title = new Text();
-				title.setText("Wacky Warehouse");
-				title.setFont(Font.font ("Fixedsys Excelsior 3.01", 60));
-				title.setFill(Color.WHITE);
-				gridMain.add(title, 1, 2);
-				
-				/**
-				 * Adding main image to gridMain
-				 */
-				
-				Image main = new Image("File:images/main.png");
-				gridMain.add(new ImageView(main), 1, 3);
-				
-				
-				/** 
-				 * 	Adding my additions -- hover over buttons
-				 */
-			
-			    Button onePlayerButton = new Button("");
-				BackgroundImage backgroundImage1 = new BackgroundImage( new Image(new File("images/1Player.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-		        Background background1 = new Background(backgroundImage1);
-		        BackgroundImage backgroundImage2 = new BackgroundImage( new Image(new File("images/1Player_arrow.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-		        Background background2 = new Background(backgroundImage2);
-		                
-			    onePlayerButton.setPrefSize(183, 59);
-			    onePlayerButton.setBackground(background1);
-			    gridMain.add(onePlayerButton, 1, 4);
-			    
-			    onePlayerButton.setOnMouseEntered(actionEvent -> {
-			        onePlayerButton.setBackground(background2);
-				});
-			    onePlayerButton.setOnMouseExited(actionEvent -> {
-			        onePlayerButton.setBackground(background1);
-				});
-			    
-			    /**
-			     * Adding my additions -- 2 player mode
-			     */
-			    
-			    // Creating the player two button
-			    Button twoPlayerButton = new Button ("");
-			    //  the player two button has a different display when the mouse hovers or does not hover over the button
-			    BackgroundImage twoPlayerBackgroundWithoutArrow = new BackgroundImage(new Image(new File("images/2Player.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-			    Background twoPlayerWithoutArrow = new Background(twoPlayerBackgroundWithoutArrow);
-			    
-			    BackgroundImage twoPlayerBackgroundWithArrow = new BackgroundImage(new Image(new File("images/2Player_arrow.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-			    Background twoPlayerWithArrow = new Background(twoPlayerBackgroundWithArrow);
-			    
-			    twoPlayerButton.setPrefSize(183, 59);
-			    gridMain.add(twoPlayerButton, 1, 5);
-			    twoPlayerButton.setBackground(twoPlayerWithoutArrow);
-			    
-			    twoPlayerButton.setOnMouseEntered(actionEvent -> {
-			    	twoPlayerButton.setBackground(twoPlayerWithArrow);
-			    });
-			    
-			    twoPlayerButton.setOnMouseExited(actionEvent -> {
-			    	twoPlayerButton.setBackground(twoPlayerWithoutArrow);
-			    });
-				
-				/**
-				 * Adding instructions page
-				 */
-		    	Button helpButton = new Button("");
-		    	BackgroundImage instructionBackgroundWithoutArrow = new BackgroundImage( new Image(new File("images/instructions.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-		        Background instructionWithoutArrow = new Background(instructionBackgroundWithoutArrow);
-		        BackgroundImage instructionBackgroundWithArrow = new BackgroundImage( new Image(new File("images/instructions_arrow.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-		        Background instructionWithArrow = new Background(instructionBackgroundWithArrow);
-		                
-			    helpButton.setBackground(instructionWithoutArrow);
-			    helpButton.setPrefSize(241, 59);
-		    	gridMain.add(helpButton, 1, 6);
-		    	
-			    helpButton.setOnMouseEntered(actionEvent -> {
-			        helpButton.setBackground(instructionWithArrow);
-				});
-			    helpButton.setOnMouseExited(actionEvent -> {
-			        helpButton.setBackground(instructionWithoutArrow);
-				});
-		    	   	
-				// Puzzle Maker button
-				Button puzzleMakerButton = new Button("");
-				puzzleMakerButton.setPrefSize(224, 59);
-				
-				BackgroundImage puzzleMakerBackgroundWithoutArrow = new BackgroundImage( new Image(new File("images/puzzleMaker.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-		        Background puzzleMakerWithoutArrow = new Background(puzzleMakerBackgroundWithoutArrow);
-		        BackgroundImage puzzleMakerBackgroundWithArrow = new BackgroundImage( new Image(new File("images/puzzleMaker_arrow.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-		        Background puzzleMakerWithArrow = new Background(puzzleMakerBackgroundWithArrow);
-		    	puzzleMakerButton.setBackground(puzzleMakerWithoutArrow);
-				
-		    	puzzleMakerButton.setOnMouseEntered(actionEvent -> {
-		    		puzzleMakerButton.setBackground(puzzleMakerWithArrow);
-		    	});
-		    	
-		    	puzzleMakerButton.setOnMouseExited(actionEvent -> {
-		    		puzzleMakerButton.setBackground(puzzleMakerWithoutArrow);
-		    	});
-		    	
-		    	
-		    	
-				PuzzleMaker puzzleMaker = new PuzzleMaker();
-				gridMain.add(puzzleMakerButton, 1, 7);
+		Stage mainWindow = primaryStage;
+		
+		GridPane gridMain = new GridPane();
+		gridMain.setAlignment(Pos.CENTER);
+		gridMain.setHgap(10);
+		gridMain.setVgap(10);
+		
+		/**
+		 * Adding title - "Wacky Warehouse"
+		 */
+		Text title = new Text();
+		title.setText("Wacky Warehouse");
+		title.setFont(Font.font ("Fixedsys Excelsior 3.01", 60));
+		title.setFill(Color.WHITE);
+		gridMain.add(title, 1, 2);
+	    GridPane.setHalignment(gridMain, HPos.CENTER);
 
-				// Quit button
-		    	Button quitButton = new Button("");
-		    	BackgroundImage quitBackgroundWithoutArrow = new BackgroundImage( new Image(new File("images/quit.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-		        Background quitWithoutArrow = new Background(quitBackgroundWithoutArrow);
-		        BackgroundImage quitBackgroundWithArrow = new BackgroundImage( new Image(new File("images/quit_arrow.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-		        Background quitWithArrow = new Background(quitBackgroundWithArrow);
-		    	quitButton.setPrefSize(106, 59);
-		    	quitButton.setBackground(quitWithoutArrow);
-		    	
-		    	quitButton.setOnMouseEntered(actionEvent -> {
-		    		quitButton.setBackground(quitWithArrow);
-		    	});
-		    	
-		    	quitButton.setOnMouseExited(actionEvent -> {
-		    		quitButton.setBackground(quitWithoutArrow);
-		    	});
-		 
-		    	gridMain.add(quitButton, 1, 8);
-		    	
-		    	
-		    	
-		    	// Set background (Main Menu)
-		    	gridMain.setStyle("-fx-background-color: #000000");
-		    	
-				// Set scene
-				Scene menuScene = new Scene(gridMain, 960, 800);// , screenSize.getWidth(), screenSize.getHeight());	
+		
+		/**
+		 * Adding main image to gridMain
+		 */
+		
+		ImageView mainImage = new ImageView(new Image("File:images/title.png"));
+		gridMain.add(mainImage, 1, 3);
+	    GridPane.setHalignment(mainImage, HPos.CENTER);
+		
+		/** 
+		 * 	Adding my additions -- hover over buttons
+		 */
+	
+	    Button onePlayerButton = new Button("");
+		BackgroundImage backgroundImage1 = new BackgroundImage( new Image(new File("images/1Player.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+        Background background1 = new Background(backgroundImage1);
+        BackgroundImage backgroundImage2 = new BackgroundImage( new Image(new File("images/1Player_arrow.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+        Background background2 = new Background(backgroundImage2);
+                
+	    onePlayerButton.setPrefSize(183, 59);
+	    onePlayerButton.setBackground(background1);
+	    gridMain.add(onePlayerButton, 1, 4);
+	    GridPane.setHalignment(onePlayerButton, HPos.CENTER);
+	    
+	    onePlayerButton.setOnMouseEntered(actionEvent -> {
+	        onePlayerButton.setBackground(background2);
+		});
+	    onePlayerButton.setOnMouseExited(actionEvent -> {
+	        onePlayerButton.setBackground(background1);
+		});
+	    
+	    /**
+	     * Adding my additions -- 2 player mode
+	     */
+	    
+	    // Creating the player two button
+	    Button twoPlayerButton = new Button ("");
+	    //  the player two button has a different display when the mouse hovers or does not hover over the button
+	    BackgroundImage twoPlayerBackgroundWithoutArrow = new BackgroundImage(new Image(new File("images/2Player.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+	    Background twoPlayerWithoutArrow = new Background(twoPlayerBackgroundWithoutArrow);
+	    
+	    BackgroundImage twoPlayerBackgroundWithArrow = new BackgroundImage(new Image(new File("images/2Player_arrow.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+	    Background twoPlayerWithArrow = new Background(twoPlayerBackgroundWithArrow);
+	    
+	    twoPlayerButton.setPrefSize(183, 59);
+	    gridMain.add(twoPlayerButton, 1, 5);
+	    twoPlayerButton.setBackground(twoPlayerWithoutArrow);
+	    GridPane.setHalignment(twoPlayerButton, HPos.CENTER);
+	    
+	    twoPlayerButton.setOnMouseEntered(actionEvent -> {
+	    	twoPlayerButton.setBackground(twoPlayerWithArrow);
+	    });
+	    
+	    twoPlayerButton.setOnMouseExited(actionEvent -> {
+	    	twoPlayerButton.setBackground(twoPlayerWithoutArrow);
+	    });
+		
+		/**
+		 * Adding instructions page
+		 */
+    	Button helpButton = new Button("");
+    	BackgroundImage instructionBackgroundWithoutArrow = new BackgroundImage( new Image(new File("images/instructions.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+        Background instructionWithoutArrow = new Background(instructionBackgroundWithoutArrow);
+        BackgroundImage instructionBackgroundWithArrow = new BackgroundImage( new Image(new File("images/instructions_arrow.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+        Background instructionWithArrow = new Background(instructionBackgroundWithArrow);
+                
+	    helpButton.setBackground(instructionWithoutArrow);
+	    helpButton.setPrefSize(241, 59);
+    	gridMain.add(helpButton, 1, 6);
+	    GridPane.setHalignment(helpButton, HPos.CENTER);
+    	
+	    helpButton.setOnMouseEntered(actionEvent -> {
+	        helpButton.setBackground(instructionWithArrow);
+		});
+	    helpButton.setOnMouseExited(actionEvent -> {
+	        helpButton.setBackground(instructionWithoutArrow);
+		});
+    	   	
+		// Puzzle Maker button
+		Button puzzleMakerButton = new Button("");
+		puzzleMakerButton.setPrefSize(224, 59);
+		
+		BackgroundImage puzzleMakerBackgroundWithoutArrow = new BackgroundImage( new Image(new File("images/puzzleMaker.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+        Background puzzleMakerWithoutArrow = new Background(puzzleMakerBackgroundWithoutArrow);
+        BackgroundImage puzzleMakerBackgroundWithArrow = new BackgroundImage( new Image(new File("images/puzzleMaker_arrow.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+        Background puzzleMakerWithArrow = new Background(puzzleMakerBackgroundWithArrow);
+    	puzzleMakerButton.setBackground(puzzleMakerWithoutArrow);
+		
+    	puzzleMakerButton.setOnMouseEntered(actionEvent -> {
+    		puzzleMakerButton.setBackground(puzzleMakerWithArrow);
+    	});
+    	
+    	puzzleMakerButton.setOnMouseExited(actionEvent -> {
+    		puzzleMakerButton.setBackground(puzzleMakerWithoutArrow);
+    	});
+    	
+		PuzzleMaker puzzleMaker = new PuzzleMaker();
+		gridMain.add(puzzleMakerButton, 1, 7);
+	    GridPane.setHalignment(puzzleMakerButton, HPos.CENTER);
 
-				/**
-				 * Handle Events for the above buttons
-				 */
-				// When onePlayerButton is clicked, then move to difficulty screen
-				onePlayerButton.setOnAction(actionEvent -> {
-					primaryStage.setScene(selectDifficulty(primaryStage, menuScene, 1));
-				});
-				
-				// When twoPlayerButton is clicked, then move to difficulty screen
-				twoPlayerButton.setOnAction(actionEvent -> {
-					primaryStage.setScene(selectDifficulty(primaryStage, menuScene, 2));
-				});
-				
-				// When helpButton is clicked, then move to instructions screen
-				helpButton.setOnAction(actionEvent -> {
-					mainWindow.setScene(helpPage(mainWindow, menuScene));
-				});
-				
-				
-				puzzleMakerButton.setOnAction(actionEvent -> {
-					mainWindow.setScene(puzzleMaker.PuzzleMakerHome(mainWindow, menuScene));
-				});
-				
-				
-				quitButton.setOnAction(actionEvent -> {
-		        	Alert confirmExit = new Alert(AlertType.CONFIRMATION, "Would you like to exit Wacky Warehouse?", ButtonType.OK, ButtonType.CANCEL);
-		        	confirmExit.setTitle("Exit Game");
-		        	confirmExit.showAndWait();
-		        	
-		        	if (confirmExit.getResult() == ButtonType.OK) {
-		        		Platform.exit();
-		        	}
-				});
+		// Quit button
+    	Button quitButton = new Button("");
+    	BackgroundImage quitBackgroundWithoutArrow = new BackgroundImage( new Image(new File("images/quit.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+        Background quitWithoutArrow = new Background(quitBackgroundWithoutArrow);
+        BackgroundImage quitBackgroundWithArrow = new BackgroundImage( new Image(new File("images/quit_arrow.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+        Background quitWithArrow = new Background(quitBackgroundWithArrow);
+    	quitButton.setPrefSize(106, 59);
+    	quitButton.setBackground(quitWithoutArrow);
+    	
+    	quitButton.setOnMouseEntered(actionEvent -> {
+    		quitButton.setBackground(quitWithArrow);
+    	});
+    	
+    	quitButton.setOnMouseExited(actionEvent -> {
+    		quitButton.setBackground(quitWithoutArrow);
+    	});
+ 
+    	gridMain.add(quitButton, 1, 8);
+	    GridPane.setHalignment(quitButton, HPos.CENTER);
+    	
+    	
+    	
+    	// Set background (Main Menu)
+    	gridMain.setStyle(background);
+    	
+		// Set scene
+		Scene menuScene = new Scene(gridMain, 960, 800);// , screenSize.getWidth(), screenSize.getHeight());	
 
-				// Show final
-				primaryStage.setTitle("Puzzle Game");
-				primaryStage.setResizable(false);
-				primaryStage.setScene(menuScene);
-				// primaryStage.setMaximized(true);
-				primaryStage.show();
+		/**
+		 * Handle Events for the above buttons
+		 */
+		// When onePlayerButton is clicked, then move to difficulty screen
+		onePlayerButton.setOnAction(actionEvent -> {
+			primaryStage.setScene(selectDifficulty(primaryStage, menuScene, 1));
+		});
+		
+		// When twoPlayerButton is clicked, then move to difficulty screen
+		twoPlayerButton.setOnAction(actionEvent -> {
+			primaryStage.setScene(selectDifficulty(primaryStage, menuScene, 2));
+		});
+		
+		// When helpButton is clicked, then move to instructions screen
+		helpButton.setOnAction(actionEvent -> {
+			mainWindow.setScene(helpPage(mainWindow, menuScene));
+		});
+		
+		
+		puzzleMakerButton.setOnAction(actionEvent -> {
+			mainWindow.setScene(puzzleMaker.PuzzleMakerHome(mainWindow, menuScene));
+		});
+		
+		
+		quitButton.setOnAction(actionEvent -> {
+        	Alert confirmExit = new Alert(AlertType.CONFIRMATION, "Would you like to exit Wacky Warehouse?", ButtonType.OK, ButtonType.CANCEL);
+        	confirmExit.setTitle("Exit Game");
+        	confirmExit.showAndWait();
+        	
+        	if (confirmExit.getResult() == ButtonType.OK) {
+        		Platform.exit();
+        	}
+		});
+
+		// Show final
+		primaryStage.setTitle("Puzzle Game");
+		primaryStage.setResizable(false);
+		primaryStage.setScene(menuScene);
+		//primaryStage.setMaximized(true);
+		primaryStage.show();
 	}
 
 	/**

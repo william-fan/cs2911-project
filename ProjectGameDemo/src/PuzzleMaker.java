@@ -17,6 +17,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
@@ -25,7 +26,6 @@ import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
@@ -37,8 +37,9 @@ public class PuzzleMaker {
 	private GridPane gamePane = new GridPane();
 
 	public Scene PuzzleMakerHome(Stage primaryStage, Scene menu) {
+		// Load font
 		try {
-			Font.loadFont(new FileInputStream(new File("fonts/FSEX300.ttf")), 36);
+			Font.loadFont(new FileInputStream(new File("fonts/FSEX300.ttf")), 20);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -55,25 +56,75 @@ public class PuzzleMaker {
 		BorderPane center = new BorderPane();
 		center.setPrefSize(960, 800);
 		
-		FlowPane gameUI = new FlowPane();
+		GridPane gameUI = new GridPane();
 		
 		center.setCenter(this.gamePane);
 		center.setBottom(gameUI);
 		center.setStyle(background);
 		
 		// Text fields, buttons
-		Label xLabel = new Label("x size: (Must be less than 20)");
-		xLabel.setStyle("-fx-text-fill: white");
+		
+		Label xLabel = new Label("Width: (max 20)");
+		xLabel.setStyle("-fx-text-fill: white;" + "\n" +
+				 "-fx-font-family: \"Fixedsys Excelsior 3.01\";"  + "\n" +
+				 "-fx-font-size: 18;" + "\n");
 		TextField xTextField = new TextField();
+		xTextField.setMaxWidth(50);		
+		xTextField.setStyle("-fx-font-family: \"Fixedsys Excelsior 3.01\";"  + "\n" +
+				 "-fx-font-size: 18;" + "\n" +
+				 "-fx-control-inner-background: #3F3F3F;" + "\n" +
+				 "-fx-focus-color: transparent;" + "\n" +
+				 "-fx-text-box-border: transparent;" + "\n" +
+				 "-fx-background-insets: 0;" + "\n");
 		
-		Label yLabel = new Label("y size: (Must be less than 20)");
-		yLabel.setStyle("-fx-text-fill: white");
+		Label yLabel = new Label("Height: (max 20)");
+		yLabel.setStyle("-fx-text-fill: white;" + "\n" +
+				 "-fx-font-family: \"Fixedsys Excelsior 3.01\";"  + "\n" +
+				 "-fx-font-size: 18;" + "\n");
 		TextField yTextField = new TextField();
-		
+		yTextField.setMaxWidth(50);
+		yTextField.setStyle("-fx-font-family: \"Fixedsys Excelsior 3.01\";"  + "\n" +
+				 "-fx-font-size: 18;" + "\n" +
+				 "-fx-control-inner-background: #3F3F3F;" + "\n" +
+				 "-fx-focus-color: transparent;" + "\n" +
+				 "-fx-text-box-border: transparent;" + "\n" +
+				 "-fx-background-insets: 0;" + "\n");
+
 		Button exportMap = new Button("Export map");
+		exportMap.setStyle("-fx-text-fill: white;" + "\n" +
+				 "-fx-font-family: \"Fixedsys Excelsior 3.01\";"  + "\n" +
+				 "-fx-font-size: 18;" + "\n" +
+				 "-fx-background-color: #000000;" + "\n");
+		
 		Button setSizeButton = new Button("Set Size");
+		setSizeButton.setStyle("-fx-text-fill: white;" + "\n" +
+				 "-fx-font-family: \"Fixedsys Excelsior 3.01\";"  + "\n" +
+				 "-fx-font-size: 18;" + "\n" +
+				 "-fx-background-color: #000000;" + "\n");
+		
 		Button mainMenu = new Button("Main Menu");
-		gameUI.getChildren().addAll(xLabel, xTextField, yLabel, yTextField, setSizeButton, exportMap, mainMenu);
+		mainMenu.setStyle("-fx-text-fill: white;" + "\n" +
+				 "-fx-font-family: \"Fixedsys Excelsior 3.01\";"  + "\n" +
+				 "-fx-font-size: 18;" + "\n" +
+				 "-fx-background-color: #000000;" + "\n");
+		
+		exportMap.setFocusTraversable(false);
+		setSizeButton.setFocusTraversable(false);
+		mainMenu.setFocusTraversable(false);
+		
+		gameUI.setAlignment(Pos.CENTER);
+		gameUI.add(xLabel, 3, 0);
+		gameUI.add(xTextField, 4, 0);
+		gameUI.add(yLabel, 5, 0);
+		gameUI.add(yTextField, 6, 0);
+		gameUI.add(setSizeButton, 7, 0);
+		gameUI.add(exportMap, 8, 0);
+		gameUI.add(mainMenu, 9, 0);
+		gameUI.add(new Label(""), 1, 2);
+		gameUI.setVgap(10);
+		gameUI.setHgap(10);
+		
+				//xTextField, yLabel, yTextField, setSizeButton, exportMap, mainMenu);
 		
 		//Add text field restrictions, no text, cannot be > 20
 		xTextField.textProperty().addListener(new ChangeListener<String>() {
@@ -128,6 +179,72 @@ public class PuzzleMaker {
 						tile.setOnMouseClicked(new MapButtonHandler());
 						tile.setPrefSize(32, 32);
 						this.gamePane.add(tile, x, y);
+					}
+				}
+			}
+		});
+		
+		yTextField.setOnKeyPressed((event) -> {
+			if (event.getCode() == KeyCode.ENTER) {
+				//Set grid pane to set size and add buttons to each node
+				this.sizeX = 0;
+				this.sizeY = 0;
+				this.gamePane.getChildren().clear();
+				if (xTextField.getLength() == 0 || yTextField.getLength() == 0) {
+					return;
+				}
+				this.sizeX = Integer.parseInt(xTextField.getText());
+				this.sizeY = Integer.parseInt(yTextField.getText());
+				if (this.sizeX == 0 || this.sizeY == 0) {
+					return;
+				}
+				this.gamePane.setMinSize(this.sizeX, this.sizeY);
+	
+				if (this.sizeX != 0 && this.sizeY != 0) {
+					for (int x = 0; x < this.sizeX; x++) {
+						for (int y = 0; y < this.sizeY; y++) {
+							Button tile = new Button("0");
+							tile.setStyle("-fx-text-fill: transparent");
+							tile.setBackground(new Background(new BackgroundImage(
+									new Image(new File("images/ground.png").toURI().toString()), BackgroundRepeat.NO_REPEAT,
+									BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT)));
+							tile.setOnMouseClicked(new MapButtonHandler());
+							tile.setPrefSize(32, 32);
+							this.gamePane.add(tile, x, y);
+						}
+					}
+				}
+			}
+		});
+		
+		yTextField.setOnKeyPressed((event) -> {
+			if (event.getCode() == KeyCode.ENTER) {
+				//Set grid pane to set size and add buttons to each node
+				this.sizeX = 0;
+				this.sizeY = 0;
+				this.gamePane.getChildren().clear();
+				if (xTextField.getLength() == 0 || yTextField.getLength() == 0) {
+					return;
+				}
+				this.sizeX = Integer.parseInt(xTextField.getText());
+				this.sizeY = Integer.parseInt(yTextField.getText());
+				if (this.sizeX == 0 || this.sizeY == 0) {
+					return;
+				}
+				this.gamePane.setMinSize(this.sizeX, this.sizeY);
+	
+				if (this.sizeX != 0 && this.sizeY != 0) {
+					for (int x = 0; x < this.sizeX; x++) {
+						for (int y = 0; y < this.sizeY; y++) {
+							Button tile = new Button("0");
+							tile.setStyle("-fx-text-fill: transparent");
+							tile.setBackground(new Background(new BackgroundImage(
+									new Image(new File("images/ground.png").toURI().toString()), BackgroundRepeat.NO_REPEAT,
+									BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT)));
+							tile.setOnMouseClicked(new MapButtonHandler());
+							tile.setPrefSize(32, 32);
+							this.gamePane.add(tile, x, y);
+						}
 					}
 				}
 			}

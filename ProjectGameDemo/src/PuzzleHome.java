@@ -173,12 +173,6 @@ public class PuzzleHome extends Application {
 		bottomBox.setAlignment(Pos.BOTTOM_RIGHT);
 		helpPane.setBottom(bottomBox);
 		
-	
-		
-		
-		
-		
-		
 		return helpScene;
 	}
 
@@ -1489,9 +1483,11 @@ PuzzleGame game = new PuzzleGame();
 		});
 
 		// Show final
-		mainWindow.setTitle("Puzzle Game");
+		mainWindow.setTitle("Wacky Warehouse");
+		mainWindow.getIcons().add(new Image(new FileInputStream(new File("images/sprite1.png"))));
 		mainWindow.setResizable(false);
 		mainWindow.setScene(menuScene);
+		mainWindow.sizeToScene();
 		mainWindow.show();
 	}
 

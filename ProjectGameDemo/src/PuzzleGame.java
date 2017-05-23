@@ -30,7 +30,7 @@ public class PuzzleGame {
 	private GridPane gamePane = new GridPane();
 	
 	// Background style
-	String background = "-fx-background-image: url(file:images/background.png);" + "\n"
+	private String background = "-fx-background-image: url(file:images/background.png);" + "\n"
 	   					 + "-fx-background-size: stretch;" + "\n"
 	   					 + "-fx-background-repeat: no-repeat;";
 	

@@ -35,6 +35,10 @@ public class PuzzleMaker {
 
 	public Scene PuzzleMakerHome(Stage primaryStage, Scene menu) {
 		// Add ui boxes
+		// Background style
+		String background = "-fx-background-image: url(file:images/background.png);" + "\n"
+		   					+ "-fx-background-size: stretch;" + "\n"
+		   					+ "-fx-background-repeat: no-repeat;";
 		resetMap();
 		this.gamePane.setAlignment(Pos.CENTER);
 		this.gamePane.setVgap(0.5);
@@ -47,7 +51,7 @@ public class PuzzleMaker {
 		
 		center.setCenter(this.gamePane);
 		center.setBottom(gameUI);
-		center.setStyle("-fx-background-color: #000000");
+		center.setStyle(background);
 		
 		// Text fields, buttons
 		Label xLabel = new Label("x size: (Must be less than 20)");

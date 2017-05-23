@@ -11,7 +11,6 @@ public class Player {
 	private int moveCount;
 	private int blockMoveCount;
 	private ImageView playerImage;
-	// private ArrayList<ArrayList<Image>> sprites;
 
 	public Player(int ID, int x, int y) {
 		this.x = x;

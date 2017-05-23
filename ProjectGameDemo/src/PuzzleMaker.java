@@ -69,7 +69,8 @@ public class PuzzleMaker {
 		title.setAlignment(Pos.CENTER);
 		title.setPadding(new Insets(20, 0, 0, 0));
 		title.getChildren().add(titleLabel);
-		
+		title.setFocusTraversable(false);
+
 		center.setCenter(this.gamePane);
 		center.setBottom(gameUI);
 		center.setTop(title);
@@ -191,13 +192,14 @@ public class PuzzleMaker {
 								BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT)));
 						tile.setOnMouseClicked(new MapButtonHandler());
 						tile.setPrefSize(32, 32);
+						tile.setFocusTraversable(false);
 						this.gamePane.add(tile, x, y);
 					}
 				}
 			}
 		});
 		
-		yTextField.setOnKeyPressed((event) -> {
+		xTextField.setOnKeyPressed((event) -> {
 			if (event.getCode() == KeyCode.ENTER) {
 				//Set grid pane to set size and add buttons to each node
 				this.sizeX = 0;
@@ -223,6 +225,7 @@ public class PuzzleMaker {
 									BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT)));
 							tile.setOnMouseClicked(new MapButtonHandler());
 							tile.setPrefSize(32, 32);
+							tile.setFocusTraversable(false);
 							this.gamePane.add(tile, x, y);
 						}
 					}
@@ -256,6 +259,7 @@ public class PuzzleMaker {
 									BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT)));
 							tile.setOnMouseClicked(new MapButtonHandler());
 							tile.setPrefSize(32, 32);
+							tile.setFocusTraversable(false);
 							this.gamePane.add(tile, x, y);
 						}
 					}

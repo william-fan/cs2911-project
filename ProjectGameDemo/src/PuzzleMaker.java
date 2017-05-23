@@ -8,6 +8,7 @@ import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -27,6 +28,7 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -58,8 +60,19 @@ public class PuzzleMaker {
 		
 		GridPane gameUI = new GridPane();
 		
+		// Title
+		HBox title = new HBox();
+		Label titleLabel = new Label("Puzzle Maker");
+		titleLabel.setStyle("-fx-text-fill: white;" + "\n" +
+				 "-fx-font-family: \"Fixedsys Excelsior 3.01\";"  + "\n" +
+				 "-fx-font-size: 40;" + "\n");
+		title.setAlignment(Pos.CENTER);
+		title.setPadding(new Insets(20, 0, 0, 0));
+		title.getChildren().add(titleLabel);
+		
 		center.setCenter(this.gamePane);
 		center.setBottom(gameUI);
+		center.setTop(title);
 		center.setStyle(background);
 		
 		// Text fields, buttons

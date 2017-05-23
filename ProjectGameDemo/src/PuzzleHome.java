@@ -1303,6 +1303,11 @@ PuzzleGame game = new PuzzleGame();
 
 	public void start(Stage primaryStage) throws Exception {
 		// Init
+		try {
+			Font.loadFont(new FileInputStream(new File("fonts/FSEX300.ttf")), 11);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 		Stage mainWindow = primaryStage;
 		
 		GridPane gridMain = new GridPane();

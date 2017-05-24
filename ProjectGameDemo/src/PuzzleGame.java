@@ -85,10 +85,25 @@ public class PuzzleGame {
 		int gameWidth = grid.length;
 		int gameHeight = grid[0].length;
 
-		FlowPane gameUI = new FlowPane();
-		gameUI.getChildren().add(timeElapsed);
-		gameUI.setAlignment(Pos.TOP_RIGHT);
-
+		BorderPane gameUI = new BorderPane();
+		Label tempP1Stats = new Label("Player 1\nMoves: " + this.player1.getMoveCount() + "\nBlock Moves: " + this.player1.getBlockMoveCount());
+		tempP1Stats.setStyle("-fx-text-fill: white;" + "\n" +
+				 "-fx-font-family: \"Fixedsys Excelsior 3.01\";"  + "\n" +
+				 "-fx-font-size: 24;" + "\n");
+		Label tempP2Stats = new Label("Player 2\nMoves: " + this.player2.getMoveCount() + "\nBlock Moves: " + this.player2.getBlockMoveCount());
+		tempP2Stats.setStyle("-fx-text-fill: white;" + "\n" +
+				 "-fx-font-family: \"Fixedsys Excelsior 3.01\";"  + "\n" +
+				 "-fx-font-size: 24;" + "\n");
+		if (playerCount == 1) {
+			tempP2Stats.setStyle("-fx-text-fill: transparent;" + "\n" +
+					 "-fx-font-family: \"Fixedsys Excelsior 3.01\";"  + "\n" +
+					 "-fx-font-size: 24;" + "\n");
+		}
+		gameUI.setCenter(timeElapsed);
+		gameUI.setLeft(tempP1Stats);
+		gameUI.setRight(tempP2Stats);
+		
+		
 		this.gamePane.setMinSize(gameWidth, gameHeight);
 		// this.gamePane.setVgap(1);
 		// this.gamePane.setHgap(1);
@@ -129,7 +144,6 @@ public class PuzzleGame {
 		// center.setPrefHeight(screenSize.getHeight());
 		center.setCenter(this.gamePane);
 		center.setTop(gameUI);
-		gameUI.setAlignment(Pos.CENTER);
 		center.setStyle("-fx-background-color: #3F3F3F;");
 
 		Scene Game = new Scene(center);// , screenSize.getWidth(), screenSize.getHeight());
@@ -218,6 +232,21 @@ public class PuzzleGame {
 					}
 				}
 			}
+			Label tempP1 = new Label("Player 1\nMoves: " + this.player1.getMoveCount() + "\nBlock Moves: " + this.player1.getBlockMoveCount());
+			tempP1.setStyle("-fx-text-fill: white;" + "\n" +
+					 "-fx-font-family: \"Fixedsys Excelsior 3.01\";"  + "\n" +
+					 "-fx-font-size: 24;" + "\n");
+			Label tempP2 = new Label("Player 2\nMoves: " + this.player2.getMoveCount() + "\nBlock Moves: " + this.player2.getBlockMoveCount());
+			tempP2.setStyle("-fx-text-fill: white;" + "\n" +
+					 "-fx-font-family: \"Fixedsys Excelsior 3.01\";"  + "\n" +
+					 "-fx-font-size: 24;" + "\n");
+			if (playerCount == 1) {
+				tempP2.setStyle("-fx-text-fill: transparent;" + "\n" +
+						 "-fx-font-family: \"Fixedsys Excelsior 3.01\";"  + "\n" +
+						 "-fx-font-size: 24;" + "\n");
+			}
+			gameUI.setLeft(tempP1);
+			gameUI.setRight(tempP2);
 			checkVictory(primaryStage, menu, grid, this.blockList, playerCount, inputFile, grid, blockCount);
 		});
 		return Game;

@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import javafx.animation.AnimationTimer;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -84,24 +85,45 @@ public class PuzzleGame {
 
 		int gameWidth = grid.length;
 		int gameHeight = grid[0].length;
-
+		
+		// UI elements
 		BorderPane gameUI = new BorderPane();
-		Label tempP1Stats = new Label("Player 1\nMoves: " + this.player1.getMoveCount() + "\nBlock Moves: " + this.player1.getBlockMoveCount());
+		BorderPane leftStats = new BorderPane();
+		BorderPane rightStats = new BorderPane();
+		Label tempP1Stats = new Label("Moves: " + this.player1.getMoveCount() + "\nPushes: " + this.player1.getBlockMoveCount());
 		tempP1Stats.setStyle("-fx-text-fill: white;" + "\n" +
 				 "-fx-font-family: \"Fixedsys Excelsior 3.01\";"  + "\n" +
 				 "-fx-font-size: 24;" + "\n");
-		Label tempP2Stats = new Label("Player 2\nMoves: " + this.player2.getMoveCount() + "\nBlock Moves: " + this.player2.getBlockMoveCount());
+		Label tempP2Stats = new Label("Moves: " + this.player2.getMoveCount() + "\nPushes: " + this.player2.getBlockMoveCount());
 		tempP2Stats.setStyle("-fx-text-fill: white;" + "\n" +
 				 "-fx-font-family: \"Fixedsys Excelsior 3.01\";"  + "\n" +
 				 "-fx-font-size: 24;" + "\n");
-		if (playerCount == 1) {
+		
+		ImageView uiSprite1 = new ImageView(new Image(new File("images/sprite1.png").toURI().toString()));
+		leftStats.setLeft(uiSprite1);
+		BorderPane.setMargin(uiSprite1, new Insets(0, 10, 0, 0));
+		BorderPane.setAlignment(uiSprite1, Pos.CENTER);
+		BorderPane.setAlignment(tempP1Stats, Pos.CENTER);
+		leftStats.setRight(tempP1Stats);
+		
+		ImageView uiSprite2 = new ImageView(new Image(new File("images/sprite2.png").toURI().toString()));
+		rightStats.setLeft(uiSprite2);
+		BorderPane.setMargin(uiSprite2, new Insets(0, 10, 0, 0));
+		BorderPane.setAlignment(uiSprite2, Pos.CENTER);
+		BorderPane.setAlignment(tempP2Stats, Pos.CENTER);
+		rightStats.setRight(tempP2Stats);
+		
+		if (playerCount == 1) {  //hide player 2 stats if only one player
 			tempP2Stats.setStyle("-fx-text-fill: transparent;" + "\n" +
 					 "-fx-font-family: \"Fixedsys Excelsior 3.01\";"  + "\n" +
 					 "-fx-font-size: 24;" + "\n");
+			uiSprite2.setVisible(false);
 		}
+		
 		gameUI.setCenter(timeElapsed);
-		gameUI.setLeft(tempP1Stats);
-		gameUI.setRight(tempP2Stats);
+		gameUI.setPadding(new Insets(0, 10, 0, 10));
+		gameUI.setLeft(leftStats);
+		gameUI.setRight(rightStats);
 		
 		
 		this.gamePane.setMinSize(gameWidth, gameHeight);
@@ -232,21 +254,36 @@ public class PuzzleGame {
 					}
 				}
 			}
-			Label tempP1 = new Label("Player 1\nMoves: " + this.player1.getMoveCount() + "\nBlock Moves: " + this.player1.getBlockMoveCount());
+			//refresh ui elements
+			Label tempP1 = new Label("Moves: " + this.player1.getMoveCount() + "\nPushes: " + this.player1.getBlockMoveCount());
 			tempP1.setStyle("-fx-text-fill: white;" + "\n" +
 					 "-fx-font-family: \"Fixedsys Excelsior 3.01\";"  + "\n" +
 					 "-fx-font-size: 24;" + "\n");
-			Label tempP2 = new Label("Player 2\nMoves: " + this.player2.getMoveCount() + "\nBlock Moves: " + this.player2.getBlockMoveCount());
+			Label tempP2 = new Label("Moves: " + this.player2.getMoveCount() + "\nPushes: " + this.player2.getBlockMoveCount());
 			tempP2.setStyle("-fx-text-fill: white;" + "\n" +
 					 "-fx-font-family: \"Fixedsys Excelsior 3.01\";"  + "\n" +
 					 "-fx-font-size: 24;" + "\n");
-			if (playerCount == 1) {
+			
+			leftStats.setLeft(uiSprite1);
+			BorderPane.setMargin(uiSprite1, new Insets(0, 10, 0, 0));
+			BorderPane.setAlignment(uiSprite1, Pos.CENTER);
+			BorderPane.setAlignment(tempP1, Pos.CENTER);
+			leftStats.setRight(tempP1);
+			
+			rightStats.setLeft(uiSprite2);
+			BorderPane.setMargin(uiSprite2, new Insets(0, 10, 0, 0));
+			BorderPane.setAlignment(uiSprite2, Pos.CENTER);
+			BorderPane.setAlignment(tempP2, Pos.CENTER);
+			rightStats.setRight(tempP2);
+			
+			if (playerCount == 1) {  //hide player 2 stats if only one player
 				tempP2.setStyle("-fx-text-fill: transparent;" + "\n" +
 						 "-fx-font-family: \"Fixedsys Excelsior 3.01\";"  + "\n" +
 						 "-fx-font-size: 24;" + "\n");
+				uiSprite2.setVisible(false);
 			}
-			gameUI.setLeft(tempP1);
-			gameUI.setRight(tempP2);
+			gameUI.setLeft(leftStats);
+			gameUI.setRight(rightStats);
 			checkVictory(primaryStage, menu, grid, this.blockList, playerCount, inputFile, grid, blockCount);
 		});
 		return Game;

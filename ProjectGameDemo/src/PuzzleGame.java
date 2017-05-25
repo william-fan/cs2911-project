@@ -380,6 +380,8 @@ public class PuzzleGame {
 				primaryStage.show();
 			} else if (event.getCode() == KeyCode.R) {
 				resetGame(grid, primaryStage, menu, playerCount, blockCount, inputFile);
+			} else if (event.getCode() == KeyCode.U) {
+				undoGame(tempP1Image, tempP2Image);
 			}
 			if (playerCount == 2) {
 				if (event.getCode() == KeyCode.S) {
@@ -637,6 +639,35 @@ public class PuzzleGame {
 		primaryStage.setScene(Game(grid, primaryStage, menu, playerCount, blockCount, inputFile));
 	}
 
+	private void undoGame(ImageView tempP1Image, ImageView tempP2Image) {
+		LinkedList<LinkedList<Integer>> test = player1.getPosList();
+		if (!test.isEmpty()) {
+			player1.setX(test.getLast().get(0));
+			player1.setY(test.getLast().get(1));
+			this.gamePane.getChildren().remove(tempP1Image);
+			this.gamePane.add(this.player1.getPlayerImage(), this.player1.getX(), this.player1.getY());
+			test.getLast().removeFirst();
+			test.getLast().removeFirst();
+			if (test.getLast().peek() != 0){
+				player2.setX(test.getLast().get(0));
+				player2.setY(test.getLast().get(1));
+				this.gamePane.getChildren().remove(tempP2Image);
+				this.gamePane.add(this.player2.getPlayerImage(), this.player2.getX(), this.player2.getY());
+			}
+			test.getLast().removeFirst();
+			test.getLast().removeFirst();
+			for (Block block : this.blockList) {
+				block.setX(test.getLast().get(0));
+				block.setY(test.getLast().get(1));
+				this.gamePane.getChildren().remove(block.getBlockImage());
+				this.gamePane.add(block.getBlockImage(), block.getX(), block.getY());
+				test.getLast().removeFirst();
+				test.getLast().removeFirst();
+			}
+			test.removeLast();
+		}
+	}
+	
 	public ArrayList<Block> getBlockList() {
 		return this.blockList;
 	}

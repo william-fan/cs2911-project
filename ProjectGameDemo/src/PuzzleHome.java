@@ -53,18 +53,20 @@ public class PuzzleHome extends Application {
 		Scene helpScene = new Scene(helpPane);
 		// Set the size of the windows
 		helpPane.setPrefSize(960, 800);
-		// Add black background
-		helpPane.setStyle("-fx-background-color: #000000");
+		// Add black background with orange border
+		helpPane.setStyle(background);
 		
 		// Create title called instructions
 		Text title = new Text();
 		title.setText("Instructions\n");
 		title.setFont(Font.font ("Fixedsys Excelsior 3.01", 80));
 		title.setFill(Color.WHITE);
+		title.setTranslateY(30);
 		
 		// Position the title at the top
 		helpPane.setTop(title);
 		BorderPane.setAlignment(title, Pos.CENTER);
+		
 		
 		// Left pane will contain the Player 1 control keys
 		VBox leftBox = new VBox(4);
@@ -122,7 +124,7 @@ public class PuzzleHome extends Application {
 		VBox centerContent = new VBox(2);
 		
 		// Center image
-		Image centerImage = new Image("File:images/main.png");
+		Image centerImage = new Image("File:images/title.png");
 		ImageView centerImageNode = new ImageView(centerImage);
 		
 		Text info = new Text();
@@ -148,12 +150,14 @@ public class PuzzleHome extends Application {
 		// Adding the main menu button to the instruction page
 		HBox bottomBox = new HBox();
 		
+		
 		Button mainMenuButton = new Button("");
     	BackgroundImage mainMenuBackgroundWithoutArrow = new BackgroundImage( new Image(new File("images/mainMenu.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
         Background mainMenuWithoutArrow = new Background(mainMenuBackgroundWithoutArrow);
         BackgroundImage mainMenuBackgroundWithArrow = new BackgroundImage( new Image(new File("images/mainMenu_arrow.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
         Background mainMenuWithArrow = new Background(mainMenuBackgroundWithArrow);
-    	mainMenuButton.setPrefSize(200, 59);
+    	mainMenuButton.setPrefSize(177, 59);
+    	//HBox.setMargin(bottomBox, new Insets(100, 50, -10, 160));
     	mainMenuButton.setBackground(mainMenuWithoutArrow);
     	
     	mainMenuButton.setOnMouseEntered(actionEvent -> {
@@ -169,9 +173,12 @@ public class PuzzleHome extends Application {
     	});
     	
 		bottomBox.getChildren().add(mainMenuButton);
-		bottomBox.setAlignment(Pos.BOTTOM_RIGHT);
-		helpPane.setBottom(bottomBox);
 		
+		helpPane.setBottom(bottomBox);
+		//System.out.println("bottomBox X layout = " + bottomBox.getLayoutX() + " bottomBox Y layout = " + bottomBox.getLayoutY());
+		bottomBox.setTranslateX(756);
+		bottomBox.setTranslateY(-40);
+		//System.out.println("bottomBox X layout = " + bottomBox.getLayoutX() + " bottomBox Y layout = " + bottomBox.getLayoutY());
 		return helpScene;
 	}
 

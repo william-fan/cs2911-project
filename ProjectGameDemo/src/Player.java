@@ -38,6 +38,7 @@ public class Player {
 		}
 		y += 1;
 		this.moveCount++;
+		updateSprite(3);
 		return true;
 	}
 
@@ -53,6 +54,7 @@ public class Player {
 		}
 		x -= 1;
 		this.moveCount++;
+		updateSprite(4);
 		return true;
 	}
 
@@ -68,6 +70,7 @@ public class Player {
 		}
 		y -= 1;
 		this.moveCount++;
+		updateSprite(1);
 		return true;
 	}
 
@@ -83,6 +86,7 @@ public class Player {
 		}
 		x += 1;
 		this.moveCount++;
+		updateSprite(2);
 		return true;
 	}
 
@@ -110,8 +114,28 @@ public class Player {
 		this.ID = ID;
 	}
 
-	public void updateSprite(int newDirection) {
-
+	private void updateSprite(int newDirection) {
+		if (newDirection == 1) {
+			ImageView tempImage = new ImageView(new Image(new File("images/sprite"+this.ID+"_1.png").toURI().toString()));
+			tempImage.setFitHeight(48);
+			tempImage.setFitWidth(48);
+			this.playerImage = tempImage;
+		} else if (newDirection == 2) {
+			ImageView tempImage = new ImageView(new Image(new File("images/sprite"+this.ID+"_2.png").toURI().toString()));
+			tempImage.setFitHeight(48);
+			tempImage.setFitWidth(48);
+			this.playerImage = tempImage;
+		} else if (newDirection == 3) {
+			ImageView tempImage = new ImageView(new Image(new File("images/sprite"+this.ID+"_3.png").toURI().toString()));
+			tempImage.setFitHeight(48);
+			tempImage.setFitWidth(48);
+			this.playerImage = tempImage;
+		} else if (newDirection == 4) {
+			ImageView tempImage = new ImageView(new Image(new File("images/sprite"+this.ID+"_4.png").toURI().toString()));
+			tempImage.setFitHeight(48);
+			tempImage.setFitWidth(48);
+			this.playerImage = tempImage;
+		}
 	}
 
 	public ImageView getPlayerImage() {

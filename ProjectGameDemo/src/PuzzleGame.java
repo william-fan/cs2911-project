@@ -19,7 +19,6 @@ import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
@@ -171,9 +170,12 @@ public class PuzzleGame {
 		Scene Game = new Scene(center);// , screenSize.getWidth(), screenSize.getHeight());
 
 		Game.setOnKeyPressed((event) -> {
+			ImageView tempP1Image = this.player1.getPlayerImage();
+			ImageView tempP2Image = this.player2.getPlayerImage();
+
 			if (event.getCode() == KeyCode.DOWN) {
 				if (this.player1.moveDown(this.getBlockList(), this.player2, grid)) {
-					this.gamePane.getChildren().remove(this.player1.getPlayerImage());
+					this.gamePane.getChildren().remove(tempP1Image);
 					this.gamePane.add(this.player1.getPlayerImage(), this.player1.getX(), this.player1.getY());
 					for (Block block : this.blockList) {
 						this.gamePane.getChildren().remove(block.getBlockImage());
@@ -182,7 +184,7 @@ public class PuzzleGame {
 				}
 			} else if (event.getCode() == KeyCode.UP) {
 				if (this.player1.moveUp(this.getBlockList(), this.player2, grid)) {
-					this.gamePane.getChildren().remove(this.player1.getPlayerImage());
+					this.gamePane.getChildren().remove(tempP1Image);
 					this.gamePane.add(this.player1.getPlayerImage(), this.player1.getX(), this.player1.getY());
 					for (Block block : this.blockList) {
 						this.gamePane.getChildren().remove(block.getBlockImage());
@@ -191,7 +193,7 @@ public class PuzzleGame {
 				}
 			} else if (event.getCode() == KeyCode.LEFT) {
 				if (this.player1.moveLeft(this.getBlockList(), this.player2, grid)) {
-					this.gamePane.getChildren().remove(this.player1.getPlayerImage());
+					this.gamePane.getChildren().remove(tempP1Image);
 					this.gamePane.add(this.player1.getPlayerImage(), this.player1.getX(), this.player1.getY());
 					for (Block block : this.blockList) {
 						this.gamePane.getChildren().remove(block.getBlockImage());
@@ -200,7 +202,7 @@ public class PuzzleGame {
 				}
 			} else if (event.getCode() == KeyCode.RIGHT) {
 				if (this.player1.moveRight(this.getBlockList(), this.player2, grid)) {
-					this.gamePane.getChildren().remove(this.player1.getPlayerImage());
+					this.gamePane.getChildren().remove(tempP1Image);
 					this.gamePane.add(this.player1.getPlayerImage(), this.player1.getX(), this.player1.getY());
 					for (Block block : this.blockList) {
 						this.gamePane.getChildren().remove(block.getBlockImage());
@@ -218,7 +220,7 @@ public class PuzzleGame {
 			if (playerCount == 2) {
 				if (event.getCode() == KeyCode.S) {
 					if (this.player2.moveDown(this.getBlockList(), this.player1, grid)) {
-						this.gamePane.getChildren().remove(this.player2.getPlayerImage());
+						this.gamePane.getChildren().remove(tempP2Image);
 						this.gamePane.add(this.player2.getPlayerImage(), this.player2.getX(), this.player2.getY());
 						for (Block block : this.blockList) {
 							this.gamePane.getChildren().remove(block.getBlockImage());
@@ -227,7 +229,7 @@ public class PuzzleGame {
 					}
 				} else if (event.getCode() == KeyCode.W) {
 					if (this.player2.moveUp(this.getBlockList(), this.player1, grid)) {
-						this.gamePane.getChildren().remove(this.player2.getPlayerImage());
+						this.gamePane.getChildren().remove(tempP2Image);
 						this.gamePane.add(this.player2.getPlayerImage(), this.player2.getX(), this.player2.getY());
 						for (Block block : this.blockList) {
 							this.gamePane.getChildren().remove(block.getBlockImage());
@@ -236,7 +238,7 @@ public class PuzzleGame {
 					}
 				} else if (event.getCode() == KeyCode.A) {
 					if (this.player2.moveLeft(this.getBlockList(), this.player1, grid)) {
-						this.gamePane.getChildren().remove(this.player2.getPlayerImage());
+						this.gamePane.getChildren().remove(tempP2Image);
 						this.gamePane.add(this.player2.getPlayerImage(), this.player2.getX(), this.player2.getY());
 						for (Block block : this.blockList) {
 							this.gamePane.getChildren().remove(block.getBlockImage());
@@ -245,7 +247,7 @@ public class PuzzleGame {
 					}
 				} else if (event.getCode() == KeyCode.D) {
 					if (this.player2.moveRight(this.getBlockList(), this.player1, grid)) {
-						this.gamePane.getChildren().remove(this.player2.getPlayerImage());
+						this.gamePane.getChildren().remove(tempP2Image);
 						this.gamePane.add(this.player2.getPlayerImage(), this.player2.getX(), this.player2.getY());
 						for (Block block : this.blockList) {
 							this.gamePane.getChildren().remove(block.getBlockImage());

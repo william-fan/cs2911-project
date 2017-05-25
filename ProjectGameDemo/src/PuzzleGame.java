@@ -277,7 +277,7 @@ public class PuzzleGame {
 				 "-fx-font-family: \"Fixedsys Excelsior 3.01\";"  + "\n" +
 				 "-fx-font-size: 24;" + "\n");
 		if (playerCount == 1) {
-			tempP2Stats.setStyle("-fx-text-fill: white;" + "\n" +
+			tempP2Stats.setStyle("-fx-text-fill: transparent;" + "\n" +
 					 "-fx-font-family: \"Fixedsys Excelsior 3.01\";"  + "\n" +
 					 "-fx-font-size: 24;" + "\n");
 		}

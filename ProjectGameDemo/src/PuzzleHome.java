@@ -276,23 +276,43 @@ public class PuzzleHome extends Application {
 		AnchorPane difficultyPane = new AnchorPane();
 		difficultyPane.setStyle(background);
 		
-		Image singleTitle = new Image(new File("images/"+playerCount+"Player_title.png").toURI().toString());
-		ImageView singleTitleShow = new ImageView(singleTitle);
-		singleTitleShow.setFitWidth(280);
-		singleTitleShow.setPreserveRatio(true);
-    	
-	    AnchorPane.setTopAnchor(singleTitleShow, 85d);
-	    AnchorPane.setLeftAnchor(singleTitleShow, 340d);	    
-	    difficultyPane.getChildren().add(singleTitleShow);
-	    
-		Image singlePicture = new Image(new File("images/player"+playerCount+"_difficulty.png").toURI().toString());
-		ImageView singlePictureShow = new ImageView(singlePicture);
-		singlePictureShow.setFitWidth(320);
-		singlePictureShow.setPreserveRatio(true);
-    	
-	    AnchorPane.setTopAnchor(singlePictureShow, 180d);
-	    AnchorPane.setLeftAnchor(singlePictureShow, 320d);	    
-	    difficultyPane.getChildren().add(singlePictureShow); 
+		if (playerCount == 1) {
+			Image singleTitle = new Image(new File("images/1Player_title.png").toURI().toString());
+			ImageView singleTitleShow = new ImageView(singleTitle);
+			singleTitleShow.setFitWidth(280);
+			singleTitleShow.setPreserveRatio(true);
+			
+			AnchorPane.setTopAnchor(singleTitleShow, 85d);
+		    AnchorPane.setLeftAnchor(singleTitleShow, 340d);	    
+		    difficultyPane.getChildren().add(singleTitleShow); 
+		    
+			Image singlePicture = new Image(new File("images/player1_difficulty.png").toURI().toString());
+			ImageView singlePictureShow = new ImageView(singlePicture);
+			singlePictureShow.setFitWidth(320);
+			singlePictureShow.setPreserveRatio(true);
+	    	
+		    AnchorPane.setTopAnchor(singlePictureShow, 180d);
+		    AnchorPane.setLeftAnchor(singlePictureShow, 320d);	    
+		    difficultyPane.getChildren().add(singlePictureShow); 	
+		} else {
+			Image multiTitle = new Image(new File("images/2Player_title.png").toURI().toString());
+			ImageView multiTitleShow = new ImageView(multiTitle);
+			multiTitleShow.setFitWidth(280);
+			multiTitleShow.setPreserveRatio(true);
+			
+		    AnchorPane.setTopAnchor(multiTitleShow, 85d);
+		    AnchorPane.setLeftAnchor(multiTitleShow, 340d);	    
+		    difficultyPane.getChildren().add(multiTitleShow); 
+		    
+			Image multiPicture = new Image(new File("images/2player_difficulty.png").toURI().toString());
+			ImageView multiPictureShow = new ImageView(multiPicture);
+			multiPictureShow.setFitWidth(320);
+			multiPictureShow.setPreserveRatio(true);
+	    	
+		    AnchorPane.setTopAnchor(multiPictureShow, 180d);
+		    AnchorPane.setLeftAnchor(multiPictureShow, 320d);	    
+		    difficultyPane.getChildren().add(multiPictureShow); 
+	    }
 	    
 		Button easyButton = new Button("");
 		BackgroundImage easyButtonBackground = new BackgroundImage(new Image(new File("images/easy_selection.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
@@ -316,7 +336,7 @@ public class PuzzleHome extends Application {
 		});
 	    
 	    AnchorPane.setTopAnchor(easyButton, 420d);
-	    AnchorPane.setLeftAnchor(easyButton, 380d);	    
+	    AnchorPane.setLeftAnchor(easyButton, 310d);	    
 	    difficultyPane.getChildren().add(easyButton); 
 	    
 	    Button mediumButton = new Button("");
@@ -341,7 +361,7 @@ public class PuzzleHome extends Application {
 		});
 	    
 	    AnchorPane.setTopAnchor(mediumButton, 490d);
-	    AnchorPane.setLeftAnchor(mediumButton, 380d);	    
+	    AnchorPane.setLeftAnchor(mediumButton, 310d);	    
 	    difficultyPane.getChildren().add(mediumButton); 
 	    
 	    Button hardButton = new Button("");
@@ -366,7 +386,7 @@ public class PuzzleHome extends Application {
 		});
 	    
 	    AnchorPane.setTopAnchor(hardButton, 555d);
-	    AnchorPane.setLeftAnchor(hardButton, 380d);	    
+	    AnchorPane.setLeftAnchor(hardButton, 310d);	    
 	    difficultyPane.getChildren().add(hardButton); 
 	    
 	    Button menuButton = new Button("");
@@ -483,7 +503,7 @@ public class PuzzleHome extends Application {
 	    BackgroundImage levelOneBackground = new BackgroundImage(new Image(new File("images/level1.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 	    Background levelOneImage = new Background(levelOneBackground);
 
-	    levelOne.setPrefSize(105, 109);
+	    levelOne.setPrefSize(200, 200);
 	    levelOne.setBackground(levelOneImage);
 	    
 	    levelOne.setOnAction(actionEvent -> {
@@ -499,7 +519,7 @@ public class PuzzleHome extends Application {
 	    BackgroundImage levelTwoBackground = new BackgroundImage(new Image(new File("images/level2.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 	    Background levelTwoImage = new Background(levelTwoBackground);
 	    
-	    levelTwo.setPrefSize(105, 109);
+	    levelTwo.setPrefSize(200, 200);
 	    levelTwo.setBackground(levelTwoImage);
 	    
 	    levelTwo.setOnAction(actionEvent -> {
@@ -515,7 +535,7 @@ public class PuzzleHome extends Application {
 	    BackgroundImage levelThreeBackground = new BackgroundImage(new Image(new File("images/level3.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 	    Background levelThreeImage = new Background(levelThreeBackground);
 	    
-	    levelThree.setPrefSize(105, 109);
+	    levelThree.setPrefSize(200, 200);
 	    levelThree.setBackground(levelThreeImage);
 	    
 	    levelThree.setOnAction(actionEvent -> {
@@ -531,7 +551,7 @@ public class PuzzleHome extends Application {
 	    BackgroundImage levelFourBackground = new BackgroundImage(new Image(new File("images/level4.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 	    Background levelFourImage = new Background(levelFourBackground);
 	    
-	    levelFour.setPrefSize(105, 109);
+	    levelFour.setPrefSize(200, 200);
 	    levelFour.setBackground(levelFourImage);
 	    
 	    levelFour.setOnAction(actionEvent -> {
@@ -547,7 +567,7 @@ public class PuzzleHome extends Application {
 	    BackgroundImage levelFiveBackground = new BackgroundImage(new Image(new File("images/level5.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 	    Background levelFiveImage = new Background(levelFiveBackground);
 	    
-	    levelFive.setPrefSize(105, 109);
+	    levelFive.setPrefSize(200, 200);
 	    levelFive.setBackground(levelFiveImage);
 
 	    levelFive.setOnAction(actionEvent -> {
@@ -561,11 +581,21 @@ public class PuzzleHome extends Application {
 	    
 		AnchorPane easyPane = new AnchorPane();
 		easyPane.setStyle(background);
-	    easyPane.getChildren().addAll(easyTitleShow, levelOne, levelTwo, levelThree, levelFour, levelFive, menuButton);
-	    
-	    AnchorPane.setTopAnchor(levelOne, 125d);
-	    AnchorPane.setLeftAnchor(levelOne, 160d);
-	    
+		
+		if (playerCount == 1) {
+			easyPane.getChildren().addAll(easyTitleShow, levelOne, levelTwo, levelThree, levelFour, levelFive, menuButton);
+		} else {
+			easyPane.getChildren().addAll(easyTitleShow, levelOne, levelTwo, levelThree, menuButton);
+		}
+		
+		if (playerCount == 1) {
+			AnchorPane.setTopAnchor(levelOne, 125d);
+	    	AnchorPane.setLeftAnchor(levelOne, 160d);
+		} else {
+			AnchorPane.setTopAnchor(levelOne, 125d);
+	    	AnchorPane.setLeftAnchor(levelOne, 290d);
+		}
+		
 	    Image levelOneMap = new Image(new File("images/easy_1_preview.png").toURI().toString());
     	ImageView levelOnePreview = new ImageView(levelOneMap);
     	levelOnePreview.setFitWidth(500);
@@ -580,11 +610,11 @@ public class PuzzleHome extends Application {
 	    	if (playerCount == 1) {
 	    		easyPane.getChildren().add(levelOnePreview);
 	    		AnchorPane.setBottomAnchor(levelOnePreview, 150d);
-		    	AnchorPane.setLeftAnchor(levelOnePreview, 240d);
+		    	AnchorPane.setLeftAnchor(levelOnePreview, 245d);
 	    	} else {
 	    		easyPane.getChildren().add(levelOnePreview2P);
 	    		AnchorPane.setBottomAnchor(levelOnePreview2P, 150d);
-		    	AnchorPane.setLeftAnchor(levelOnePreview2P, 240d);
+		    	AnchorPane.setLeftAnchor(levelOnePreview2P, 245d);
 	    	}
 		});
 	    
@@ -596,70 +626,80 @@ public class PuzzleHome extends Application {
 	    	}
 		});
 	    
-	    AnchorPane.setTopAnchor(levelTwo, 125d);
-	    AnchorPane.setLeftAnchor(levelTwo, 295d);
+	    if (playerCount == 1) {
+	    	AnchorPane.setTopAnchor(levelTwo, 125d);
+	    	AnchorPane.setLeftAnchor(levelTwo, 295d);
+	    } else {
+	    	AnchorPane.setTopAnchor(levelTwo, 125d);
+	    	AnchorPane.setLeftAnchor(levelTwo, 420d);
+	    }
 	    
 	    Image levelTwoMap = new Image(new File("images/easy_2_preview.png").toURI().toString());
     	ImageView levelTwoPreview = new ImageView(levelTwoMap);
     	levelTwoPreview.setFitWidth(500);
     	levelTwoPreview.setPreserveRatio(true);
     	
-    	//Image levelTwoMap2P = new Image(new File("images/easy2p_2_preview.png").toURI().toString());
-     	//ImageView levelTwoPreview2P = new ImageView(levelTwoMap2P);
-     	//levelTwoPreview2P.setFitWidth(500);
-     	//levelTwoPreview2P.setPreserveRatio(true);
+    	Image levelTwoMap2P = new Image(new File("images/easy2p_2_preview.png").toURI().toString());
+     	ImageView levelTwoPreview2P = new ImageView(levelTwoMap2P);
+     	levelTwoPreview2P.setFitWidth(500);
+     	levelTwoPreview2P.setPreserveRatio(true);
     	
 	    levelTwo.setOnMouseEntered(actionEvent -> {
 	    	if (playerCount == 1) {
 	    		easyPane.getChildren().add(levelTwoPreview);
 	    		AnchorPane.setBottomAnchor(levelTwoPreview, 150d);
-		    	AnchorPane.setLeftAnchor(levelTwoPreview, 240d);
-	    	}// else {
-	    		//easyPane.getChildren().add(levelOnePreview2P);
-	    		//AnchorPane.setBottomAnchor(levelOnePreview2P, 150d);
-		    	//AnchorPane.setLeftAnchor(levelOnePreview2P, 240d);
-	    	//}
+		    	AnchorPane.setLeftAnchor(levelTwoPreview, 245d);
+	    	} else {
+	    	    easyPane.getChildren().add(levelTwoPreview2P);
+	    		AnchorPane.setBottomAnchor(levelTwoPreview2P, 150d);
+		    	AnchorPane.setLeftAnchor(levelTwoPreview2P, 240d);
+	    	}
 		});
 	    
 	    levelTwo.setOnMouseExited(actionEvent -> {
 	    	if (playerCount == 1) {
 	    		easyPane.getChildren().remove(levelTwoPreview);
-	    	}// else {
-	    	//	easyPane.getChildren().remove(levelOnePreview2P);
-	    	//}
+	    	} else {
+	    		easyPane.getChildren().remove(levelTwoPreview2P);
+	    	}
 		});
 	    
-	    AnchorPane.setTopAnchor(levelThree, 125d);
-	    AnchorPane.setLeftAnchor(levelThree, 430d);
+	    if (playerCount == 1) {
+	    	AnchorPane.setTopAnchor(levelThree, 125d);
+	    	AnchorPane.setLeftAnchor(levelThree, 430d);
+	    } else {
+	    	AnchorPane.setTopAnchor(levelThree, 125d);
+	    	AnchorPane.setLeftAnchor(levelThree, 550d);
+	    }
 	    
 	    Image levelThreeMap = new Image(new File("images/easy_3_preview.png").toURI().toString());
     	ImageView levelThreePreview = new ImageView(levelThreeMap);
     	levelThreePreview.setFitWidth(500);
     	levelThreePreview.setPreserveRatio(true);
     	
-    	//Image levelTwoMap2P = new Image(new File("images/easy2p_2_preview.png").toURI().toString());
-     	//ImageView levelTwoPreview2P = new ImageView(levelTwoMap2P);
-     	//levelTwoPreview2P.setFitWidth(500);
-     	//levelTwoPreview2P.setPreserveRatio(true);
+    	Image levelThreeMap2P = new Image(new File("images/easy2p_3_preview.png").toURI().toString());
+     	ImageView levelThreePreview2P = new ImageView(levelThreeMap2P);
+     	levelThreePreview2P.setFitWidth(500);
+     	levelThreePreview2P.setPreserveRatio(true);
     	
 	    levelThree.setOnMouseEntered(actionEvent -> {
 	    	if (playerCount == 1) {
 	    		easyPane.getChildren().add(levelThreePreview);
 	    		AnchorPane.setBottomAnchor(levelThreePreview, 150d);
-		    	AnchorPane.setLeftAnchor(levelThreePreview, 240d);
-	    	}// else {
-	    		//easyPane.getChildren().add(levelOnePreview2P);
-	    		//AnchorPane.setBottomAnchor(levelOnePreview2P, 150d);
-		    	//AnchorPane.setLeftAnchor(levelOnePreview2P, 240d);
-	    	//}
+		    	AnchorPane.setLeftAnchor(levelThreePreview, 245d);
+	    	} else {
+	    		easyPane.getChildren().add(levelThreePreview2P);
+	    		AnchorPane.setBottomAnchor(levelThreePreview2P, 150d);
+		    	AnchorPane.setLeftAnchor(levelThreePreview2P, 240d);
+	    	}
 		});
 	    
 	    levelThree.setOnMouseExited(actionEvent -> {
 	    	if (playerCount == 1) {
 	    		easyPane.getChildren().remove(levelThreePreview);
-	    	}// else {
-	    	//	easyPane.getChildren().remove(levelOnePreview2P);
-	    	//}
+	    	} else {
+	    		easyPane.getChildren().remove(levelThreePreview2P);
+	    	}
 		});
 	    
 	    
@@ -671,29 +711,18 @@ public class PuzzleHome extends Application {
     	levelFourPreview.setFitWidth(500);
     	levelFourPreview.setPreserveRatio(true);
     	
-    	//Image levelTwoMap2P = new Image(new File("images/easy2p_2_preview.png").toURI().toString());
-     	//ImageView levelTwoPreview2P = new ImageView(levelTwoMap2P);
-     	//levelTwoPreview2P.setFitWidth(500);
-     	//levelTwoPreview2P.setPreserveRatio(true);
-    	
 	    levelFour.setOnMouseEntered(actionEvent -> {
 	    	if (playerCount == 1) {
 	    		easyPane.getChildren().add(levelFourPreview);
 	    		AnchorPane.setBottomAnchor(levelFourPreview, 150d);
-		    	AnchorPane.setLeftAnchor(levelFourPreview, 240d);
-	    	}// else {
-	    		//easyPane.getChildren().add(levelOnePreview2P);
-	    		//AnchorPane.setBottomAnchor(levelOnePreview2P, 150d);
-		    	//AnchorPane.setLeftAnchor(levelOnePreview2P, 240d);
-	    	//}
+		    	AnchorPane.setLeftAnchor(levelFourPreview, 245d);
+	    	} 
 		});
 	    
 	    levelFour.setOnMouseExited(actionEvent -> {
 	    	if (playerCount == 1) {
 	    		easyPane.getChildren().remove(levelFourPreview);
-	    	}// else {
-	    	//	easyPane.getChildren().remove(levelOnePreview2P);
-	    	//}
+	    	}
 		});
 	    
 	    AnchorPane.setTopAnchor(levelFive, 125d);
@@ -704,29 +733,18 @@ public class PuzzleHome extends Application {
     	levelFivePreview.setFitWidth(500);
     	levelFivePreview.setPreserveRatio(true);
     	
-    	//Image levelTwoMap2P = new Image(new File("images/easy2p_2_preview.png").toURI().toString());
-     	//ImageView levelTwoPreview2P = new ImageView(levelTwoMap2P);
-     	//levelTwoPreview2P.setFitWidth(500);
-     	//levelTwoPreview2P.setPreserveRatio(true);
-    	
 	    levelFive.setOnMouseEntered(actionEvent -> {
 	    	if (playerCount == 1) {
 	    		easyPane.getChildren().add(levelFivePreview);
 	    		AnchorPane.setBottomAnchor(levelFivePreview, 150d);
-		    	AnchorPane.setLeftAnchor(levelFivePreview, 240d);
-	    	}// else {
-	    		//easyPane.getChildren().add(levelOnePreview2P);
-	    		//AnchorPane.setBottomAnchor(levelOnePreview2P, 150d);
-		    	//AnchorPane.setLeftAnchor(levelOnePreview2P, 240d);
-	    	//}
+		    	AnchorPane.setLeftAnchor(levelFivePreview, 245d);
+	    	}
 		});
 	    
 	    levelFive.setOnMouseExited(actionEvent -> {
 	    	if (playerCount == 1) {
 	    		easyPane.getChildren().remove(levelFivePreview);
-	    	}// else {
-	    	//	easyPane.getChildren().remove(levelOnePreview2P);
-	    	//}
+	    	}
 		});
 	    
 		Scene layoutDisplay = new Scene(easyPane, 960, 800);
@@ -774,7 +792,7 @@ public class PuzzleHome extends Application {
 	    BackgroundImage levelOneBackground = new BackgroundImage(new Image(new File("images/level1.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 	    Background levelOneImage = new Background(levelOneBackground);
 
-	    levelOne.setPrefSize(105, 109);
+	    levelOne.setPrefSize(200, 200);
 	    levelOne.setBackground(levelOneImage);
 	    
 	    levelOne.setOnAction(actionEvent -> {
@@ -790,7 +808,7 @@ public class PuzzleHome extends Application {
 	    BackgroundImage levelTwoBackground = new BackgroundImage(new Image(new File("images/level2.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 	    Background levelTwoImage = new Background(levelTwoBackground);
 	    
-	    levelTwo.setPrefSize(105, 109);
+	    levelTwo.setPrefSize(200, 200);
 	    levelTwo.setBackground(levelTwoImage);
 	    
 	    levelTwo.setOnAction(actionEvent -> {
@@ -806,7 +824,7 @@ public class PuzzleHome extends Application {
 	    BackgroundImage levelThreeBackground = new BackgroundImage(new Image(new File("images/level3.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 	    Background levelThreeImage = new Background(levelThreeBackground);
 	    
-	    levelThree.setPrefSize(105, 109);
+	    levelThree.setPrefSize(200, 200);
 	    levelThree.setBackground(levelThreeImage);
 	    
 	    levelThree.setOnAction(actionEvent -> {
@@ -822,7 +840,7 @@ public class PuzzleHome extends Application {
 	    BackgroundImage levelFourBackground = new BackgroundImage(new Image(new File("images/level4.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 	    Background levelFourImage = new Background(levelFourBackground);
 	    
-	    levelFour.setPrefSize(105, 109);
+	    levelFour.setPrefSize(200, 200);
 	    levelFour.setBackground(levelFourImage);
 	    
 	    levelFour.setOnAction(actionEvent -> {
@@ -838,7 +856,7 @@ public class PuzzleHome extends Application {
 	    BackgroundImage levelFiveBackground = new BackgroundImage(new Image(new File("images/level5.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 	    Background levelFiveImage = new Background(levelFiveBackground);
 	    
-	    levelFive.setPrefSize(105, 109);
+	    levelFive.setPrefSize(200, 200);
 	    levelFive.setBackground(levelFiveImage);
 
 	    levelFive.setOnAction(actionEvent -> {
@@ -852,11 +870,21 @@ public class PuzzleHome extends Application {
 	    
 		AnchorPane mediumPane = new AnchorPane();
 		mediumPane.setStyle(background);
-		mediumPane.getChildren().addAll(mediumTitleShow, levelOne, levelTwo, levelThree, levelFour, levelFive, menuButton);
-	    
-	    AnchorPane.setTopAnchor(levelOne, 125d);
-	    AnchorPane.setLeftAnchor(levelOne, 160d);
-	    
+		
+		if (playerCount == 1) {
+			mediumPane.getChildren().addAll(mediumTitleShow, levelOne, levelTwo, levelThree, levelFour, levelFive, menuButton);
+		} else {
+			mediumPane.getChildren().addAll(mediumTitleShow, levelOne, levelTwo, levelThree, menuButton);
+		}
+		
+		if (playerCount == 1) {
+			AnchorPane.setTopAnchor(levelOne, 125d);
+	    	AnchorPane.setLeftAnchor(levelOne, 160d);
+		} else {
+			AnchorPane.setTopAnchor(levelOne, 125d);
+	    	AnchorPane.setLeftAnchor(levelOne, 290d);
+		}
+		
 	    Image levelOneMap = new Image(new File("images/medium_1_preview.png").toURI().toString());
     	ImageView levelOnePreview = new ImageView(levelOneMap);
     	levelOnePreview.setFitWidth(500);
@@ -871,11 +899,11 @@ public class PuzzleHome extends Application {
 	    	if (playerCount == 1) {
 	    		mediumPane.getChildren().add(levelOnePreview);
 	    		AnchorPane.setBottomAnchor(levelOnePreview, 150d);
-		    	AnchorPane.setLeftAnchor(levelOnePreview, 240d);
+		    	AnchorPane.setLeftAnchor(levelOnePreview, 245d);
 	    	} else {
 	    		mediumPane.getChildren().add(levelOnePreview2P);
 	    		AnchorPane.setBottomAnchor(levelOnePreview2P, 150d);
-		    	AnchorPane.setLeftAnchor(levelOnePreview2P, 240d);
+		    	AnchorPane.setLeftAnchor(levelOnePreview2P, 245d);
 	    	}
 		});
 	    
@@ -887,70 +915,80 @@ public class PuzzleHome extends Application {
 	    	}
 		});
 	    
-	    AnchorPane.setTopAnchor(levelTwo, 125d);
-	    AnchorPane.setLeftAnchor(levelTwo, 295d);
+	    if (playerCount == 1) {
+	    	AnchorPane.setTopAnchor(levelTwo, 125d);
+	    	AnchorPane.setLeftAnchor(levelTwo, 295d);
+	    } else {
+	    	AnchorPane.setTopAnchor(levelTwo, 125d);
+	    	AnchorPane.setLeftAnchor(levelTwo, 420d);
+	    }
 	    
 	    Image levelTwoMap = new Image(new File("images/medium_2_preview.png").toURI().toString());
     	ImageView levelTwoPreview = new ImageView(levelTwoMap);
     	levelTwoPreview.setFitWidth(500);
     	levelTwoPreview.setPreserveRatio(true);
     	
-    	//Image levelTwoMap2P = new Image(new File("images/easy2p_2_preview.png").toURI().toString());
-     	//ImageView levelTwoPreview2P = new ImageView(levelTwoMap2P);
-     	//levelTwoPreview2P.setFitWidth(500);
-     	//levelTwoPreview2P.setPreserveRatio(true);
+    	Image levelTwoMap2P = new Image(new File("images/medium2p_2_preview.png").toURI().toString());
+     	ImageView levelTwoPreview2P = new ImageView(levelTwoMap2P);
+     	levelTwoPreview2P.setFitWidth(500);
+     	levelTwoPreview2P.setPreserveRatio(true);
     	
 	    levelTwo.setOnMouseEntered(actionEvent -> {
 	    	if (playerCount == 1) {
 	    		mediumPane.getChildren().add(levelTwoPreview);
 	    		AnchorPane.setBottomAnchor(levelTwoPreview, 150d);
-		    	AnchorPane.setLeftAnchor(levelTwoPreview, 240d);
-	    	}// else {
-	    		//easyPane.getChildren().add(levelOnePreview2P);
-	    		//AnchorPane.setBottomAnchor(levelOnePreview2P, 150d);
-		    	//AnchorPane.setLeftAnchor(levelOnePreview2P, 240d);
-	    	//}
+		    	AnchorPane.setLeftAnchor(levelTwoPreview, 245d);
+	    	} else {
+	    		mediumPane.getChildren().add(levelTwoPreview2P);
+	    		AnchorPane.setBottomAnchor(levelTwoPreview2P, 150d);
+		    	AnchorPane.setLeftAnchor(levelTwoPreview2P, 240d);
+	    	}
 		});
 	    
 	    levelTwo.setOnMouseExited(actionEvent -> {
 	    	if (playerCount == 1) {
 	    		mediumPane.getChildren().remove(levelTwoPreview);
-	    	}// else {
-	    	//	easyPane.getChildren().remove(levelOnePreview2P);
-	    	//}
+	    	} else {
+	    		mediumPane.getChildren().remove(levelTwoPreview2P);
+	    	}
 		});
 	    
-	    AnchorPane.setTopAnchor(levelThree, 125d);
-	    AnchorPane.setLeftAnchor(levelThree, 430d);
+	    if (playerCount == 1) {
+	    	AnchorPane.setTopAnchor(levelThree, 125d);
+	    	AnchorPane.setLeftAnchor(levelThree, 430d);
+	    } else {
+	    	AnchorPane.setTopAnchor(levelThree, 125d);
+	    	AnchorPane.setLeftAnchor(levelThree, 550d);
+	    }
 	    
 	    Image levelThreeMap = new Image(new File("images/medium_3_preview.png").toURI().toString());
     	ImageView levelThreePreview = new ImageView(levelThreeMap);
     	levelThreePreview.setFitWidth(500);
     	levelThreePreview.setPreserveRatio(true);
     	
-    	//Image levelTwoMap2P = new Image(new File("images/easy2p_2_preview.png").toURI().toString());
-     	//ImageView levelTwoPreview2P = new ImageView(levelTwoMap2P);
-     	//levelTwoPreview2P.setFitWidth(500);
-     	//levelTwoPreview2P.setPreserveRatio(true);
+    	Image levelThreeMap2P = new Image(new File("images/medium2p_3_preview.png").toURI().toString());
+     	ImageView levelThreePreview2P = new ImageView(levelThreeMap2P);
+     	levelThreePreview2P.setFitWidth(500);
+     	levelThreePreview2P.setPreserveRatio(true);
     	
 	    levelThree.setOnMouseEntered(actionEvent -> {
 	    	if (playerCount == 1) {
 	    		mediumPane.getChildren().add(levelThreePreview);
 	    		AnchorPane.setBottomAnchor(levelThreePreview, 150d);
-		    	AnchorPane.setLeftAnchor(levelThreePreview, 240d);
-	    	}// else {
-	    		//easyPane.getChildren().add(levelOnePreview2P);
-	    		//AnchorPane.setBottomAnchor(levelOnePreview2P, 150d);
-		    	//AnchorPane.setLeftAnchor(levelOnePreview2P, 240d);
-	    	//}
+		    	AnchorPane.setLeftAnchor(levelThreePreview, 245d);
+	    	} else {
+	    		mediumPane.getChildren().add(levelThreePreview2P);
+	    		AnchorPane.setBottomAnchor(levelThreePreview2P, 150d);
+		    	AnchorPane.setLeftAnchor(levelThreePreview2P, 240d);
+	    	}
 		});
 	    
 	    levelThree.setOnMouseExited(actionEvent -> {
 	    	if (playerCount == 1) {
 	    		mediumPane.getChildren().remove(levelThreePreview);
-	    	}// else {
-	    	//	easyPane.getChildren().remove(levelOnePreview2P);
-	    	//}
+	    	} else {
+	    		mediumPane.getChildren().remove(levelThreePreview2P);
+	    	}
 		});
 	    
 	    AnchorPane.setTopAnchor(levelFour, 125d);
@@ -960,30 +998,19 @@ public class PuzzleHome extends Application {
     	ImageView levelFourPreview = new ImageView(levelFourMap);
     	levelFourPreview.setFitWidth(500);
     	levelFourPreview.setPreserveRatio(true);
-    	
-    	//Image levelTwoMap2P = new Image(new File("images/easy2p_2_preview.png").toURI().toString());
-     	//ImageView levelTwoPreview2P = new ImageView(levelTwoMap2P);
-     	//levelTwoPreview2P.setFitWidth(500);
-     	//levelTwoPreview2P.setPreserveRatio(true);
-    	
+
 	    levelFour.setOnMouseEntered(actionEvent -> {
 	    	if (playerCount == 1) {
 	    		mediumPane.getChildren().add(levelFourPreview);
 	    		AnchorPane.setBottomAnchor(levelFourPreview, 150d);
-		    	AnchorPane.setLeftAnchor(levelFourPreview, 240d);
-	    	}// else {
-	    		//easyPane.getChildren().add(levelOnePreview2P);
-	    		//AnchorPane.setBottomAnchor(levelOnePreview2P, 150d);
-		    	//AnchorPane.setLeftAnchor(levelOnePreview2P, 240d);
-	    	//}
+		    	AnchorPane.setLeftAnchor(levelFourPreview, 245d);
+	    	} 
 		});
 	    
 	    levelFour.setOnMouseExited(actionEvent -> {
 	    	if (playerCount == 1) {
 	    		mediumPane.getChildren().remove(levelFourPreview);
-	    	}// else {
-	    	//	easyPane.getChildren().remove(levelOnePreview2P);
-	    	//}
+	    	}
 		});
 	    
 	    AnchorPane.setTopAnchor(levelFive, 125d);
@@ -994,29 +1021,18 @@ public class PuzzleHome extends Application {
     	levelFivePreview.setFitWidth(500);
     	levelFivePreview.setPreserveRatio(true);
     	
-    	//Image levelTwoMap2P = new Image(new File("images/easy2p_2_preview.png").toURI().toString());
-     	//ImageView levelTwoPreview2P = new ImageView(levelTwoMap2P);
-     	//levelTwoPreview2P.setFitWidth(500);
-     	//levelTwoPreview2P.setPreserveRatio(true);
-    	
 	    levelFive.setOnMouseEntered(actionEvent -> {
 	    	if (playerCount == 1) {
 	    		mediumPane.getChildren().add(levelFivePreview);
 	    		AnchorPane.setBottomAnchor(levelFivePreview, 150d);
-		    	AnchorPane.setLeftAnchor(levelFivePreview, 240d);
-	    	}// else {
-	    		//easyPane.getChildren().add(levelOnePreview2P);
-	    		//AnchorPane.setBottomAnchor(levelOnePreview2P, 150d);
-		    	//AnchorPane.setLeftAnchor(levelOnePreview2P, 240d);
-	    	//}
+		    	AnchorPane.setLeftAnchor(levelFivePreview, 245d);
+	    	} 
 		});
 	    
 	    levelFive.setOnMouseExited(actionEvent -> {
 	    	if (playerCount == 1) {
 	    		mediumPane.getChildren().remove(levelFivePreview);
-	    	}// else {
-	    	//	easyPane.getChildren().remove(levelOnePreview2P);
-	    	//}
+	    	} 
 		});
 	    
 		Scene layoutDisplay = new Scene(mediumPane, 960, 800);
@@ -1064,7 +1080,7 @@ public class PuzzleHome extends Application {
 	    BackgroundImage levelOneBackground = new BackgroundImage(new Image(new File("images/level1.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 	    Background levelOneImage = new Background(levelOneBackground);
 
-	    levelOne.setPrefSize(105, 109);
+	    levelOne.setPrefSize(200, 200);
 	    levelOne.setBackground(levelOneImage);
 	    
 	    levelOne.setOnAction(actionEvent -> {
@@ -1080,7 +1096,7 @@ public class PuzzleHome extends Application {
 	    BackgroundImage levelTwoBackground = new BackgroundImage(new Image(new File("images/level2.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 	    Background levelTwoImage = new Background(levelTwoBackground);
 	    
-	    levelTwo.setPrefSize(105, 109);
+	    levelTwo.setPrefSize(200, 200);
 	    levelTwo.setBackground(levelTwoImage);
 	    
 	    levelTwo.setOnAction(actionEvent -> {
@@ -1096,7 +1112,7 @@ public class PuzzleHome extends Application {
 	    BackgroundImage levelThreeBackground = new BackgroundImage(new Image(new File("images/level3.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 	    Background levelThreeImage = new Background(levelThreeBackground);
 	    
-	    levelThree.setPrefSize(105, 109);
+	    levelThree.setPrefSize(200, 200);
 	    levelThree.setBackground(levelThreeImage);
 	    
 	    levelThree.setOnAction(actionEvent -> {
@@ -1112,7 +1128,7 @@ public class PuzzleHome extends Application {
 	    BackgroundImage levelFourBackground = new BackgroundImage(new Image(new File("images/level4.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 	    Background levelFourImage = new Background(levelFourBackground);
 	    
-	    levelFour.setPrefSize(105, 109);
+	    levelFour.setPrefSize(200, 200);
 	    levelFour.setBackground(levelFourImage);
 	    
 	    levelFour.setOnAction(actionEvent -> {
@@ -1128,7 +1144,7 @@ public class PuzzleHome extends Application {
 	    BackgroundImage levelFiveBackground = new BackgroundImage(new Image(new File("images/level5.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 	    Background levelFiveImage = new Background(levelFiveBackground);
 	    
-	    levelFive.setPrefSize(105, 109);
+	    levelFive.setPrefSize(200, 200);
 	    levelFive.setBackground(levelFiveImage);
 
 	    levelFive.setOnAction(actionEvent -> {
@@ -1142,11 +1158,21 @@ public class PuzzleHome extends Application {
 	    
 		AnchorPane hardPane = new AnchorPane();
 		hardPane.setStyle(background);
-		hardPane.getChildren().addAll(hardTitleShow, levelOne, levelTwo, levelThree, levelFour, levelFive, menuButton);
-	    
-	    AnchorPane.setTopAnchor(levelOne, 125d);
-	    AnchorPane.setLeftAnchor(levelOne, 160d);
-	    
+		
+		if (playerCount == 1) {
+			hardPane.getChildren().addAll(hardTitleShow, levelOne, levelTwo, levelThree, levelFour, levelFive, menuButton);
+		} else {
+			hardPane.getChildren().addAll(hardTitleShow, levelOne, levelTwo, levelThree, menuButton);
+		}
+		
+		if (playerCount == 1) {
+			AnchorPane.setTopAnchor(levelOne, 125d);
+	    	AnchorPane.setLeftAnchor(levelOne, 160d);
+		} else {
+			AnchorPane.setTopAnchor(levelOne, 125d);
+	    	AnchorPane.setLeftAnchor(levelOne, 290d);
+		}
+		
 	    Image levelOneMap = new Image(new File("images/hard_1_preview.png").toURI().toString());
     	ImageView levelOnePreview = new ImageView(levelOneMap);
     	levelOnePreview.setFitWidth(500);
@@ -1161,11 +1187,11 @@ public class PuzzleHome extends Application {
 	    	if (playerCount == 1) {
 	    		hardPane.getChildren().add(levelOnePreview);
 	    		AnchorPane.setBottomAnchor(levelOnePreview, 150d);
-		    	AnchorPane.setLeftAnchor(levelOnePreview, 240d);
+		    	AnchorPane.setLeftAnchor(levelOnePreview, 245d);
 	    	} else {
 	    		hardPane.getChildren().add(levelOnePreview2P);
 	    		AnchorPane.setBottomAnchor(levelOnePreview2P, 150d);
-		    	AnchorPane.setLeftAnchor(levelOnePreview2P, 240d);
+		    	AnchorPane.setLeftAnchor(levelOnePreview2P, 245d);
 	    	}
 		});
 	    
@@ -1177,72 +1203,81 @@ public class PuzzleHome extends Application {
 	    	}
 		});
 	    
-	    AnchorPane.setTopAnchor(levelTwo, 125d);
-	    AnchorPane.setLeftAnchor(levelTwo, 295d);
+	    if (playerCount == 1) {
+	    	AnchorPane.setTopAnchor(levelTwo, 125d);
+	    	AnchorPane.setLeftAnchor(levelTwo, 295d);
+	    } else {
+	    	AnchorPane.setTopAnchor(levelTwo, 125d);
+	    	AnchorPane.setLeftAnchor(levelTwo, 420d);
+	    }
 	    
 	    Image levelTwoMap = new Image(new File("images/hard_2_preview.png").toURI().toString());
     	ImageView levelTwoPreview = new ImageView(levelTwoMap);
     	levelTwoPreview.setFitWidth(500);
     	levelTwoPreview.setPreserveRatio(true);
     	
-    	//Image levelTwoMap2P = new Image(new File("images/easy2p_2_preview.png").toURI().toString());
-     	//ImageView levelTwoPreview2P = new ImageView(levelTwoMap2P);
-     	//levelTwoPreview2P.setFitWidth(500);
-     	//levelTwoPreview2P.setPreserveRatio(true);
+    	Image levelTwoMap2P = new Image(new File("images/hard2p_2_preview.png").toURI().toString());
+     	ImageView levelTwoPreview2P = new ImageView(levelTwoMap2P);
+     	levelTwoPreview2P.setFitWidth(500);
+     	levelTwoPreview2P.setPreserveRatio(true);
     	
 	    levelTwo.setOnMouseEntered(actionEvent -> {
 	    	if (playerCount == 1) {
 	    		hardPane.getChildren().add(levelTwoPreview);
 	    		AnchorPane.setBottomAnchor(levelTwoPreview, 150d);
-		    	AnchorPane.setLeftAnchor(levelTwoPreview, 240d);
-	    	}// else {
-	    		//easyPane.getChildren().add(levelOnePreview2P);
-	    		//AnchorPane.setBottomAnchor(levelOnePreview2P, 150d);
-		    	//AnchorPane.setLeftAnchor(levelOnePreview2P, 240d);
-	    	//}
+		    	AnchorPane.setLeftAnchor(levelTwoPreview, 245d);
+	    	} else {
+	    		hardPane.getChildren().add(levelTwoPreview2P);
+	    		AnchorPane.setBottomAnchor(levelTwoPreview2P, 150d);
+		    	AnchorPane.setLeftAnchor(levelTwoPreview2P, 240d);
+	    	}
 		});
 	    
 	    levelTwo.setOnMouseExited(actionEvent -> {
 	    	if (playerCount == 1) {
 	    		hardPane.getChildren().remove(levelTwoPreview);
-	    	}// else {
-	    	//	easyPane.getChildren().remove(levelOnePreview2P);
-	    	//}
+	    	} else {
+	    		hardPane.getChildren().remove(levelTwoPreview2P);
+	    	}
 		});
 	    
-	    AnchorPane.setTopAnchor(levelThree, 125d);
-	    AnchorPane.setLeftAnchor(levelThree, 430d);
+	    if (playerCount == 1) {
+	    	AnchorPane.setTopAnchor(levelThree, 125d);
+	    	AnchorPane.setLeftAnchor(levelThree, 430d);
+	    } else {
+	    	AnchorPane.setTopAnchor(levelThree, 125d);
+	    	AnchorPane.setLeftAnchor(levelThree, 550d);
+	    }
 	    
 	    Image levelThreeMap = new Image(new File("images/hard_3_preview.png").toURI().toString());
     	ImageView levelThreePreview = new ImageView(levelThreeMap);
     	levelThreePreview.setFitWidth(500);
     	levelThreePreview.setPreserveRatio(true);
     	
-    	//Image levelTwoMap2P = new Image(new File("images/easy2p_2_preview.png").toURI().toString());
-     	//ImageView levelTwoPreview2P = new ImageView(levelTwoMap2P);
-     	//levelTwoPreview2P.setFitWidth(500);
-     	//levelTwoPreview2P.setPreserveRatio(true);
+    	Image levelThreeMap2P = new Image(new File("images/hard2p_3_preview.png").toURI().toString());
+     	ImageView levelThreePreview2P = new ImageView(levelThreeMap2P);
+     	levelThreePreview2P.setFitWidth(500);
+     	levelThreePreview2P.setPreserveRatio(true);
     	
 	    levelThree.setOnMouseEntered(actionEvent -> {
 	    	if (playerCount == 1) {
 	    		hardPane.getChildren().add(levelThreePreview);
 	    		AnchorPane.setBottomAnchor(levelThreePreview, 150d);
-		    	AnchorPane.setLeftAnchor(levelThreePreview, 240d);
-	    	}// else {
-	    		//easyPane.getChildren().add(levelOnePreview2P);
-	    		//AnchorPane.setBottomAnchor(levelOnePreview2P, 150d);
-		    	//AnchorPane.setLeftAnchor(levelOnePreview2P, 240d);
-	    	//}
+		    	AnchorPane.setLeftAnchor(levelThreePreview, 245d);
+	    	} else {
+	    		hardPane.getChildren().add(levelThreePreview2P);
+	    		AnchorPane.setBottomAnchor(levelThreePreview2P, 150d);
+		    	AnchorPane.setLeftAnchor(levelThreePreview2P, 240d);
+	    	}
 		});
 	    
 	    levelThree.setOnMouseExited(actionEvent -> {
 	    	if (playerCount == 1) {
 	    		hardPane.getChildren().remove(levelThreePreview);
-	    	}// else {
-	    	//	easyPane.getChildren().remove(levelOnePreview2P);
-	    	//}
+	    	} else {
+	    		hardPane.getChildren().remove(levelThreePreview2P);
+	    	}
 		});
-	    
 	    
 	    AnchorPane.setTopAnchor(levelFour, 125d);
 	    AnchorPane.setLeftAnchor(levelFour, 565d);
@@ -1252,29 +1287,18 @@ public class PuzzleHome extends Application {
     	levelFourPreview.setFitWidth(500);
     	levelFourPreview.setPreserveRatio(true);
     	
-    	//Image levelTwoMap2P = new Image(new File("images/easy2p_2_preview.png").toURI().toString());
-     	//ImageView levelTwoPreview2P = new ImageView(levelTwoMap2P);
-     	//levelTwoPreview2P.setFitWidth(500);
-     	//levelTwoPreview2P.setPreserveRatio(true);
-    	
 	    levelFour.setOnMouseEntered(actionEvent -> {
 	    	if (playerCount == 1) {
 	    		hardPane.getChildren().add(levelFourPreview);
 	    		AnchorPane.setBottomAnchor(levelFourPreview, 150d);
-		    	AnchorPane.setLeftAnchor(levelFourPreview, 240d);
-	    	}// else {
-	    		//easyPane.getChildren().add(levelOnePreview2P);
-	    		//AnchorPane.setBottomAnchor(levelOnePreview2P, 150d);
-		    	//AnchorPane.setLeftAnchor(levelOnePreview2P, 240d);
-	    	//}
+		    	AnchorPane.setLeftAnchor(levelFourPreview, 245d);
+	    	}
 		});
 	    
 	    levelFour.setOnMouseExited(actionEvent -> {
 	    	if (playerCount == 1) {
 	    		hardPane.getChildren().remove(levelFourPreview);
-	    	}// else {
-	    	//	easyPane.getChildren().remove(levelOnePreview2P);
-	    	//}
+	    	}
 		});
 	    
 	    AnchorPane.setTopAnchor(levelFive, 125d);
@@ -1285,31 +1309,20 @@ public class PuzzleHome extends Application {
     	levelFivePreview.setFitWidth(500);
     	levelFivePreview.setPreserveRatio(true);
     	
-    	//Image levelTwoMap2P = new Image(new File("images/easy2p_2_preview.png").toURI().toString());
-     	//ImageView levelTwoPreview2P = new ImageView(levelTwoMap2P);
-     	//levelTwoPreview2P.setFitWidth(500);
-     	//levelTwoPreview2P.setPreserveRatio(true);
-    	
 	    levelFive.setOnMouseEntered(actionEvent -> {
 	    	if (playerCount == 1) {
 	    		hardPane.getChildren().add(levelFivePreview);
 	    		AnchorPane.setBottomAnchor(levelFivePreview, 150d);
-		    	AnchorPane.setLeftAnchor(levelFivePreview, 240d);
-	    	}// else {
-	    		//easyPane.getChildren().add(levelOnePreview2P);
-	    		//AnchorPane.setBottomAnchor(levelOnePreview2P, 150d);
-		    	//AnchorPane.setLeftAnchor(levelOnePreview2P, 240d);
-	    	//}
+		    	AnchorPane.setLeftAnchor(levelFivePreview, 245d);
+	    	}
 		});
 	    
 	    levelFive.setOnMouseExited(actionEvent -> {
 	    	if (playerCount == 1) {
 	    		hardPane.getChildren().remove(levelFivePreview);
-	    	}// else {
-	    	//	easyPane.getChildren().remove(levelOnePreview2P);
-	    	//}
+	    	}
 		});
-	    
+    
 		Scene layoutDisplay = new Scene(hardPane, 960, 800);
 		return layoutDisplay;
 	}

@@ -53,20 +53,18 @@ public class PuzzleHome extends Application {
 		Scene helpScene = new Scene(helpPane);
 		// Set the size of the windows
 		helpPane.setPrefSize(960, 800);
-		// Add black background with orange border
-		helpPane.setStyle(background);
+		// Add black background
+		helpPane.setStyle("-fx-background-color: #000000");
 		
 		// Create title called instructions
 		Text title = new Text();
 		title.setText("Instructions\n");
 		title.setFont(Font.font ("Fixedsys Excelsior 3.01", 80));
 		title.setFill(Color.WHITE);
-		title.setTranslateY(30);
 		
 		// Position the title at the top
 		helpPane.setTop(title);
 		BorderPane.setAlignment(title, Pos.CENTER);
-		
 		
 		// Left pane will contain the Player 1 control keys
 		VBox leftBox = new VBox(4);
@@ -124,7 +122,7 @@ public class PuzzleHome extends Application {
 		VBox centerContent = new VBox(2);
 		
 		// Center image
-		Image centerImage = new Image("File:images/title.png");
+		Image centerImage = new Image("File:images/main.png");
 		ImageView centerImageNode = new ImageView(centerImage);
 		
 		Text info = new Text();
@@ -150,14 +148,12 @@ public class PuzzleHome extends Application {
 		// Adding the main menu button to the instruction page
 		HBox bottomBox = new HBox();
 		
-		
 		Button mainMenuButton = new Button("");
     	BackgroundImage mainMenuBackgroundWithoutArrow = new BackgroundImage( new Image(new File("images/mainMenu.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
         Background mainMenuWithoutArrow = new Background(mainMenuBackgroundWithoutArrow);
         BackgroundImage mainMenuBackgroundWithArrow = new BackgroundImage( new Image(new File("images/mainMenu_arrow.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
         Background mainMenuWithArrow = new Background(mainMenuBackgroundWithArrow);
-    	mainMenuButton.setPrefSize(177, 59);
-    	//HBox.setMargin(bottomBox, new Insets(100, 50, -10, 160));
+    	mainMenuButton.setPrefSize(200, 59);
     	mainMenuButton.setBackground(mainMenuWithoutArrow);
     	
     	mainMenuButton.setOnMouseEntered(actionEvent -> {
@@ -173,12 +169,9 @@ public class PuzzleHome extends Application {
     	});
     	
 		bottomBox.getChildren().add(mainMenuButton);
-		
+		bottomBox.setAlignment(Pos.BOTTOM_RIGHT);
 		helpPane.setBottom(bottomBox);
-		//System.out.println("bottomBox X layout = " + bottomBox.getLayoutX() + " bottomBox Y layout = " + bottomBox.getLayoutY());
-		bottomBox.setTranslateX(756);
-		bottomBox.setTranslateY(-40);
-		//System.out.println("bottomBox X layout = " + bottomBox.getLayoutX() + " bottomBox Y layout = " + bottomBox.getLayoutY());
+		
 		return helpScene;
 	}
 
@@ -278,34 +271,34 @@ public class PuzzleHome extends Application {
 	}
 
 	private Scene selectDifficulty(Stage primaryStage, Scene menu, int playerCount) {
-PuzzleGame game = new PuzzleGame();
+		PuzzleGame game = new PuzzleGame();
 		
 		AnchorPane difficultyPane = new AnchorPane();
 		difficultyPane.setStyle(background);
 		
 		Image singleTitle = new Image(new File("images/1Player_title.png").toURI().toString());
 		ImageView singleTitleShow = new ImageView(singleTitle);
-		singleTitleShow.setFitWidth(300);
+		singleTitleShow.setFitWidth(280);
 		singleTitleShow.setPreserveRatio(true);
     	
 	    AnchorPane.setTopAnchor(singleTitleShow, 85d);
-	    AnchorPane.setLeftAnchor(singleTitleShow, 335d);	    
+	    AnchorPane.setLeftAnchor(singleTitleShow, 340d);	    
 	    difficultyPane.getChildren().add(singleTitleShow); 
 	    
 		Image singlePicture = new Image(new File("images/player1_difficulty.png").toURI().toString());
 		ImageView singlePictureShow = new ImageView(singlePicture);
-		singlePictureShow.setFitWidth(350);
+		singlePictureShow.setFitWidth(320);
 		singlePictureShow.setPreserveRatio(true);
     	
 	    AnchorPane.setTopAnchor(singlePictureShow, 180d);
-	    AnchorPane.setLeftAnchor(singlePictureShow, 300d);	    
+	    AnchorPane.setLeftAnchor(singlePictureShow, 320d);	    
 	    difficultyPane.getChildren().add(singlePictureShow); 
 	    
 		Button easyButton = new Button("");
 		BackgroundImage easyButtonBackground = new BackgroundImage(new Image(new File("images/easy_selection.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 	    Background easyButtonImage = new Background(easyButtonBackground);
 	    easyButton.setBackground(easyButtonImage);
-	    easyButton.setPrefSize(240, 100);
+	    easyButton.setPrefSize(300, 100);
 	    
 	    BackgroundImage easyButtonBackgroundHover = new BackgroundImage(new Image(new File("images/easy_selection_arrow.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 	    Background easyButtonImageHover = new Background(easyButtonBackgroundHover);
@@ -322,8 +315,8 @@ PuzzleGame game = new PuzzleGame();
      		easyButton.setBackground(easyButtonImage);
 		});
 	    
-	    AnchorPane.setTopAnchor(easyButton, 430d);
-	    AnchorPane.setLeftAnchor(easyButton, 310d);	    
+	    AnchorPane.setTopAnchor(easyButton, 420d);
+	    AnchorPane.setLeftAnchor(easyButton, 380d);	    
 	    difficultyPane.getChildren().add(easyButton); 
 	    
 	    Button mediumButton = new Button("");
@@ -347,8 +340,8 @@ PuzzleGame game = new PuzzleGame();
 	    	mediumButton.setBackground(mediumButtonImage);
 		});
 	    
-	    AnchorPane.setTopAnchor(mediumButton, 520d);
-	    AnchorPane.setLeftAnchor(mediumButton, 330d);	    
+	    AnchorPane.setTopAnchor(mediumButton, 490d);
+	    AnchorPane.setLeftAnchor(mediumButton, 380d);	    
 	    difficultyPane.getChildren().add(mediumButton); 
 	    
 	    Button hardButton = new Button("");
@@ -372,20 +365,19 @@ PuzzleGame game = new PuzzleGame();
 	    	hardButton.setBackground(hardButtonImage);
 		});
 	    
-	    AnchorPane.setTopAnchor(hardButton, 610d);
-	    AnchorPane.setLeftAnchor(hardButton, 330d);	    
+	    AnchorPane.setTopAnchor(hardButton, 555d);
+	    AnchorPane.setLeftAnchor(hardButton, 380d);	    
 	    difficultyPane.getChildren().add(hardButton); 
 	    
 	    Button menuButton = new Button("");
 	    BackgroundImage menuButtonBackground = new BackgroundImage(new Image(new File("images/main.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 	    Background menuButtonImage = new Background(menuButtonBackground);
 	    menuButton.setBackground(menuButtonImage);
-	    menuButton.setPrefSize(200, 100);
+	    menuButton.setPrefSize(300, 100);
 	    
 	    BackgroundImage menuButtonBackgroundHover = new BackgroundImage(new Image(new File("images/main_arrow.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 	    Background menuButtonImageHover = new Background(menuButtonBackgroundHover);
 	    menuButton.setBackground(menuButtonImage);
-	    menuButton.setPrefSize(200, 100);
 	    
 	    menuButton.setOnAction(actionEvent -> {
 	    	primaryStage.setScene(menu);
@@ -401,16 +393,25 @@ PuzzleGame game = new PuzzleGame();
 		});
 	    
     	AnchorPane.setBottomAnchor(menuButton, 20d);
-	    AnchorPane.setLeftAnchor(menuButton, 700d);
+	    AnchorPane.setLeftAnchor(menuButton, 680d);
 	    difficultyPane.getChildren().add(menuButton);
 	    
-		Button customMap = new Button("Custom Map");
-
+		Button customMap = new Button("");
+		BackgroundImage customMapBackground = new BackgroundImage(new Image(new File("images/custom_map_select.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+		Background customMapImage = new Background(customMapBackground);
+		customMap.setBackground(customMapImage);
+		customMap.setPrefSize(320, 100);
+		
+		BackgroundImage customMapBackgroundHover = new BackgroundImage(new Image(new File("images/custom_map_select_arrow.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+	    Background customMapImageHover = new Background(customMapBackgroundHover);
+	    customMap.setBackground(customMapImage);
+	    
 		customMap.setOnAction(actionEvent -> {
 			FileChooser fileChooser = new FileChooser();
 			fileChooser.setTitle("Open Map File");
 			fileChooser.getExtensionFilters().addAll(new ExtensionFilter("Map Files", "*.map"));
 			File f = fileChooser.showOpenDialog(primaryStage);
+			
 			if (f != null) {
 				if (readMap(f) == null ) {
 		        	Alert confirmExit = new Alert(AlertType.ERROR, "File must be of correct type", ButtonType.OK);
@@ -421,7 +422,19 @@ PuzzleGame game = new PuzzleGame();
 				}
 			}
 		});
-
+		
+		customMap.setOnMouseEntered(actionEvent -> {
+			customMap.setBackground(customMapImageHover);
+		});
+	    
+		customMap.setOnMouseExited(actionEvent -> {
+			customMap.setBackground(customMapImage);
+		});
+		
+	    AnchorPane.setTopAnchor(customMap, 620d);
+	    AnchorPane.setLeftAnchor(customMap, 310d);	
+	    difficultyPane.getChildren().add(customMap);
+	    
 		Scene difficultyScene = new Scene(difficultyPane, 960, 800);
 		return difficultyScene;
 	}
@@ -442,12 +455,11 @@ PuzzleGame game = new PuzzleGame();
 	    BackgroundImage menuButtonBackground = new BackgroundImage(new Image(new File("images/main.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 	    Background menuButtonImage = new Background(menuButtonBackground);
 	    menuButton.setBackground(menuButtonImage);
-	    menuButton.setPrefSize(200, 100);
+	    menuButton.setPrefSize(300, 100);
 	    
 	    BackgroundImage menuButtonBackgroundHover = new BackgroundImage(new Image(new File("images/main_arrow.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 	    Background menuButtonImageHover = new Background(menuButtonBackgroundHover);
 	    menuButton.setBackground(menuButtonImage);
-	    menuButton.setPrefSize(200, 100);
 	    
 	    menuButton.setOnAction(actionEvent -> {
 	    	primaryStage.setScene(menu);
@@ -455,7 +467,6 @@ PuzzleGame game = new PuzzleGame();
 	    
 	    menuButton.setOnMouseEntered(actionEvent -> {
 	    	menuButton.setBackground(menuButtonImageHover);
-	    	menuButton.setPrefSize(300, 100);
 		});
 	    
 	    menuButton.setOnMouseExited(actionEvent -> {
@@ -463,7 +474,7 @@ PuzzleGame game = new PuzzleGame();
 		});
 	    
     	AnchorPane.setBottomAnchor(menuButton, 20d);
-	    AnchorPane.setLeftAnchor(menuButton, 390d);
+	    AnchorPane.setLeftAnchor(menuButton, 360d);
 	    	
 		HBox levelSelect = new HBox();
 		levelSelect.setSpacing(10);
@@ -735,20 +746,18 @@ PuzzleGame game = new PuzzleGame();
 	    BackgroundImage menuButtonBackground = new BackgroundImage(new Image(new File("images/main.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 	    Background menuButtonImage = new Background(menuButtonBackground);
 	    menuButton.setBackground(menuButtonImage);
-	    menuButton.setPrefSize(200, 100);
+	    menuButton.setPrefSize(300, 100);
 	    
 	    BackgroundImage menuButtonBackgroundHover = new BackgroundImage(new Image(new File("images/main_arrow.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 	    Background menuButtonImageHover = new Background(menuButtonBackgroundHover);
 	    menuButton.setBackground(menuButtonImage);
-	    menuButton.setPrefSize(200, 100);
-	    
+
 	    menuButton.setOnAction(actionEvent -> {
 	    	primaryStage.setScene(menu);
 	    });
 	    
 	    menuButton.setOnMouseEntered(actionEvent -> {
 	    	menuButton.setBackground(menuButtonImageHover);
-	    	menuButton.setPrefSize(300, 100);
 		});
 	    
 	    menuButton.setOnMouseExited(actionEvent -> {
@@ -756,7 +765,7 @@ PuzzleGame game = new PuzzleGame();
 		});
 	    
     	AnchorPane.setBottomAnchor(menuButton, 20d);
-	    AnchorPane.setLeftAnchor(menuButton, 390d);
+	    AnchorPane.setLeftAnchor(menuButton, 370d);
 	    	
 		HBox levelSelect = new HBox();
 		levelSelect.setSpacing(10);
@@ -1027,20 +1036,18 @@ PuzzleGame game = new PuzzleGame();
 	    BackgroundImage menuButtonBackground = new BackgroundImage(new Image(new File("images/main.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 	    Background menuButtonImage = new Background(menuButtonBackground);
 	    menuButton.setBackground(menuButtonImage);
-	    menuButton.setPrefSize(200, 100);
+	    menuButton.setPrefSize(300, 100);
 	    
 	    BackgroundImage menuButtonBackgroundHover = new BackgroundImage(new Image(new File("images/main_arrow.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 	    Background menuButtonImageHover = new Background(menuButtonBackgroundHover);
 	    menuButton.setBackground(menuButtonImage);
-	    menuButton.setPrefSize(200, 100);
-	    
+
 	    menuButton.setOnAction(actionEvent -> {
 	    	primaryStage.setScene(menu);
 	    });
 	    
 	    menuButton.setOnMouseEntered(actionEvent -> {
 	    	menuButton.setBackground(menuButtonImageHover);
-	    	menuButton.setPrefSize(300, 100);
 		});
 	    
 	    menuButton.setOnMouseExited(actionEvent -> {
@@ -1048,7 +1055,7 @@ PuzzleGame game = new PuzzleGame();
 		});
 	    
     	AnchorPane.setBottomAnchor(menuButton, 20d);
-	    AnchorPane.setLeftAnchor(menuButton, 390d);
+	    AnchorPane.setLeftAnchor(menuButton, 370d);
 	    	
 		HBox levelSelect = new HBox();
 		levelSelect.setSpacing(10);

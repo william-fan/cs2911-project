@@ -391,7 +391,6 @@ public class PuzzleGame {
 	    
 	    replayButton.setOnMouseEntered(actionEvent -> {
 	    	replayButton.setBackground(replayButtonImageHover);
-	    	replayButton.setPrefSize(300, 100);
 		});
 	    
 	    replayButton.setOnMouseExited(actionEvent -> {
@@ -399,7 +398,7 @@ public class PuzzleGame {
 		});
 	    
     	AnchorPane.setBottomAnchor(replayButton, 20d);
-	    AnchorPane.setLeftAnchor(replayButton, 100d);
+	    AnchorPane.setLeftAnchor(replayButton, 80d);
 	    
 	    // level select button
 	    Button levelButton = new Button("");
@@ -419,7 +418,6 @@ public class PuzzleGame {
 	    
 	    levelButton.setOnMouseEntered(actionEvent -> {
 	    	levelButton.setBackground(levelButtonImageHover);
-	    	levelButton.setPrefSize(300, 100);
 		});
 	    
 	    levelButton.setOnMouseExited(actionEvent -> {
@@ -427,27 +425,25 @@ public class PuzzleGame {
 		});
 	    
     	AnchorPane.setBottomAnchor(levelButton, 18d);
-	    AnchorPane.setLeftAnchor(levelButton, 360d);
+	    AnchorPane.setLeftAnchor(levelButton, 345d);
 	    
 	    // menu select button
 		Button menuButton = new Button("");
 	    BackgroundImage menuButtonBackground = new BackgroundImage(new Image(new File("images/main.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 	    Background menuButtonImage = new Background(menuButtonBackground);
 	    menuButton.setBackground(menuButtonImage);
-	    menuButton.setPrefSize(200, 100);
+	    menuButton.setPrefSize(300, 100);
 	    
 	    BackgroundImage menuButtonBackgroundHover = new BackgroundImage(new Image(new File("images/main_arrow.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 	    Background menuButtonImageHover = new Background(menuButtonBackgroundHover);
 	    menuButton.setBackground(menuButtonImage);
-	    menuButton.setPrefSize(200, 100);
-	    
+
 	    menuButton.setOnAction(actionEvent -> {
 	    	primaryStage.setScene(menu);
 	    });
 	    
 	    menuButton.setOnMouseEntered(actionEvent -> {
 	    	menuButton.setBackground(menuButtonImageHover);
-	    	menuButton.setPrefSize(300, 100);
 		});
 	    
 	    menuButton.setOnMouseExited(actionEvent -> {

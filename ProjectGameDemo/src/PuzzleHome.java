@@ -614,7 +614,7 @@ public class PuzzleHome extends Application {
 	    	} else {
 	    		easyPane.getChildren().add(levelOnePreview2P);
 	    		AnchorPane.setBottomAnchor(levelOnePreview2P, 150d);
-		    	AnchorPane.setLeftAnchor(levelOnePreview2P, 245d);
+		    	AnchorPane.setLeftAnchor(levelOnePreview2P, 240d);
 	    	}
 		});
 	    
@@ -903,7 +903,7 @@ public class PuzzleHome extends Application {
 	    	} else {
 	    		mediumPane.getChildren().add(levelOnePreview2P);
 	    		AnchorPane.setBottomAnchor(levelOnePreview2P, 150d);
-		    	AnchorPane.setLeftAnchor(levelOnePreview2P, 245d);
+		    	AnchorPane.setLeftAnchor(levelOnePreview2P, 240d);
 	    	}
 		});
 	    
@@ -1191,7 +1191,7 @@ public class PuzzleHome extends Application {
 	    	} else {
 	    		hardPane.getChildren().add(levelOnePreview2P);
 	    		AnchorPane.setBottomAnchor(levelOnePreview2P, 150d);
-		    	AnchorPane.setLeftAnchor(levelOnePreview2P, 245d);
+		    	AnchorPane.setLeftAnchor(levelOnePreview2P, 240d);
 	    	}
 		});
 	    

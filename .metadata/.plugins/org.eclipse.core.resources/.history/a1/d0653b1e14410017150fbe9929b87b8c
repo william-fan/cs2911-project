@@ -1,0 +1,557 @@
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+
+import javafx.animation.AnimationTimer;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+
+public class PuzzleGame {
+	private Player player1 = new Player(1, 0, 0); // assume 0, 0 is a wall and is invalid
+	private Player player2 = new Player(2, 0, 0);
+	private ArrayList<Block> blockList = new ArrayList<Block>();
+	private String timerString;
+	private GridPane gamePane = new GridPane();
+	
+	// Background style
+	private String background = "-fx-background-image: url(file:images/background.png);" + "\n"
+	   					 + "-fx-background-size: stretch;" + "\n"
+	   					 + "-fx-background-repeat: no-repeat;";
+	
+	// blockCount only for generation purposes
+	public Scene Game(Cell[][] grid, Stage primaryStage, Scene menu, int playerCount, int blockCount, File inputFile) {
+		try {
+			Font.loadFont(new FileInputStream(new File("fonts/FSEX300.ttf")), 36);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		this.gamePane.setAlignment(Pos.CENTER);
+		Label timeElapsed = new Label("");
+		timeElapsed.setStyle("-fx-text-fill: white;" + "\n" +
+							 "-fx-font-family: \"Fixedsys Excelsior 3.01\";"  + "\n" +
+							 "-fx-font-size: 72;" + "\n");
+		
+		
+
+		AnimationTimer timer = new AnimationTimer() { // every time a frame updates, we add to frame counter.
+			long timestamp;
+			int seconds = 0;
+			int minutes = 0;
+			int frames = 0;
+
+			public void handle(long now) { // Every 60 frames, add one second
+				long newTime = System.currentTimeMillis();
+				if (timestamp + 1000 <= newTime) {
+					frames++;
+					if (frames == 60) {
+						frames = 0;
+						seconds++;
+					}
+					if (seconds == 60) {
+						minutes++;
+						seconds = 0;
+					}
+					timerString = "" + seconds;
+					if (seconds < 10) {
+						timerString = "0" + timerString;
+					}
+					timerString = minutes + " : " + timerString;
+					if (minutes < 10) {
+						timerString = "0" + timerString;
+					}
+					timeElapsed.setText(timerString);
+				}
+			}
+		};
+
+		timer.start();
+		
+		/**
+		 * Charlie's additions
+		 */
+		
+		HBox centerBox = new HBox();
+		// Adding time elapsed label to a HBox
+		
+		
+		Button popUpMenu = new Button("Menu");
+		popUpMenu.setStyle("-fx-text-fill: white;" + "\n" +
+							 "-fx-font-family: \"Fixedsys Excelsior 3.01\";"  + "\n" +
+							 "-fx-font-size: 20;" + "\n");
+		popUpMenu.setText("Menu");
+		
+		popUpMenu.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				  final Stage inGameMenu = new Stage();
+				   	timer.stop();
+	                inGameMenu.initModality(Modality.APPLICATION_MODAL);
+	                inGameMenu.initOwner(primaryStage);
+	                VBox inGameMenuOptions = new VBox(6);
+	                
+	                String background = "-fx-background-image: url(file:images/background.png);" + "\n"
+		   					+ "-fx-background-size: stretch;" + "\n"
+		   					+ "-fx-background-repeat: no-repeat;";
+	                
+	                // Title -- Game Paused!
+	                Label title = new Label();
+	                title.setText("Game Paused!");
+	                title.setStyle("-fx-text-fill: white;" + "\n" +
+							 "-fx-font-family: \"Fixedsys Excelsior 3.01\";"  + "\n" +
+							 "-fx-font-size: 40;" + "\n");
+	                
+	                BorderPane topSection = new BorderPane();
+	                topSection.setTop(title);
+	                title.setAlignment(Pos.TOP_CENTER);
+	                
+	                inGameMenuOptions.getChildren().add(topSection);
+	                
+	                // Buttons
+	                
+	                Button resume = new Button("Resume");
+	                resume.setStyle("-fx-text-fill: white;" + "\n" +
+							 "-fx-font-family: \"Fixedsys Excelsior 3.01\";"  + "\n" +
+							 "-fx-font-size: 20;" + "\n + "
+							 		+ "-fx-background-color: #000000;" + "\n");
+	                
+	                Button restart = new Button("Restart");
+	                restart.setStyle("-fx-text-fill: white;" + "\n" +
+							 "-fx-font-family: \"Fixedsys Excelsior 3.01\";"  + "\n" +
+							 "-fx-font-size: 20;" + "\n + "
+							 		+ "-fx-background-color: #000000;" + "\n");
+	                
+	                inGameMenuOptions.setStyle(background);
+	                Scene inGameMenuScene = new Scene(inGameMenuOptions, 500, 600);
+	                
+	                inGameMenu.setScene(inGameMenuScene);
+	                inGameMenu.show();
+	                
+	                inGameMenu.setOnCloseRequest(actionEvent -> {
+	                	timer.start();
+	                });
+			}
+			
+		});
+		
+		centerBox.getChildren().addAll(timeElapsed, popUpMenu);
+		centerBox.setAlignment(Pos.TOP_CENTER);
+		
+		
+
+		int gameWidth = grid.length;
+		int gameHeight = grid[0].length;
+
+		BorderPane gameUI = new BorderPane();
+		Label tempP1Stats = new Label("Player 1\nMoves: " + this.player1.getMoveCount() + "\nBlock Moves: " + this.player1.getBlockMoveCount());
+		tempP1Stats.setStyle("-fx-text-fill: white;" + "\n" +
+				 "-fx-font-family: \"Fixedsys Excelsior 3.01\";"  + "\n" +
+				 "-fx-font-size: 24;" + "\n");
+		Label tempP2Stats = new Label("Player 2\nMoves: " + this.player2.getMoveCount() + "\nBlock Moves: " + this.player2.getBlockMoveCount());
+		
+		tempP2Stats.setStyle("-fx-text-fill: white;" + "\n" +
+				 "-fx-font-family: \"Fixedsys Excelsior 3.01\";"  + "\n" +
+				 "-fx-font-size: 24;" + "\n");
+		if (playerCount == 1) {
+			tempP2Stats.setStyle("-fx-text-fill: transparent;" + "\n" +
+					 "-fx-font-family: \"Fixedsys Excelsior 3.01\";"  + "\n" +
+					 "-fx-font-size: 24;" + "\n");
+		}
+		gameUI.setCenter(centerBox);
+		gameUI.setLeft(tempP1Stats);
+		gameUI.setRight(tempP2Stats);
+		
+		
+		this.gamePane.setMinSize(gameWidth, gameHeight);
+		// this.gamePane.setVgap(1);
+		// this.gamePane.setHgap(1);
+
+		// Rectangle2D screenSize = Screen.getPrimary().getVisualBounds(); //Get
+		// screen size
+		if (inputFile != null) {
+			findMapFeatures(grid);
+		} else {
+			for (int c = blockCount; c != 0; c--) { // generate blocks if no input given
+				Block tempBlock = new Block(1, c, 3);
+				this.blockList.add(tempBlock);
+			}
+		}
+
+		for (int y = 0; y < gameHeight; y++) { // add images to gridpane
+			for (int x = 0; x < gameWidth; x++) {
+				HBox a = new HBox();
+				ImageView ground = new ImageView(grid[x][y].getFloorImage());
+				ground.setFitHeight(48);
+				ground.setFitWidth(48);
+				a.getChildren().add(ground);
+				this.gamePane.add(a, x, y);
+			}
+		}
+
+		if (playerCount == 2) {
+			this.gamePane.add(this.player2.getPlayerImage(), this.player2.getX(), this.player2.getY());
+		}
+		this.gamePane.add(this.player1.getPlayerImage(), this.player1.getX(), this.player1.getY());
+
+		for (Block block : this.blockList) {
+			this.gamePane.add(block.getBlockImage(), block.getX(), block.getY());
+		}
+
+		BorderPane center = new BorderPane();
+		// center.setPrefWidth(screenSize.getWidth());
+		// center.setPrefHeight(screenSize.getHeight());
+		center.setCenter(this.gamePane);
+		center.setTop(gameUI);
+		center.setStyle("-fx-background-color: #3F3F3F;");
+
+		Scene Game = new Scene(center);// , screenSize.getWidth(), screenSize.getHeight());
+
+		Game.setOnKeyPressed((event) -> {
+			if (event.getCode() == KeyCode.DOWN) {
+				if (this.player1.moveDown(this.getBlockList(), this.player2, grid)) {
+					this.gamePane.getChildren().remove(this.player1.getPlayerImage());
+					this.gamePane.add(this.player1.getPlayerImage(), this.player1.getX(), this.player1.getY());
+					for (Block block : this.blockList) {
+						this.gamePane.getChildren().remove(block.getBlockImage());
+						this.gamePane.add(block.getBlockImage(), block.getX(), block.getY());
+					}
+				}
+			} else if (event.getCode() == KeyCode.UP) {
+				if (this.player1.moveUp(this.getBlockList(), this.player2, grid)) {
+					this.gamePane.getChildren().remove(this.player1.getPlayerImage());
+					this.gamePane.add(this.player1.getPlayerImage(), this.player1.getX(), this.player1.getY());
+					for (Block block : this.blockList) {
+						this.gamePane.getChildren().remove(block.getBlockImage());
+						this.gamePane.add(block.getBlockImage(), block.getX(), block.getY());
+					}
+				}
+			} else if (event.getCode() == KeyCode.LEFT) {
+				if (this.player1.moveLeft(this.getBlockList(), this.player2, grid)) {
+					this.gamePane.getChildren().remove(this.player1.getPlayerImage());
+					this.gamePane.add(this.player1.getPlayerImage(), this.player1.getX(), this.player1.getY());
+					for (Block block : this.blockList) {
+						this.gamePane.getChildren().remove(block.getBlockImage());
+						this.gamePane.add(block.getBlockImage(), block.getX(), block.getY());
+					}
+				}
+			} else if (event.getCode() == KeyCode.RIGHT) {
+				if (this.player1.moveRight(this.getBlockList(), this.player2, grid)) {
+					this.gamePane.getChildren().remove(this.player1.getPlayerImage());
+					this.gamePane.add(this.player1.getPlayerImage(), this.player1.getX(), this.player1.getY());
+					for (Block block : this.blockList) {
+						this.gamePane.getChildren().remove(block.getBlockImage());
+						this.gamePane.add(block.getBlockImage(), block.getX(), block.getY());
+					}
+				}
+			} else if (event.getCode() == KeyCode.ESCAPE) {
+				primaryStage.setScene(menu);
+				primaryStage.setResizable(false);
+				// primaryStage.setMaximized(true);
+				primaryStage.show();
+			} else if (event.getCode() == KeyCode.R) {
+				resetGame(grid, primaryStage, menu, playerCount, blockCount, inputFile);
+			}
+			if (playerCount == 2) {
+				if (event.getCode() == KeyCode.S) {
+					if (this.player2.moveDown(this.getBlockList(), this.player1, grid)) {
+						this.gamePane.getChildren().remove(this.player2.getPlayerImage());
+						this.gamePane.add(this.player2.getPlayerImage(), this.player2.getX(), this.player2.getY());
+						for (Block block : this.blockList) {
+							this.gamePane.getChildren().remove(block.getBlockImage());
+							this.gamePane.add(block.getBlockImage(), block.getX(), block.getY());
+						}
+					}
+				} else if (event.getCode() == KeyCode.W) {
+					if (this.player2.moveUp(this.getBlockList(), this.player1, grid)) {
+						this.gamePane.getChildren().remove(this.player2.getPlayerImage());
+						this.gamePane.add(this.player2.getPlayerImage(), this.player2.getX(), this.player2.getY());
+						for (Block block : this.blockList) {
+							this.gamePane.getChildren().remove(block.getBlockImage());
+							this.gamePane.add(block.getBlockImage(), block.getX(), block.getY());
+						}
+					}
+				} else if (event.getCode() == KeyCode.A) {
+					if (this.player2.moveLeft(this.getBlockList(), this.player1, grid)) {
+						this.gamePane.getChildren().remove(this.player2.getPlayerImage());
+						this.gamePane.add(this.player2.getPlayerImage(), this.player2.getX(), this.player2.getY());
+						for (Block block : this.blockList) {
+							this.gamePane.getChildren().remove(block.getBlockImage());
+							this.gamePane.add(block.getBlockImage(), block.getX(), block.getY());
+						}
+					}
+				} else if (event.getCode() == KeyCode.D) {
+					if (this.player2.moveRight(this.getBlockList(), this.player1, grid)) {
+						this.gamePane.getChildren().remove(this.player2.getPlayerImage());
+						this.gamePane.add(this.player2.getPlayerImage(), this.player2.getX(), this.player2.getY());
+						for (Block block : this.blockList) {
+							this.gamePane.getChildren().remove(block.getBlockImage());
+							this.gamePane.add(block.getBlockImage(), block.getX(), block.getY());
+						}
+					}
+				}
+			}
+			Label tempP1 = new Label("Player 1\nMoves: " + this.player1.getMoveCount() + "\nBlock Moves: " + this.player1.getBlockMoveCount());
+			tempP1.setStyle("-fx-text-fill: white;" + "\n" +
+					 "-fx-font-family: \"Fixedsys Excelsior 3.01\";"  + "\n" +
+					 "-fx-font-size: 24;" + "\n");
+			Label tempP2 = new Label("Player 2\nMoves: " + this.player2.getMoveCount() + "\nBlock Moves: " + this.player2.getBlockMoveCount());
+			tempP2.setStyle("-fx-text-fill: white;" + "\n" +
+					 "-fx-font-family: \"Fixedsys Excelsior 3.01\";"  + "\n" +
+					 "-fx-font-size: 24;" + "\n");
+			if (playerCount == 1) {
+				tempP2.setStyle("-fx-text-fill: transparent;" + "\n" +
+						 "-fx-font-family: \"Fixedsys Excelsior 3.01\";"  + "\n" +
+						 "-fx-font-size: 24;" + "\n");
+			}
+			gameUI.setLeft(tempP1);
+			gameUI.setRight(tempP2);
+			checkVictory(primaryStage, menu, grid, this.blockList, playerCount, inputFile, grid, blockCount);
+		});
+		return Game;
+
+	}
+
+	private void checkVictory(Stage primaryStage, Scene menu, Cell[][] map, ArrayList<Block> blockList, int playerCount, File inputFile, Cell[][] grid, int blockCount) {
+		int gameWidth = map.length;
+		int gameHeight = map[0].length;
+		ArrayList<Block> tempList = new ArrayList<Block>(blockList);
+		
+		//set block colors
+		for (Block tempBlock : blockList) {
+			if (map[tempBlock.getX()][tempBlock.getY()].getType() != 2) {
+				this.gamePane.getChildren().remove(tempBlock.getBlockImage());
+				tempBlock.setID(1);
+				this.gamePane.add(tempBlock.getBlockImage(), tempBlock.getX(), tempBlock.getY());
+			} else {
+				this.gamePane.getChildren().remove(tempBlock.getBlockImage());
+				tempBlock.setID(2);
+				this.gamePane.add(tempBlock.getBlockImage(), tempBlock.getX(), tempBlock.getY());
+			}
+		}
+		
+		//check if each target has a block on it, and remove the block from the temp list if there is
+		for (int y = 0; y < gameHeight; y++) {
+			for (int x = 0; x < gameWidth; x++) {
+				if (map[x][y].getType() == 2) {
+					Block block = findBlock(tempList, x, y);
+					if (block != null) {
+						tempList.remove(block);
+					} else {
+						return; // failed, no blocks on target
+					}
+				}
+			}
+		}
+		
+		//if list is empty, show the victory screen
+		if (tempList.isEmpty()) {
+			primaryStage.setScene(victoryScreen(primaryStage, menu, playerCount, inputFile, grid, blockCount));
+		}
+	}
+
+	private Scene victoryScreen(Stage primaryStage, Scene menu, int playerCount, File inputFile, Cell[][] grid, int blockCount) {
+		AnchorPane victoryPane = new AnchorPane();
+		
+		Label victoryText = new Label("Level Complete!");
+		victoryText.setStyle("-fx-text-fill: white;" + "\n" +
+				 			 "-fx-font-family: \"Fixedsys Excelsior 3.01\";"  + "\n" +
+				 			 "-fx-font-size: 72;" + "\n"); // ADDED
+		
+		AnchorPane.setTopAnchor(victoryText, 75d);
+		AnchorPane.setLeftAnchor(victoryText, 220d);
+		
+		Label summaryText = new Label("Summary");
+		summaryText.setUnderline(true);
+		summaryText.setStyle("-fx-text-fill: white;" + "\n" +
+				 			 "-fx-font-family: \"Fixedsys Excelsior 3.01\";"  + "\n" +
+				 			 "-fx-font-size: 72;" + "\n"); // ADDED
+		
+		AnchorPane.setTopAnchor(summaryText, 175d);
+		AnchorPane.setLeftAnchor(summaryText, 360d);
+		
+		timerString = timerString.replaceAll("\\s+", "");
+
+		Label timeText = new Label("Time Taken: " + timerString);
+		timeText.setStyle("-fx-text-fill: white;" + "\n" +
+				 			 "-fx-font-family: \"Fixedsys Excelsior 3.01\";"  + "\n" +
+				 			 "-fx-font-size: 72;" + "\n"); // ADDED
+		
+		AnchorPane.setTopAnchor(timeText, 280d);
+		AnchorPane.setLeftAnchor(timeText, 145d);
+		
+		Label moveText = new Label("Moves: "+ player1.getMoveCount());
+		moveText.setStyle("-fx-text-fill: white;" + "\n" +
+				 			 "-fx-font-family: \"Fixedsys Excelsior 3.01\";"  + "\n" +
+				 			 "-fx-font-size: 72;" + "\n"); // ADDED
+		
+		AnchorPane.setTopAnchor(moveText, 360d);
+		AnchorPane.setLeftAnchor(moveText, 150d);
+		
+		Label pushesText = new Label("Pushes: "+ player1.getBlockMoveCount());
+		pushesText.setStyle("-fx-text-fill: white;" + "\n" +
+				 			 "-fx-font-family: \"Fixedsys Excelsior 3.01\";"  + "\n" +
+				 			 "-fx-font-size: 72;" + "\n"); // ADDED
+		
+		AnchorPane.setTopAnchor(pushesText, 440d);
+		AnchorPane.setLeftAnchor(pushesText, 150d);
+		
+		// play again button
+		Button replayButton = new Button("");
+	    BackgroundImage replayButtonBackground = new BackgroundImage(new Image(new File("images/replay.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+	    Background replayButtonImage = new Background(replayButtonBackground);
+	    replayButton.setBackground(replayButtonImage);
+	    replayButton.setPrefSize(300, 100);
+	    
+	    BackgroundImage replayButtonBackgroundHover = new BackgroundImage(new Image(new File("images/replay_arrow.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+	    Background replayButtonImageHover = new Background(replayButtonBackgroundHover);
+	    replayButton.setBackground(replayButtonImage);
+	    
+	    replayButton.setOnAction(actionEvent -> {
+	    	resetGame(grid, primaryStage, menu, playerCount, blockCount, inputFile);
+	    });
+	    
+	    replayButton.setOnMouseEntered(actionEvent -> {
+	    	replayButton.setBackground(replayButtonImageHover);
+	    	replayButton.setPrefSize(300, 100);
+		});
+	    
+	    replayButton.setOnMouseExited(actionEvent -> {
+	    	replayButton.setBackground(replayButtonImage);
+		});
+	    
+    	AnchorPane.setBottomAnchor(replayButton, 20d);
+	    AnchorPane.setLeftAnchor(replayButton, 100d);
+	    
+	    // level select button
+	    Button levelButton = new Button("");
+	    BackgroundImage levelButtonBackground = new BackgroundImage(new Image(new File("images/level_select.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+	    Background levelButtonImage = new Background(levelButtonBackground);
+	    levelButton.setBackground(levelButtonImage);
+	    levelButton.setPrefSize(300, 100);
+	    
+	    BackgroundImage levelButtonBackgroundHover = new BackgroundImage(new Image(new File("images/level_select_arrow.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+	    Background levelButtonImageHover = new Background(levelButtonBackgroundHover);
+	    levelButton.setBackground(levelButtonImage);
+	    
+	    levelButton.setOnAction(actionEvent -> {
+	    	PuzzleHome levelSelect = new PuzzleHome();
+			primaryStage.setScene(levelSelect.easyDifficulty(primaryStage, menu, playerCount));
+	    });
+	    
+	    levelButton.setOnMouseEntered(actionEvent -> {
+	    	levelButton.setBackground(levelButtonImageHover);
+	    	levelButton.setPrefSize(300, 100);
+		});
+	    
+	    levelButton.setOnMouseExited(actionEvent -> {
+	    	levelButton.setBackground(levelButtonImage);
+		});
+	    
+    	AnchorPane.setBottomAnchor(levelButton, 18d);
+	    AnchorPane.setLeftAnchor(levelButton, 360d);
+	    
+	    // menu select button
+		Button menuButton = new Button("");
+	    BackgroundImage menuButtonBackground = new BackgroundImage(new Image(new File("images/main.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+	    Background menuButtonImage = new Background(menuButtonBackground);
+	    menuButton.setBackground(menuButtonImage);
+	    menuButton.setPrefSize(200, 100);
+	    
+	    BackgroundImage menuButtonBackgroundHover = new BackgroundImage(new Image(new File("images/main_arrow.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+	    Background menuButtonImageHover = new Background(menuButtonBackgroundHover);
+	    menuButton.setBackground(menuButtonImage);
+	    menuButton.setPrefSize(200, 100);
+	    
+	    menuButton.setOnAction(actionEvent -> {
+	    	primaryStage.setScene(menu);
+	    });
+	    
+	    menuButton.setOnMouseEntered(actionEvent -> {
+	    	menuButton.setBackground(menuButtonImageHover);
+	    	menuButton.setPrefSize(300, 100);
+		});
+	    
+	    menuButton.setOnMouseExited(actionEvent -> {
+	    	menuButton.setBackground(menuButtonImage);
+		});
+	    
+    	AnchorPane.setBottomAnchor(menuButton, 20d);
+	    AnchorPane.setLeftAnchor(menuButton, 650d);
+
+	    victoryPane.getChildren().addAll(victoryText, timeText, moveText, pushesText, summaryText, replayButton, levelButton, menuButton);
+	    
+		Scene helpScene = new Scene(victoryPane, 960, 800);
+		victoryPane.setStyle(background);
+		
+		return helpScene;
+	}
+
+	// reset values to original
+	private void resetGame(Cell[][] grid, Stage primaryStage, Scene menu, int playerCount, int blockCount,
+			File inputFile) {
+		this.player1 = new Player(1, 0, 0); // assume 0, 0 is a wall and is invalid
+		this.player2 = new Player(2, 0, 0);
+		this.blockList = new ArrayList<Block>();
+		this.timerString = "";
+		primaryStage.setScene(Game(grid, primaryStage, menu, playerCount, blockCount, inputFile));
+	}
+
+	public ArrayList<Block> getBlockList() {
+		return this.blockList;
+	}
+
+	private void findMapFeatures(Cell[][] map) {
+		int gameWidth = map.length;
+		int gameHeight = map[0].length;
+		for (int y = 0; y < gameHeight; y++) {
+			for (int x = 0; x < gameWidth; x++) {
+				if (map[x][y].getType() == 3) {
+					if (this.player1.getX() == 0 && this.player1.getY() == 0) { //0, 0 is the default location
+						this.player1.setX(x);
+						this.player1.setY(y);
+					} else {
+						this.player2.setX(x);
+						this.player2.setY(y);
+					}
+				}
+				if (map[x][y].getType() == 4) {
+					Block block = new Block(1, x, y);
+					this.blockList.add(block);
+				}
+			}
+		}
+	}
+
+	private Block findBlock(ArrayList<Block> tempBlockList, int x, int y) {
+		for (Block block : tempBlockList) {
+			if (block.getX() == x && block.getY() == y) {
+				return block;
+			}
+		}
+		return null;
+	}
+
+}

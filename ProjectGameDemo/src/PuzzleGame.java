@@ -4,10 +4,16 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import javafx.animation.AnimationTimer;
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -21,7 +27,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class PuzzleGame {
@@ -49,6 +59,8 @@ public class PuzzleGame {
 							 "-fx-font-family: \"Fixedsys Excelsior 3.01\";"  + "\n" +
 							 "-fx-font-size: 72;" + "\n");
 		
+		
+
 		AnimationTimer timer = new AnimationTimer() { // every time a frame updates, we add to frame counter.
 			long timestamp;
 			int seconds = 0;
@@ -81,6 +93,175 @@ public class PuzzleGame {
 		};
 
 		timer.start();
+		
+		/**
+		 * Charlie's additions
+		 */
+		
+		HBox centerBox = new HBox();
+		// Adding time elapsed label to a HBox
+		
+		
+		Button popUpMenu = new Button("Menu");
+		popUpMenu.setStyle("-fx-text-fill: white;" + "\n" +
+							 "-fx-font-family: \"Fixedsys Excelsior 3.01\";"  + "\n" +
+							 "-fx-font-size: 20;" + "\n" +
+							 "-fx-background-color: #000000;");
+		popUpMenu.setText("Menu");
+		popUpMenu.setTranslateX(70);
+		popUpMenu.setTranslateY(20);
+		
+		popUpMenu.setOnAction(new EventHandler<ActionEvent>() {
+			
+			
+			@Override
+			/**
+			 * Handles the functionality of the in game gui menu button 
+			 */
+			public void handle(ActionEvent event) {
+				  final Stage inGameMenu = new Stage();
+				   	timer.stop();
+	                inGameMenu.initModality(Modality.APPLICATION_MODAL);
+	                inGameMenu.initOwner(primaryStage);
+	                VBox inGameMenuOptions = new VBox(2);
+	                
+	                String background = "-fx-background-image: url(file:images/background.png);" + "\n"
+		   					+ "-fx-background-size: stretch;" + "\n"
+		   					+ "-fx-background-repeat: no-repeat;";
+	                
+	                // Title -- Game Paused!
+	                Label title = new Label();
+	                title.setText("Game Paused!");
+	                title.setStyle("-fx-text-fill: white;" + "\n" +
+							 "-fx-font-family: \"Fixedsys Excelsior 3.01\";"  + "\n" +
+							 "-fx-font-size: 55;" + "\n");
+	                
+	                BorderPane topSection = new BorderPane();
+	                topSection.setCenter(title);
+	                title.setTranslateY(-20);
+	               
+	             
+	                
+	                // Buttons
+	                
+	                Button resume = new Button("Resume");
+	                resume.setStyle("-fx-text-fill: white;" + "\n" +
+							 "-fx-font-family: \"Fixedsys Excelsior 3.01\";"  + "\n" +
+							 "-fx-font-size: 40;" + "\n"
+							 		+ "-fx-background-color: #000000;");
+	                
+	                Button restart = new Button("Restart");
+	                restart.setStyle("-fx-text-fill: white;" + "\n" +
+							 "-fx-font-family: \"Fixedsys Excelsior 3.01\";"  + "\n" +
+							 "-fx-font-size: 40;" + "\n"
+							 		+ "-fx-background-color: #000000;");
+	                
+	                Button changeLevel = new Button("Change Level");
+	                changeLevel.setStyle("-fx-text-fill: white;" + "\n" +
+							 "-fx-font-family: \"Fixedsys Excelsior 3.01\";"  + "\n" +
+							 "-fx-font-size: 40;" + "\n"
+							 		+ "-fx-background-color: #000000;");
+	                
+	                Button mainMenu = new Button("Main Menu");
+	                mainMenu.setStyle("-fx-text-fill: white;" + "\n" +
+							 "-fx-font-family: \"Fixedsys Excelsior 3.01\";"  + "\n" +
+							 "-fx-font-size: 40;" + "\n"
+							 		+ "-fx-background-color: #000000;");
+	                
+	                Button quit = new Button("Quit");
+	                quit.setStyle("-fx-text-fill: white;" + "\n" +
+							 "-fx-font-family: \"Fixedsys Excelsior 3.01\";"  + "\n" +
+							 "-fx-font-size: 40;" + "\n"
+							 		+ "-fx-background-color: #000000;");
+	                
+	                
+	                // Button functionality
+	                resume.setOnAction(actionEvent -> {
+	                	timer.start();
+	                	inGameMenu.close();
+	                });
+	                
+	                restart.setOnAction(actionEvent -> {
+	        	    	resetGame(grid, primaryStage, menu, playerCount, blockCount, inputFile);
+	        	    	inGameMenu.close();
+	        	    });
+	                
+	                changeLevel.setOnAction(actionEvent -> {
+	                	PuzzleHome levelSelect = new PuzzleHome();
+	                	
+	                	// Using the file name to indicate whether game is easy, medium or hard.
+	                	String levelDifficulty = inputFile.getName();
+	                	if (levelDifficulty.charAt(0) == 'e') {
+	                		primaryStage.setScene(levelSelect.easyDifficulty(primaryStage, menu, playerCount));
+	                	} else if (levelDifficulty.charAt(0) == 'm') {
+	                		primaryStage.setScene(levelSelect.mediumDifficulty(primaryStage, menu, playerCount));
+	                	} else if (levelDifficulty.charAt(0) == 'h') {
+	                		primaryStage.setScene(levelSelect.hardDifficulty(primaryStage, menu, playerCount));
+	                	}
+	        			
+	        			inGameMenu.close();
+	                });
+	                
+	                mainMenu.setOnAction(actionEvent -> {
+	                	primaryStage.setScene(menu);
+	                	inGameMenu.close();
+	                });
+	                
+	                quit.setOnAction(actionEvent -> {
+	                	Alert confirmExit = new Alert(AlertType.CONFIRMATION, "Would you like to exit Wacky Warehouse?", ButtonType.OK, ButtonType.CANCEL);
+	                	confirmExit.setTitle("Exit Game");
+	                	confirmExit.showAndWait();
+	                	
+	                	if (confirmExit.getResult() == ButtonType.OK) {
+	                		Platform.exit();
+	                	}
+	                });
+	                
+	               
+	              
+	                resume.setOnMouseEntered(actionEvent -> {
+	                	
+	                	
+	                	
+	                });
+	                
+	            
+	                
+	                // Create a VBox to store the buttons.
+	               
+	                
+	                VBox buttons = new VBox(5);
+	                buttons.getChildren().addAll(resume, restart, changeLevel, mainMenu, quit);
+	                buttons.setSpacing(20);
+	               // buttons.setTranslateY(20);
+	               // buttons.setTranslateX(100);
+       
+	 	            buttons.setAlignment(Pos.CENTER);
+	                inGameMenuOptions.getChildren().addAll(topSection, buttons);
+	                inGameMenuOptions.setAlignment(Pos.CENTER);
+	                
+	                // Set the style of the VBox
+	                inGameMenuOptions.setStyle(background);
+	                Scene inGameMenuScene = new Scene(inGameMenuOptions, 500, 600);
+	                
+	                inGameMenu.setScene(inGameMenuScene);
+	                inGameMenu.show();
+	     
+	                inGameMenu.setOnCloseRequest(actionEvent -> {
+	                	timer.start();
+	                });
+	                
+	                // Turned off full screen mode for inGameMenu
+	                inGameMenu.setResizable(false);
+	                
+			}
+			
+		});
+		
+		centerBox.getChildren().addAll(timeElapsed, popUpMenu);
+		centerBox.setAlignment(Pos.TOP_CENTER);
+		
+		
 
 		int gameWidth = grid.length;
 		int gameHeight = grid[0].length;
@@ -91,15 +272,16 @@ public class PuzzleGame {
 				 "-fx-font-family: \"Fixedsys Excelsior 3.01\";"  + "\n" +
 				 "-fx-font-size: 24;" + "\n");
 		Label tempP2Stats = new Label("Player 2\nMoves: " + this.player2.getMoveCount() + "\nBlock Moves: " + this.player2.getBlockMoveCount());
+		
 		tempP2Stats.setStyle("-fx-text-fill: white;" + "\n" +
 				 "-fx-font-family: \"Fixedsys Excelsior 3.01\";"  + "\n" +
 				 "-fx-font-size: 24;" + "\n");
 		if (playerCount == 1) {
-			tempP2Stats.setStyle("-fx-text-fill: transparent;" + "\n" +
+			tempP2Stats.setStyle("-fx-text-fill: white;" + "\n" +
 					 "-fx-font-family: \"Fixedsys Excelsior 3.01\";"  + "\n" +
 					 "-fx-font-size: 24;" + "\n");
 		}
-		gameUI.setCenter(timeElapsed);
+		gameUI.setCenter(centerBox);
 		gameUI.setLeft(tempP1Stats);
 		gameUI.setRight(tempP2Stats);
 		

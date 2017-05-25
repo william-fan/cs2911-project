@@ -11,6 +11,7 @@ public class Player {
 	private int moveCount;
 	private int blockMoveCount;
 	private ImageView playerImage;
+	private LinkedList<LinkedList<Integer>> posList = new LinkedList<LinkedList<Integer>>();
 
 	public Player(int ID, int x, int y) {
 		this.x = x;
@@ -156,6 +157,7 @@ public class Player {
 				} else if (grid[tempBlock.getX()][tempBlock.getY() - 1].getType() == 1) {
 					return false;
 				} else {
+					addPositionToList(otherPlayer, blockList);
 					tempBlock.setY(this.getY() - 2);
 					this.blockMoveCount++;
 					return true;
@@ -175,6 +177,7 @@ public class Player {
 				} else if (grid[tempBlock.getX() + 1][tempBlock.getY()].getType() == 1) {
 					return false;
 				} else {
+					addPositionToList(otherPlayer, blockList);
 					tempBlock.setX(this.getX() + 2);
 					this.blockMoveCount++;
 					return true;
@@ -194,6 +197,7 @@ public class Player {
 				} else if (grid[tempBlock.getX()][tempBlock.getY() + 1].getType() == 1) {
 					return false;
 				} else {
+					addPositionToList(otherPlayer, blockList);
 					tempBlock.setY(this.getY() + 2);
 					this.blockMoveCount++;
 					return true;
@@ -213,6 +217,7 @@ public class Player {
 				} else if (grid[tempBlock.getX() - 1][tempBlock.getY()].getType() == 1) {
 					return false;
 				} else {
+					addPositionToList(otherPlayer, blockList);
 					tempBlock.setX(this.getX() - 2);
 					this.blockMoveCount++;
 					return true;
@@ -233,6 +238,19 @@ public class Player {
 		return null;
 	}
 
+	private void addPositionToList(Player otherPlayer, ArrayList<Block> blockList) {
+		LinkedList<Integer> spritePos = new LinkedList<Integer>();
+		spritePos.add(x);
+		spritePos.add(y);
+		spritePos.add(otherPlayer.getX());
+		spritePos.add(otherPlayer.getY());
+		for (Block block : blockList){
+			spritePos.add(block.getX());
+			spritePos.add(block.getY());
+		}
+		posList.add(spritePos);
+	}
+	
 	public int getMoveCount() {
 		return this.moveCount;
 	}
@@ -247,5 +265,9 @@ public class Player {
 
 	public void setBlockMoveCount(int blockMoveCount) {
 		this.blockMoveCount = blockMoveCount;
+	}
+	
+	public LinkedList<LinkedList<Integer>> getPosList() {
+		return this.posList;
 	}
 }

@@ -276,16 +276,16 @@ public class PuzzleHome extends Application {
 		AnchorPane difficultyPane = new AnchorPane();
 		difficultyPane.setStyle(background);
 		
-		Image singleTitle = new Image(new File("images/1Player_title.png").toURI().toString());
+		Image singleTitle = new Image(new File("images/"+playerCount+"Player_title.png").toURI().toString());
 		ImageView singleTitleShow = new ImageView(singleTitle);
 		singleTitleShow.setFitWidth(280);
 		singleTitleShow.setPreserveRatio(true);
     	
 	    AnchorPane.setTopAnchor(singleTitleShow, 85d);
 	    AnchorPane.setLeftAnchor(singleTitleShow, 340d);	    
-	    difficultyPane.getChildren().add(singleTitleShow); 
+	    difficultyPane.getChildren().add(singleTitleShow);
 	    
-		Image singlePicture = new Image(new File("images/player1_difficulty.png").toURI().toString());
+		Image singlePicture = new Image(new File("images/player"+playerCount+"_difficulty.png").toURI().toString());
 		ImageView singlePictureShow = new ImageView(singlePicture);
 		singlePictureShow.setFitWidth(320);
 		singlePictureShow.setPreserveRatio(true);

@@ -5,7 +5,8 @@ import javafx.scene.image.Image;
 public class Cell {
 	private int x;
 	private int y;
-	private int type; // 0 floor, 1 wall, 2 target, 3 player, 4 block (3 & 4 are placeholders for starting locations)
+	private int type; // 0 floor, 1 wall, 2 target, 3 player, 4 block (3 & 4 are
+						// placeholders for starting locations)
 	private Image floorImage;
 
 	public Cell(int x, int y, int type) {

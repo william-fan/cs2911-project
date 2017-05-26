@@ -118,22 +118,26 @@ public class Player {
 
 	private void updateSprite(int newDirection) {
 		if (newDirection == 1) {
-			ImageView tempImage = new ImageView(new Image(new File("images/sprite"+this.ID+"_1.png").toURI().toString()));
+			ImageView tempImage = new ImageView(
+					new Image(new File("images/sprite" + this.ID + "_1.png").toURI().toString()));
 			tempImage.setFitHeight(48);
 			tempImage.setFitWidth(48);
 			this.playerImage = tempImage;
 		} else if (newDirection == 2) {
-			ImageView tempImage = new ImageView(new Image(new File("images/sprite"+this.ID+"_2.png").toURI().toString()));
+			ImageView tempImage = new ImageView(
+					new Image(new File("images/sprite" + this.ID + "_2.png").toURI().toString()));
 			tempImage.setFitHeight(48);
 			tempImage.setFitWidth(48);
 			this.playerImage = tempImage;
 		} else if (newDirection == 3) {
-			ImageView tempImage = new ImageView(new Image(new File("images/sprite"+this.ID+"_3.png").toURI().toString()));
+			ImageView tempImage = new ImageView(
+					new Image(new File("images/sprite" + this.ID + "_3.png").toURI().toString()));
 			tempImage.setFitHeight(48);
 			tempImage.setFitWidth(48);
 			this.playerImage = tempImage;
 		} else if (newDirection == 4) {
-			ImageView tempImage = new ImageView(new Image(new File("images/sprite"+this.ID+"_4.png").toURI().toString()));
+			ImageView tempImage = new ImageView(
+					new Image(new File("images/sprite" + this.ID + "_4.png").toURI().toString()));
 			tempImage.setFitHeight(48);
 			tempImage.setFitWidth(48);
 			this.playerImage = tempImage;
@@ -244,13 +248,13 @@ public class Player {
 		spritePos.add(ID);
 		spritePos.add(x);
 		spritePos.add(y);
-		for (Block block : blockList){
+		for (Block block : blockList) {
 			spritePos.add(block.getX());
 			spritePos.add(block.getY());
 		}
-		posList.add(spritePos);
+		this.posList.add(spritePos);
 	}
-	
+
 	public int getMoveCount() {
 		return this.moveCount;
 	}
@@ -266,7 +270,7 @@ public class Player {
 	public void setBlockMoveCount(int blockMoveCount) {
 		this.blockMoveCount = blockMoveCount;
 	}
-	
+
 	public LinkedList<LinkedList<Integer>> getPosList() {
 		return this.posList;
 	}

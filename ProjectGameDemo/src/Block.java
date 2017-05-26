@@ -63,7 +63,7 @@ public class Block {
 		this.ID = ID;
 		this.blockImage = this.imageInit();
 	}
-	
+
 	public ImageView getBlockImage() {
 		return this.blockImage;
 	}

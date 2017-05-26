@@ -128,7 +128,13 @@ public class PuzzleHome extends Application {
 		ImageView centerImageNode = new ImageView(centerImage);
 		
 		Text info = new Text();
-		info.setText("\n \n \n Your goal is to push all the boxes to the goal squares.\n \n Be careful, because you cannot pull boxes.");
+		info.setText("\n-Your goal is to push all the boxes to the goal squares."
+				+ "\nBe careful, because you cannot pull boxes."
+				+ "\n\n-If you get stuck you can press 'r' on the keyboard\nto restart the game, or press 'u' to undo a"
+				+ "\nprevious movement. Make sure to check out the in game"
+				+ "\nmenu to pause the game by pressing the 'esc' key"
+				+ "\nor by clicking on the icon 'menu' during gameplay." 
+				+ "\n\n-Also have fun creating your own puzzle\nwith the puzzle maker!");
 		info.setFont(Font.font ("Fixedsys Excelsior 3.01", 30));
 		info.setFill(Color.WHITE);
 		info.setTextAlignment(TextAlignment.LEFT);

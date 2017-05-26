@@ -29,6 +29,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -45,6 +46,11 @@ public class PuzzleGame {
 
 	// blockCount only for generation purposes
 	public Scene Game(Cell[][] grid, Stage primaryStage, Scene menu, int playerCount, int blockCount, File inputFile) {
+		try {
+			Font.loadFont(new FileInputStream(new File("fonts/FSEX300.ttf")), 36);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 		this.gamePane.setAlignment(Pos.CENTER);
 		this.gamePane.setPrefSize(960, 720);
 		Label timeElapsed = new Label("");
@@ -821,21 +827,7 @@ public class PuzzleGame {
 
 		AnchorPane.setTopAnchor(timeText, 280d);
 		AnchorPane.setLeftAnchor(timeText, 145d);
-
-		Label moveText = new Label("Moves: " + player1.getMoveCount());
-		moveText.setStyle("-fx-text-fill: white;" + "\n" + "-fx-font-family: \"Fixedsys Excelsior 3.01\";" + "\n"
-				+ "-fx-font-size: 72;" + "\n"); // ADDED
-
-		AnchorPane.setTopAnchor(moveText, 360d);
-		AnchorPane.setLeftAnchor(moveText, 150d);
-
-		Label pushesText = new Label("Pushes: " + player1.getBlockMoveCount());
-		pushesText.setStyle("-fx-text-fill: white;" + "\n" + "-fx-font-family: \"Fixedsys Excelsior 3.01\";" + "\n"
-				+ "-fx-font-size: 72;" + "\n"); // ADDED
-
-		AnchorPane.setTopAnchor(pushesText, 440d);
-		AnchorPane.setLeftAnchor(pushesText, 150d);
-
+		
 		// play again button
 		Button replayButton = new Button("");
 		BackgroundImage replayButtonBackground = new BackgroundImage(
@@ -863,14 +855,11 @@ public class PuzzleGame {
 			replayButton.setBackground(replayButtonImage);
 		});
 
-		AnchorPane.setBottomAnchor(replayButton, 20d);
-		AnchorPane.setLeftAnchor(replayButton, 80d);
-
 		// level select button
 		Button levelButton = new Button("");
 		BackgroundImage levelButtonBackground = new BackgroundImage(
-				new Image(new File("images/level_select.png").toURI().toString()), BackgroundRepeat.NO_REPEAT,
-				BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+		new Image(new File("images/level_select.png").toURI().toString()), BackgroundRepeat.NO_REPEAT,
+		BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 		Background levelButtonImage = new Background(levelButtonBackground);
 		levelButton.setBackground(levelButtonImage);
 		levelButton.setPrefSize(300, 100);
@@ -893,9 +882,6 @@ public class PuzzleGame {
 		levelButton.setOnMouseExited(actionEvent -> {
 			levelButton.setBackground(levelButtonImage);
 		});
-
-		AnchorPane.setBottomAnchor(levelButton, 18d);
-		AnchorPane.setLeftAnchor(levelButton, 345d);
 
 		// menu select button
 		Button menuButton = new Button("");
@@ -924,11 +910,71 @@ public class PuzzleGame {
 			menuButton.setBackground(menuButtonImage);
 		});
 
-		AnchorPane.setBottomAnchor(menuButton, 20d);
-		AnchorPane.setLeftAnchor(menuButton, 650d);
-
-		victoryPane.getChildren().addAll(victoryText, timeText, moveText, pushesText, summaryText, replayButton,
-				levelButton, menuButton);
+		if (playerCount == 1) {
+			AnchorPane.setBottomAnchor(replayButton, 20d);
+			AnchorPane.setLeftAnchor(replayButton, 80d);
+			
+			AnchorPane.setBottomAnchor(levelButton, 20d);
+			AnchorPane.setLeftAnchor(levelButton, 345d);
+			
+			AnchorPane.setBottomAnchor(menuButton, 20d);
+			AnchorPane.setLeftAnchor(menuButton, 650d);
+			
+			Label moveText = new Label("Moves: " + player1.getMoveCount());
+			moveText.setStyle("-fx-text-fill: white;" + "\n" + "-fx-font-family: \"Fixedsys Excelsior 3.01\";" + "\n"
+					+ "-fx-font-size: 72;" + "\n"); // ADDED
+	
+			AnchorPane.setTopAnchor(moveText, 360d);
+			AnchorPane.setLeftAnchor(moveText, 150d);
+	
+			Label pushesText = new Label("Pushes: " + player1.getBlockMoveCount());
+			pushesText.setStyle("-fx-text-fill: white;" + "\n" + "-fx-font-family: \"Fixedsys Excelsior 3.01\";" + "\n"
+					+ "-fx-font-size: 72;" + "\n"); // ADDED
+	
+			AnchorPane.setTopAnchor(pushesText, 440d);
+			AnchorPane.setLeftAnchor(pushesText, 150d);
+			
+			victoryPane.getChildren().addAll(victoryText, timeText, moveText, pushesText, summaryText, replayButton, levelButton, menuButton);
+		} else {
+			AnchorPane.setBottomAnchor(replayButton, 10d);
+			AnchorPane.setLeftAnchor(replayButton, 80d);
+			
+			AnchorPane.setBottomAnchor(levelButton, 10d);
+			AnchorPane.setLeftAnchor(levelButton, 345d);
+			
+			AnchorPane.setBottomAnchor(menuButton, 10d);
+			AnchorPane.setLeftAnchor(menuButton, 650d);
+			
+			Label moveText = new Label("Player 1 Moves: " + player1.getMoveCount());
+			moveText.setStyle("-fx-text-fill: white;" + "\n" + "-fx-font-family: \"Fixedsys Excelsior 3.01\";" + "\n"
+					+ "-fx-font-size: 72;" + "\n"); // ADDED
+	
+			AnchorPane.setTopAnchor(moveText, 360d);
+			AnchorPane.setLeftAnchor(moveText, 150d);
+	
+			Label pushesText = new Label("Pushes: " + player1.getBlockMoveCount());
+			pushesText.setStyle("-fx-text-fill: white;" + "\n" + "-fx-font-family: \"Fixedsys Excelsior 3.01\";" + "\n"
+					+ "-fx-font-size: 72;" + "\n"); // ADDED
+	
+			AnchorPane.setTopAnchor(pushesText, 440d);
+			AnchorPane.setLeftAnchor(pushesText, 475d);
+			
+			Label move2Text = new Label("Player 2 Moves: " + player2.getMoveCount());
+			move2Text.setStyle("-fx-text-fill: white;" + "\n" + "-fx-font-family: \"Fixedsys Excelsior 3.01\";" + "\n"
+					+ "-fx-font-size: 72;" + "\n"); // ADDED
+	
+			AnchorPane.setTopAnchor(move2Text, 520d);
+			AnchorPane.setLeftAnchor(move2Text, 150d);
+	
+			Label pushes2Text = new Label("Pushes: " + player2.getBlockMoveCount());
+			pushes2Text.setStyle("-fx-text-fill: white;" + "\n" + "-fx-font-family: \"Fixedsys Excelsior 3.01\";" + "\n"
+					+ "-fx-font-size: 72;" + "\n"); // ADDED
+	
+			AnchorPane.setTopAnchor(pushes2Text, 600d);
+			AnchorPane.setLeftAnchor(pushes2Text, 475d);
+			
+			victoryPane.getChildren().addAll(victoryText, timeText, moveText, pushesText, move2Text, pushes2Text, summaryText, replayButton, levelButton, menuButton);
+		}
 
 		Scene helpScene = new Scene(victoryPane, 960, 800);
 		victoryPane.setStyle(background);

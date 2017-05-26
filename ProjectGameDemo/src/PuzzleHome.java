@@ -589,7 +589,7 @@ public class PuzzleHome extends Application {
 				BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 		Background levelOneImage = new Background(levelOneBackground);
 
-		levelOne.setPrefSize(200, 200);
+		levelOne.setPrefSize(105, 109);
 		levelOne.setBackground(levelOneImage);
 
 		levelOne.setOnAction(actionEvent -> {
@@ -607,7 +607,7 @@ public class PuzzleHome extends Application {
 				BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 		Background levelTwoImage = new Background(levelTwoBackground);
 
-		levelTwo.setPrefSize(200, 200);
+		levelTwo.setPrefSize(105, 109);
 		levelTwo.setBackground(levelTwoImage);
 
 		levelTwo.setOnAction(actionEvent -> {
@@ -625,7 +625,7 @@ public class PuzzleHome extends Application {
 				BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 		Background levelThreeImage = new Background(levelThreeBackground);
 
-		levelThree.setPrefSize(200, 200);
+		levelThree.setPrefSize(105, 109);
 		levelThree.setBackground(levelThreeImage);
 
 		levelThree.setOnAction(actionEvent -> {
@@ -643,7 +643,7 @@ public class PuzzleHome extends Application {
 				BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 		Background levelFourImage = new Background(levelFourBackground);
 
-		levelFour.setPrefSize(200, 200);
+		levelFour.setPrefSize(105, 109);
 		levelFour.setBackground(levelFourImage);
 
 		levelFour.setOnAction(actionEvent -> {
@@ -661,7 +661,7 @@ public class PuzzleHome extends Application {
 				BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 		Background levelFiveImage = new Background(levelFiveBackground);
 
-		levelFive.setPrefSize(200, 200);
+		levelFive.setPrefSize(105, 109);
 		levelFive.setBackground(levelFiveImage);
 
 		levelFive.setOnAction(actionEvent -> {
@@ -900,7 +900,7 @@ public class PuzzleHome extends Application {
 				BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 		Background levelOneImage = new Background(levelOneBackground);
 
-		levelOne.setPrefSize(200, 200);
+		levelOne.setPrefSize(105, 109);
 		levelOne.setBackground(levelOneImage);
 
 		levelOne.setOnAction(actionEvent -> {
@@ -918,7 +918,7 @@ public class PuzzleHome extends Application {
 				BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 		Background levelTwoImage = new Background(levelTwoBackground);
 
-		levelTwo.setPrefSize(200, 200);
+		levelTwo.setPrefSize(105, 109);
 		levelTwo.setBackground(levelTwoImage);
 
 		levelTwo.setOnAction(actionEvent -> {
@@ -936,7 +936,7 @@ public class PuzzleHome extends Application {
 				BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 		Background levelThreeImage = new Background(levelThreeBackground);
 
-		levelThree.setPrefSize(200, 200);
+		levelThree.setPrefSize(105, 109);
 		levelThree.setBackground(levelThreeImage);
 
 		levelThree.setOnAction(actionEvent -> {
@@ -954,7 +954,7 @@ public class PuzzleHome extends Application {
 				BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 		Background levelFourImage = new Background(levelFourBackground);
 
-		levelFour.setPrefSize(200, 200);
+		levelFour.setPrefSize(105, 109);
 		levelFour.setBackground(levelFourImage);
 
 		levelFour.setOnAction(actionEvent -> {
@@ -972,7 +972,7 @@ public class PuzzleHome extends Application {
 				BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 		Background levelFiveImage = new Background(levelFiveBackground);
 
-		levelFive.setPrefSize(200, 200);
+		levelFive.setPrefSize(105, 109);
 		levelFive.setBackground(levelFiveImage);
 
 		levelFive.setOnAction(actionEvent -> {
@@ -1211,7 +1211,7 @@ public class PuzzleHome extends Application {
 				BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 		Background levelOneImage = new Background(levelOneBackground);
 
-		levelOne.setPrefSize(200, 200);
+		levelOne.setPrefSize(105, 109);
 		levelOne.setBackground(levelOneImage);
 
 		levelOne.setOnAction(actionEvent -> {
@@ -1229,7 +1229,7 @@ public class PuzzleHome extends Application {
 				BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 		Background levelTwoImage = new Background(levelTwoBackground);
 
-		levelTwo.setPrefSize(200, 200);
+		levelTwo.setPrefSize(105, 109);
 		levelTwo.setBackground(levelTwoImage);
 
 		levelTwo.setOnAction(actionEvent -> {
@@ -1247,7 +1247,7 @@ public class PuzzleHome extends Application {
 				BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 		Background levelThreeImage = new Background(levelThreeBackground);
 
-		levelThree.setPrefSize(200, 200);
+		levelThree.setPrefSize(105, 109);
 		levelThree.setBackground(levelThreeImage);
 
 		levelThree.setOnAction(actionEvent -> {
@@ -1265,7 +1265,7 @@ public class PuzzleHome extends Application {
 				BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 		Background levelFourImage = new Background(levelFourBackground);
 
-		levelFour.setPrefSize(200, 200);
+		levelFour.setPrefSize(105, 109);
 		levelFour.setBackground(levelFourImage);
 
 		levelFour.setOnAction(actionEvent -> {
@@ -1283,7 +1283,7 @@ public class PuzzleHome extends Application {
 				BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 		Background levelFiveImage = new Background(levelFiveBackground);
 
-		levelFive.setPrefSize(200, 200);
+		levelFive.setPrefSize(105, 109);
 		levelFive.setBackground(levelFiveImage);
 
 		levelFive.setOnAction(actionEvent -> {

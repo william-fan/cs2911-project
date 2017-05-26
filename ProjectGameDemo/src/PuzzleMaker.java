@@ -10,6 +10,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -91,7 +92,7 @@ public class PuzzleMaker {
 		
 		// Text fields, buttons
 		
-		Label xLabel = new Label("Width: (max 20)");
+		Label xLabel = new Label("Width: (max 18)");
 		xLabel.setStyle("-fx-text-fill: white;" + "\n" +
 				 "-fx-font-family: \"Fixedsys Excelsior 3.01\";"  + "\n" +
 				 "-fx-font-size: 18;" + "\n");
@@ -104,7 +105,7 @@ public class PuzzleMaker {
 				 "-fx-text-box-border: transparent;" + "\n" +
 				 "-fx-background-insets: 0;" + "\n");
 		
-		Label yLabel = new Label("Height: (max 20)");
+		Label yLabel = new Label("Height: (max 13)");
 		yLabel.setStyle("-fx-text-fill: white;" + "\n" +
 				 "-fx-font-family: \"Fixedsys Excelsior 3.01\";"  + "\n" +
 				 "-fx-font-size: 18;" + "\n");
@@ -161,7 +162,7 @@ public class PuzzleMaker {
 					Platform.runLater(() -> { // prevent IllegalArgumentException
 						xTextField.setText(newValue.replaceAll("[^\\d]", ""));
 					});
-				} else if (newValue.length() > 0 && Integer.parseInt(newValue) > 20) {
+				} else if (newValue.length() > 0 && Integer.parseInt(newValue) > 18) {
 					xTextField.setText(oldValue);
 				}
 			}
@@ -174,7 +175,7 @@ public class PuzzleMaker {
 					Platform.runLater(() -> { // prevent IllegalArgumentException
 						yTextField.setText(newValue.replaceAll("[^\\d]", ""));
 					});
-				} else if (newValue.length() > 0 && Integer.parseInt(newValue) > 20) {
+				} else if (newValue.length() > 0 && Integer.parseInt(newValue) > 13) {
 					yTextField.setText(oldValue);
 				}
 			}
@@ -324,7 +325,8 @@ public class PuzzleMaker {
 					}
 					map += "4";
 				} else {
-					Button tempButton = ((Button)gamePane.getChildren().get(x*this.sizeX+y));
+					
+					Button tempButton = ((Button) getNode(this.gamePane, x, y));
 					if (x != -1) {
 						map += " ";
 					}
@@ -387,6 +389,22 @@ public class PuzzleMaker {
     	        e.printStackTrace();
     	    }
         }
+	}
+	
+	/**
+	 * Finds the node in the specified position within the grid pane.
+	 * @param gridPane The specified grid pane.
+	 * @param col The integer column.
+	 * @param row The integer row.
+	 * @return The node at the specific location.
+	 */
+	private Node getNode(GridPane gridPane, int col, int row) {
+	    for (Node node : gridPane.getChildren()) {
+	        if (GridPane.getColumnIndex(node) == col && GridPane.getRowIndex(node) == row) {
+	            return node;
+	        }
+	    }
+	    return null;
 	}
 	
 	/*

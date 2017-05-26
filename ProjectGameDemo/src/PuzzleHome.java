@@ -289,7 +289,7 @@ public class PuzzleHome extends Application {
 		return map;
 	}
 
-	private Scene selectDifficulty(Stage primaryStage, Scene menu, int playerCount) {
+	public Scene selectDifficulty(Stage primaryStage, Scene menu, int playerCount) {
 		PuzzleGame game = new PuzzleGame();
 
 		AnchorPane difficultyPane = new AnchorPane();

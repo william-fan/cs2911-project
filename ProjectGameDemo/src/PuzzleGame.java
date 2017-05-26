@@ -277,7 +277,10 @@ public class PuzzleGame {
 						primaryStage.setScene(levelSelect.mediumDifficulty(primaryStage, menu, playerCount));
 					} else if (levelDifficulty.charAt(0) == 'h') {
 						primaryStage.setScene(levelSelect.hardDifficulty(primaryStage, menu, playerCount));
+					} else {
+						primaryStage.setScene(levelSelect.selectDifficulty(primaryStage, menu, playerCount));
 					}
+					
 					inGameMenu.close();
 				});
 
@@ -623,6 +626,8 @@ public class PuzzleGame {
 						primaryStage.setScene(levelSelect.mediumDifficulty(primaryStage, menu, playerCount));
 					} else if (levelDifficulty.charAt(0) == 'h') {
 						primaryStage.setScene(levelSelect.hardDifficulty(primaryStage, menu, playerCount));
+					} else {
+						primaryStage.setScene(levelSelect.selectDifficulty(primaryStage, menu, playerCount));
 					}
 
 					inGameMenu.close();

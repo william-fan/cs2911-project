@@ -5,7 +5,7 @@ import javafx.application.Application;
  * class.
  * 
  * @authors 
- * William Fan, Bob Guo, Charles Lu, Alexander Ong, Yuxing Wu
+ * William Fan, Bob Guo, Charles Lu, Alexander Ong, Allan Wu
  */
 
 public class PuzzleMain {

@@ -241,10 +241,9 @@ public class Player {
 
 	private void addPositionToList(Player otherPlayer, ArrayList<Block> blockList) {
 		LinkedList<Integer> spritePos = new LinkedList<Integer>();
+		spritePos.add(ID);
 		spritePos.add(x);
 		spritePos.add(y);
-		spritePos.add(otherPlayer.getX());
-		spritePos.add(otherPlayer.getY());
 		for (Block block : blockList){
 			spritePos.add(block.getX());
 			spritePos.add(block.getY());

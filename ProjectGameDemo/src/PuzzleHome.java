@@ -34,12 +34,27 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 
+/**
+ * This class deals with the UI for menus when selecting mode of play, the
+ * difficulty/levels of each puzzle and the text on the instructions screen. 
+ * This class also reads the hard coded maps for the PuzzleGame class.
+ * 
+ * @authors 
+ * William Fan, Bob Guo, Charles Lu, Alexander Ong, Allan Wu
+ */
 public class PuzzleHome extends Application {
 
 	// Background style
 	private String background = "-fx-background-image: url(file:images/background.png);" + "\n"
 			+ "-fx-background-size: stretch;" + "\n" + "-fx-background-repeat: no-repeat;";
 
+	/**
+	 * Brings up the instructions screen when the instructions button is pressed.
+	 * It brings up images and text to their predetermined locations.
+	 * @param primaryStage The pane for the puzzle window
+	 * @param menu The layout of the menu
+	 * @return The layout of the instructions page
+	 */
 	private Scene helpPage(Stage primaryStage, Scene menu) {
 		// Create helpPane
 		BorderPane helpPane = new BorderPane();
@@ -188,7 +203,12 @@ public class PuzzleHome extends Application {
 		// " bottomBox Y layout = " + bottomBox.getLayoutY());
 		return helpScene;
 	}
-
+	
+	/**
+	 * Generates a map if no map file is found. 
+	 * @param difficulty The difficulty of the map, 0-2 for easy to hard
+	 * @return returns the cell grid of the map
+	 */
 	private Cell[][] generateMap(int difficulty) {
 		Cell[][] map = null;
 		if (difficulty == 0) {
@@ -218,6 +238,12 @@ public class PuzzleHome extends Application {
 		return map;
 	}
 
+	/**
+	 * When given a file, this reads the map and allocates tiles to whatever
+	 * type they have been given. 
+	 * @param f The input file for the scanner
+	 * @return returns the cell grid of the map
+	 */
 	private Cell[][] readMap(File f) {
 		Scanner scanChars = scanFile(f.getPath());
 		Scanner scanLines = scanFile(f.getPath());
@@ -284,6 +310,17 @@ public class PuzzleHome extends Application {
 		return map;
 	}
 
+	/**
+	 * Brings up the select difficulty screen when the mode of play is selected.
+	 * It brings up images and buttons to the pane. The buttons also change images
+	 * when the cursor is hovering over it. When the difficulty is selected, it
+	 * goes to its respective difficulty methods below.
+	 * @param primaryStage The pane for the puzzle window
+	 * @param menu The layout of the menu
+	 * @param playerCount The number of players selected
+	 * @return returns the select difficulty screen once the mode of play is
+	 * selected
+	 */
 	public Scene selectDifficulty(Stage primaryStage, Scene menu, int playerCount) {
 		PuzzleGame game = new PuzzleGame();
 
@@ -494,9 +531,17 @@ public class PuzzleHome extends Application {
 		return difficultyScene;
 	}
 
-	//
+	// 
 	// DIFFICULTY SELECTION SCREENS
 	//
+	/**
+	 * This is the EASY difficulty map select screen. When hovering over the
+	 * box, a preview of the map can be viewed below. 
+	 * @param primaryStage The pane for the puzzle window
+	 * @param menu The layout of the menu
+	 * @param playerCount The number of players selected
+	 * @return returns the level select for their respective difficulty
+	 */
 	public Scene easyDifficulty(Stage primaryStage, Scene menu, int playerCount) {
 
 		PuzzleGame game = new PuzzleGame();
@@ -799,7 +844,15 @@ public class PuzzleHome extends Application {
 		Scene layoutDisplay = new Scene(easyPane, 960, 800);
 		return layoutDisplay;
 	}
-
+	
+	/**
+	 * This is the MEDIUM difficulty map select screen. When hovering over 
+	 * the box, a preview of the map can be viewed below.
+	 * @param primaryStage The pane for the puzzle window
+	 * @param menu The layout of the menu
+	 * @param playerCount The number of players selected
+	 * @return returns the level select for their respective difficulty
+	 */
 	public Scene mediumDifficulty(Stage primaryStage, Scene menu, int playerCount) {
 
 		PuzzleGame game = new PuzzleGame();
@@ -1102,7 +1155,15 @@ public class PuzzleHome extends Application {
 		Scene layoutDisplay = new Scene(mediumPane, 960, 800);
 		return layoutDisplay;
 	}
-
+	
+	/**
+	 * This is the HARD difficulty map select screen. When hovering over the
+	 * box, a preview of the map can be viewed below. 
+	 * @param primaryStage The pane for the puzzle window
+	 * @param menu The layout of the menu
+	 * @param playerCount The number of players selected
+	 * @return returns the level select for their respective difficulty
+	 */
 	public Scene hardDifficulty(Stage primaryStage, Scene menu, int playerCount) {
 
 		PuzzleGame game = new PuzzleGame();
@@ -1406,6 +1467,12 @@ public class PuzzleHome extends Application {
 		return layoutDisplay;
 	}
 
+	/**
+	 * (non-Javadoc)
+	 * @see javafx.application.Application#start(javafx.stage.Stage)
+	 * Starts the given stage in the input
+	 * @param primaryStage The pane for the puzzle window
+	 */
 	public void start(Stage primaryStage) throws Exception {
 		// Init
 		try {
@@ -1622,9 +1689,7 @@ public class PuzzleHome extends Application {
 
 	/**
 	 * Read the input file as a scanner.
-	 * 
-	 * @param input
-	 *            The input file name.
+	 * @param input The input file name.
 	 * @return The scanner object of the input file.
 	 */
 	private Scanner scanFile(String input) {

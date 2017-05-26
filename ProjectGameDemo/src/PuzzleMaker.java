@@ -31,7 +31,7 @@ import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-/*
+/**
  * This is the PuzzleMaker class, in charge of the puzzle making function.
  * It opens the PuzzleHome class.
  * 
@@ -44,11 +44,13 @@ public class PuzzleMaker {
 	private int sizeY = 0;
 	private GridPane gamePane = new GridPane();
 
-	/*
+	/**
 	 * Sets the scene for the puzzle maker including buttons, text box for size
-	 * input and the puzzle when set size is clicked.
+	 * input and the puzzle when set size is clicked. 
+	 * @param primaryStage The pane for the puzzle window
+	 * @param menu The layout of the menu
+	 * @return The UI of the puzzle maker
 	 */
-
 	public Scene PuzzleMakerHome(Stage primaryStage, Scene menu) {
 		// Add ui boxes
 		// Background style
@@ -132,6 +134,9 @@ public class PuzzleMaker {
 		// Add text field restrictions, no text, cannot be > 20
 		xTextField.textProperty().addListener(new ChangeListener<String>() {
 			@Override
+			/**
+			 * Checks if the size has changed
+			 */
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 				if (!newValue.matches("\\d*")) {
 					Platform.runLater(() -> { // prevent
@@ -273,22 +278,21 @@ public class PuzzleMaker {
 
 	}
 
-	/*
+	/**
 	 * Resets the map when puzzle maker is exited.
 	 */
-
 	private void resetMap() {
 		this.sizeX = 0;
 		this.sizeY = 0;
 		this.gamePane = new GridPane();
 	}
 
-	/*
+	/**
 	 * Exports the puzzle generated to a .map file. Also has checks if the map
 	 * contains at least 1 player tile, blocks and goal tiles and whether the
 	 * number of blocks and goals are the same.
+	 * @param primaryStage The pane for the puzzle window
 	 */
-
 	private void exportMap(Stage primaryStage) {
 		// Format export string
 		String map = "";
@@ -372,13 +376,9 @@ public class PuzzleMaker {
 
 	/**
 	 * Finds the node in the specified position within the grid pane.
-	 * 
-	 * @param gridPane
-	 *            The specified grid pane.
-	 * @param col
-	 *            The integer column.
-	 * @param row
-	 *            The integer row.
+	 * @param gridPane The specified grid pane.
+	 * @param col The integer column.
+	 * @param row The integer row.
 	 * @return The node at the specific location.
 	 */
 	private Node getNode(GridPane gridPane, int col, int row) {
@@ -390,12 +390,12 @@ public class PuzzleMaker {
 		return null;
 	}
 
-	/*
+	/**
 	 * This allows the user to click on the tile to change its type from a goal
 	 * to a player tile. Users can use left clicks or right clicks to change the
 	 * tile type.
+	 * @param event Any mouse clicks when clicking the tiles
 	 */
-
 	private class MapButtonHandler implements EventHandler<MouseEvent> {
 		public void handle(MouseEvent event) {
 			String oldText = ((Button) event.getSource()).getText();

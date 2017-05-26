@@ -33,6 +33,15 @@ import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+/**
+ * This class is in charge of the Puzzle Game and the interactions between the
+ * player and its surroundings. It also holds the UI which includes the timer
+ * which times how long the player takes to complete the puzzle as well as
+ * the number of moves and blocks moved. 
+ * 
+ * @authors 
+ * William Fan, Bob Guo, Charles Lu, Alexander Ong, Allan Wu
+ */	
 public class PuzzleGame {
 	private Player player1 = new Player(1, 0, 0); // assume 0, 0 is a wall and is invalid
 	private Player player2 = new Player(2, 0, 0);
@@ -45,6 +54,17 @@ public class PuzzleGame {
 			+ "-fx-background-size: stretch;" + "\n" + "-fx-background-repeat: no-repeat;";
 
 	// blockCount only for generation purposes
+	/**
+	 * This method holds the GUI including the timer and the move counts on the top bar.
+	 * Also deals with player movement and button presses like R or ESC
+	 * @param grid The cell grid from the scanner
+	 * @param primaryStage The pane for the puzzle window
+	 * @param menu The layout of the menu
+	 * @param playerCount The amount of players playing
+	 * @param blockCount The amount of blocks in the map
+	 * @param inputFile The input file with the map
+	 * @return returns the scanned map selected by the player
+	 */
 	public Scene Game(Cell[][] grid, Stage primaryStage, Scene menu, int playerCount, int blockCount, File inputFile) {
 		try {
 			Font.loadFont(new FileInputStream(new File("fonts/FSEX300.ttf")), 36);
@@ -112,8 +132,10 @@ public class PuzzleGame {
 
 			@Override
 			/**
-			 * Handles the functionality of the in game gui menu button
-			 */
+		     * Handles the functionality of the in game gui menu button which
+		     * brings up a pause menu.
+		     * @param event The mouse clicking on the button
+		     */
 			public void handle(ActionEvent event) {
 				final Stage inGameMenu = new Stage();
 				timer.stop();
@@ -760,6 +782,18 @@ public class PuzzleGame {
 
 	}
 
+	/**
+	 * This function checks for the blocks and whether they are 
+	 * over the goal tile
+	 * @param primaryStage The pane for the puzzle window
+	 * @param menu The layout of the menu
+	 * @param map The cell grid of the scanned file
+	 * @param blockList The blocks in the map
+	 * @param playerCount The number of players playing
+	 * @param inputFile The input file with the map
+	 * @param grid The grid layout
+	 * @param blockCount The number of blocks in the map
+	 */
 	private void checkVictory(Stage primaryStage, Scene menu, Cell[][] map, ArrayList<Block> blockList, int playerCount,
 			File inputFile, Cell[][] grid, int blockCount) {
 		int gameWidth = map.length;
@@ -800,6 +834,16 @@ public class PuzzleGame {
 		}
 	}
 
+	/**
+	 * Brings up the victory screen when the win conditions are met
+	 * @param primaryStage The pane for the puzzle window
+	 * @param menu The layout of the menu
+	 * @param playerCount The number of players playing
+	 * @param inputFile The input file with the map
+	 * @param grid The grid layout
+	 * @param blockCount The number of blocks in the map
+	 * @return returns the Victory Screen
+	 */
 	private Scene victoryScreen(Stage primaryStage, Scene menu, int playerCount, File inputFile, Cell[][] grid,
 			int blockCount) {
 		AnchorPane victoryPane = new AnchorPane();
@@ -983,6 +1027,15 @@ public class PuzzleGame {
 	}
 
 	// reset values to original
+	/**
+	 * Resets the game to its initial state
+	 * @param grid
+	 * @param primaryStage
+	 * @param menu
+	 * @param playerCount
+	 * @param blockCount
+	 * @param inputFile
+	 */
 	private void resetGame(Cell[][] grid, Stage primaryStage, Scene menu, int playerCount, int blockCount,
 			File inputFile) {
 		this.player1 = new Player(1, 0, 0); // assume 0, 0 is a wall and is
@@ -992,40 +1045,69 @@ public class PuzzleGame {
 		this.timerString = "";
 		primaryStage.setScene(Game(grid, primaryStage, menu, playerCount, blockCount, inputFile));
 	}
-
+	
+	/**
+	 * Undos the game to the state where the last box was moved
+	 * @param tempP1Image The P1 image
+	 * @param tempP2Image The P2 image
+	 */
 	private void undoGame(ImageView tempP1Image, ImageView tempP2Image) {
-		LinkedList<LinkedList<Integer>> test = player1.getPosList();
-		if (!test.isEmpty()) {
-			player1.setX(test.getLast().get(0));
-			player1.setY(test.getLast().get(1));
-			this.gamePane.getChildren().remove(tempP1Image);
-			this.gamePane.add(this.player1.getPlayerImage(), this.player1.getX(), this.player1.getY());
-			test.getLast().removeFirst();
-			test.getLast().removeFirst();
-			if (test.getLast().peek() != 0) {
-				player2.setX(test.getLast().get(0));
-				player2.setY(test.getLast().get(1));
+		LinkedList<LinkedList<Integer>> posList = player1.getPosList();
+		LinkedList<LinkedList<Integer>> posList2 = player2.getPosList();
+		if (!posList.isEmpty()) {
+			if (posList.getLast().peek() == 1){
+				posList.getLast().removeFirst();
+				player1.setX(posList.getLast().getFirst());
+				posList.getLast().removeFirst();
+				player1.setY(posList.getLast().getFirst());
+				posList.getLast().removeFirst();
+				this.gamePane.getChildren().remove(tempP1Image);
+				this.gamePane.add(this.player1.getPlayerImage(), this.player1.getX(), this.player1.getY());
+				for (Block block : this.blockList) {
+					block.setX(posList.getLast().getFirst());
+					posList.getLast().removeFirst();
+					block.setY(posList.getLast().getFirst());
+					posList.getLast().removeFirst();
+					this.gamePane.getChildren().remove(block.getBlockImage());
+					this.gamePane.add(block.getBlockImage(), block.getX(), block.getY());
+				}
+				posList.removeLast();
+			}
+		}
+		if (!posList2.isEmpty()){
+			if (posList2.getLast().peek() == 2) {
+				posList2.getLast().removeFirst();
+				player2.setX(posList2.getLast().getFirst());
+				posList2.getLast().removeFirst();
+				player2.setY(posList2.getLast().getFirst());
+				posList2.getLast().removeFirst();
 				this.gamePane.getChildren().remove(tempP2Image);
 				this.gamePane.add(this.player2.getPlayerImage(), this.player2.getX(), this.player2.getY());
+				for (Block block : this.blockList) {
+					block.setX(posList2.getLast().getFirst());
+					posList2.getLast().removeFirst();
+					block.setY(posList2.getLast().getFirst());
+					posList2.getLast().removeFirst();
+					this.gamePane.getChildren().remove(block.getBlockImage());
+					this.gamePane.add(block.getBlockImage(), block.getX(), block.getY());
+				}
+				posList2.removeLast();
 			}
-			test.getLast().removeFirst();
-			test.getLast().removeFirst();
-			for (Block block : this.blockList) {
-				block.setX(test.getLast().get(0));
-				block.setY(test.getLast().get(1));
-				this.gamePane.getChildren().remove(block.getBlockImage());
-				this.gamePane.add(block.getBlockImage(), block.getX(), block.getY());
-				test.getLast().removeFirst();
-				test.getLast().removeFirst();
-			}
-			test.removeLast();
 		}
 	}
 
+	/**
+	 * Returns an arraylist of blocks
+	 * @return An arraylist of blocks
+	 */
 	public ArrayList<Block> getBlockList() {
 		return this.blockList;
 	}
 
+	/**
+	 * Finds the important tiles on the map
+	 * @param map
+	 */
 	private void findMapFeatures(Cell[][] map) {
 		int gameWidth = map.length;
 		int gameHeight = map[0].length;
@@ -1049,6 +1131,13 @@ public class PuzzleGame {
 		}
 	}
 
+	/**
+	 * Finds the block in a list with given xy coordinates
+	 * @param tempBlockList A temporary block list with all the blocks
+	 * @param x The x coordinate of block
+	 * @param y The y coordinate of block
+	 * @return Returns the block with the same xy coordinates
+	 */
 	private Block findBlock(ArrayList<Block> tempBlockList, int x, int y) {
 		for (Block block : tempBlockList) {
 			if (block.getX() == x && block.getY() == y) {

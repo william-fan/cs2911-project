@@ -33,11 +33,24 @@ import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+/*
+ * This is the PuzzleMaker class, in charge of the puzzle making function.
+ * It opens the PuzzleHome class.
+ * 
+ * @authors 
+ * William Fan, Bob Guo, Charles Lu, Alexander Ong, Allan Wu
+ */
+
 public class PuzzleMaker {
 	private int sizeX = 0;
 	private int sizeY = 0;
 	private GridPane gamePane = new GridPane();
 
+	/*
+	 * Sets the scene for the puzzle maker including buttons, text box for size
+	 * input and the puzzle when set size is clicked. 
+	 */
+	
 	public Scene PuzzleMakerHome(Stage primaryStage, Scene menu) {
 		// Load font
 		try {
@@ -280,11 +293,21 @@ public class PuzzleMaker {
 
 	}
 	
+	/*
+	 * Resets the map when puzzle maker is exited.
+	 */
+	
 	private void resetMap() {
 		this.sizeX = 0;
 		this.sizeY = 0;
 		this.gamePane = new GridPane();
 	}
+	
+	/*
+	 * Exports the puzzle generated to a .map file. Also has checks if the map
+	 * contains at least 1 player tile, blocks and goal tiles and whether the
+	 * number of blocks and goals are the same.
+	 */
 	
 	private void exportMap(Stage primaryStage) {
 		//Format export string
@@ -365,6 +388,12 @@ public class PuzzleMaker {
     	    }
         }
 	}
+	
+	/*
+	 * This allows the user to click on the tile to change its type from a goal
+	 * to a player tile. Users can use left clicks or right clicks to change the
+	 * tile type.
+	 */
 	
 	private class MapButtonHandler implements EventHandler<MouseEvent> {
 		public void handle(MouseEvent event) {

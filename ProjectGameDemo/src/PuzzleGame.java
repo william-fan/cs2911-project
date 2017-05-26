@@ -144,37 +144,99 @@ public class PuzzleGame {
 
 		              // Buttons
 
-		              Button resume = new Button("Resume");
-		              resume.setStyle("-fx-text-fill: white;" + "\n" +
-		           "-fx-font-family: \"Fixedsys Excelsior 3.01\";"  + "\n" +
-		           "-fx-font-size: 40;" + "\n"
-		              + "-fx-background-color: #000000;");
+		            Button resume = new Button("");
+		            
+		      		BackgroundImage resumeBackground = new BackgroundImage(new Image(new File("images/resume.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+		    	    Background resumeImage = new Background(resumeBackground);
+		    	    resume.setBackground(resumeImage);
+		    	    resume.setPrefSize(300, 100);
+		    	    
+		    	    BackgroundImage resumeBackgroundHover = new BackgroundImage(new Image(new File("images/resume_arrow.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+		    	    Background resumeImageHover = new Background(resumeBackgroundHover);
 
-		              Button restart = new Button("Restart");
-		              restart.setStyle("-fx-text-fill: white;" + "\n" +
-		           "-fx-font-family: \"Fixedsys Excelsior 3.01\";"  + "\n" +
-		           "-fx-font-size: 40;" + "\n"
-		              + "-fx-background-color: #000000;");
+		    	    resume.setOnMouseEntered(actionEvent -> {
+		    	    	resume.setBackground(resumeImageHover);
+		    		});
+		    	    
+		    	    resume.setOnMouseExited(actionEvent -> {
+		    	    	resume.setBackground(resumeImage);
+		    		});
+		            
+		            Button restart = new Button("");
 
-		              Button changeLevel = new Button("Change Level");
-		              changeLevel.setStyle("-fx-text-fill: white;" + "\n" +
-		           "-fx-font-family: \"Fixedsys Excelsior 3.01\";"  + "\n" +
-		           "-fx-font-size: 40;" + "\n"
-		              + "-fx-background-color: #000000;");
+		            BackgroundImage restartBackground = new BackgroundImage(new Image(new File("images/restart.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+		    	    Background restartImage = new Background(restartBackground);
+		    	    restart.setBackground(restartImage);
+		    	    restart.setPrefSize(300, 100);
+		    	    
+		    	    BackgroundImage restartBackgroundHover = new BackgroundImage(new Image(new File("images/restart_arrow.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+		    	    Background restartImageHover = new Background(restartBackgroundHover);
 
-		              Button mainMenu = new Button("Main Menu");
-		              mainMenu.setStyle("-fx-text-fill: white;" + "\n" +
-		           "-fx-font-family: \"Fixedsys Excelsior 3.01\";"  + "\n" +
-		           "-fx-font-size: 40;" + "\n"
-		              + "-fx-background-color: #000000;");
+		    	    restart.setOnMouseEntered(actionEvent -> {
+		    	    	restart.setBackground(restartImageHover);
+		    		});
+		    	    
+		    	    restart.setOnMouseExited(actionEvent -> {
+		    	    	restart.setBackground(restartImage);
+		    		});
+		            
+		            Button changeLevel = new Button("");
 
-		              Button quit = new Button("Quit");
-		              quit.setStyle("-fx-text-fill: white;" + "\n" +
-		           "-fx-font-family: \"Fixedsys Excelsior 3.01\";"  + "\n" +
-		           "-fx-font-size: 40;" + "\n"
-		              + "-fx-background-color: #000000;");
+		            BackgroundImage changeLevelBackground = new BackgroundImage(new Image(new File("images/ingame_change_level.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+		    	    Background changeLevelImage = new Background(changeLevelBackground);
+		    	    changeLevel.setBackground(changeLevelImage);
+		    	    changeLevel.setPrefSize(370, 100);
+		    	    
+		    	    BackgroundImage changeLevelBackgroundHover = new BackgroundImage(new Image(new File("images/ingame_change_level_arrow.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+		    	    Background changeLevelImageHover = new Background(changeLevelBackgroundHover);
 
+		    	    changeLevel.setOnMouseEntered(actionEvent -> {
+		    	    	changeLevel.setBackground(changeLevelImageHover);
+		    		});
+		    	    
+		    	    changeLevel.setOnMouseExited(actionEvent -> {
+		    	    	changeLevel.setBackground(changeLevelImage);
+		    		});
+		            
+		            Button mainMenu = new Button("");
+		              
+		      		BackgroundImage mainMenuBackground = new BackgroundImage(new Image(new File("images/ingame_main.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+		    	    Background mainMenuImage = new Background(mainMenuBackground);
+		    	    mainMenu.setBackground(mainMenuImage);
+		    	    mainMenu.setPrefSize(300, 100);
+		    	    
+		    	    BackgroundImage mainMenuBackgroundHover = new BackgroundImage(new Image(new File("images/ingame_main_arrow.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+		    	    Background mainMenuImageHover = new Background(mainMenuBackgroundHover);
 
+		    	    mainMenu.setOnMouseEntered(actionEvent -> {
+		    	    	mainMenu.setBackground(mainMenuImageHover);
+		    		});
+		    	    
+		    	    mainMenu.setOnMouseExited(actionEvent -> {
+		    	    	mainMenu.setBackground(mainMenuImage);
+		    		});
+		    	    
+		    	    AnchorPane.setTopAnchor(mainMenu, 490d);
+		    	    AnchorPane.setLeftAnchor(mainMenu, 310d);	    
+
+		              Button quit = new Button("");
+		              
+		              BackgroundImage quitBackground = new BackgroundImage(new Image(new File("images/ingame_quit.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+			    	    Background quitImage = new Background(quitBackground);
+			    	    quit.setBackground(quitImage);
+			    	    quit.setPrefSize(300, 100);
+			    	    
+			    	    BackgroundImage quitBackgroundHover = new BackgroundImage(new Image(new File("images/ingame_quit_arrow.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+			    	    Background quitImageHover = new Background(quitBackgroundHover);
+
+			    	    quit.setOnMouseEntered(actionEvent -> {
+			    	    	quit.setBackground(quitImageHover);
+			    		});
+			    	    
+			    	    quit.setOnMouseExited(actionEvent -> {
+			    	    	quit.setBackground(quitImage);
+			    		});
+		              
 		              // Button functionality
 		              resume.setOnAction(actionEvent -> {
 		                timer.start();
@@ -641,53 +703,31 @@ public class PuzzleGame {
 	}
 
 	private void undoGame(ImageView tempP1Image, ImageView tempP2Image) {
-		LinkedList<LinkedList<Integer>> posList = player1.getPosList();
-		LinkedList<LinkedList<Integer>> posList2 = player2.getPosList();
-		if (!posList.isEmpty()) {
-			if (posList.getLast().peek() == 1){
-				posList.getLast().removeFirst();
-				player1.setX(posList.getLast().getFirst());
-				posList.getLast().removeFirst();
-				player1.setY(posList.getLast().getFirst());
-				posList.getLast().removeFirst();
-				this.gamePane.getChildren().remove(tempP1Image);
-				this.gamePane.add(this.player1.getPlayerImage(), this.player1.getX(), this.player1.getY());
-				for (Block block : this.blockList) {
-					//if (block.getID() == posList.getLast().peek()){
-					//	posList.getLast().removeFirst();
-					block.setX(posList.getLast().getFirst());
-					posList.getLast().removeFirst();
-					block.setY(posList.getLast().getFirst());
-					posList.getLast().removeFirst();
-					this.gamePane.getChildren().remove(block.getBlockImage());
-					this.gamePane.add(block.getBlockImage(), block.getX(), block.getY());
-					//}
-				}
-				posList.removeLast();
-			}
-		}
-		if (!posList2.isEmpty()){
-			if (posList2.getLast().peek() == 2) {
-				posList2.getLast().removeFirst();
-				player2.setX(posList2.getLast().getFirst());
-				posList2.getLast().removeFirst();
-				player2.setY(posList2.getLast().getFirst());
-				posList2.getLast().removeFirst();
+		LinkedList<LinkedList<Integer>> test = player1.getPosList();
+		if (!test.isEmpty()) {
+			player1.setX(test.getLast().get(0));
+			player1.setY(test.getLast().get(1));
+			this.gamePane.getChildren().remove(tempP1Image);
+			this.gamePane.add(this.player1.getPlayerImage(), this.player1.getX(), this.player1.getY());
+			test.getLast().removeFirst();
+			test.getLast().removeFirst();
+			if (test.getLast().peek() != 0){
+				player2.setX(test.getLast().get(0));
+				player2.setY(test.getLast().get(1));
 				this.gamePane.getChildren().remove(tempP2Image);
 				this.gamePane.add(this.player2.getPlayerImage(), this.player2.getX(), this.player2.getY());
-				for (Block block : this.blockList) {
-					//if (block.getID() == posList2.getLast().peek()) {
-					//	posList2.getLast().removeFirst();
-					block.setX(posList2.getLast().getFirst());
-					posList2.getLast().removeFirst();
-					block.setY(posList2.getLast().getFirst());
-					posList2.getLast().removeFirst();
-					this.gamePane.getChildren().remove(block.getBlockImage());
-					this.gamePane.add(block.getBlockImage(), block.getX(), block.getY());
-					//}
-				}
-				posList2.removeLast();
 			}
+			test.getLast().removeFirst();
+			test.getLast().removeFirst();
+			for (Block block : this.blockList) {
+				block.setX(test.getLast().get(0));
+				block.setY(test.getLast().get(1));
+				this.gamePane.getChildren().remove(block.getBlockImage());
+				this.gamePane.add(block.getBlockImage(), block.getX(), block.getY());
+				test.getLast().removeFirst();
+				test.getLast().removeFirst();
+			}
+			test.removeLast();
 		}
 	}
 	

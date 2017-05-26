@@ -134,11 +134,11 @@ public class PuzzleGame {
 		              title.setText("Game Paused!");
 		              title.setStyle("-fx-text-fill: white;" + "\n" +
 		           "-fx-font-family: \"Fixedsys Excelsior 3.01\";"  + "\n" +
-		           "-fx-font-size: 55;" + "\n");
+		           "-fx-font-size: 65;" + "\n");
 
 		              BorderPane topSection = new BorderPane();
 		              topSection.setCenter(title);
-		              title.setTranslateY(25);
+		              title.setTranslateY(-20);
 
 
 
@@ -149,7 +149,7 @@ public class PuzzleGame {
 		      		BackgroundImage resumeBackground = new BackgroundImage(new Image(new File("images/resume.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 		    	    Background resumeImage = new Background(resumeBackground);
 		    	    resume.setBackground(resumeImage);
-		    	    resume.setPrefSize(300, 100);
+		    	    resume.setPrefSize(300, 80);
 		    	    
 		    	    BackgroundImage resumeBackgroundHover = new BackgroundImage(new Image(new File("images/resume_arrow.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 		    	    Background resumeImageHover = new Background(resumeBackgroundHover);
@@ -167,7 +167,7 @@ public class PuzzleGame {
 		            BackgroundImage restartBackground = new BackgroundImage(new Image(new File("images/restart.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 		    	    Background restartImage = new Background(restartBackground);
 		    	    restart.setBackground(restartImage);
-		    	    restart.setPrefSize(300, 100);
+		    	    restart.setPrefSize(300, 80);
 		    	    
 		    	    BackgroundImage restartBackgroundHover = new BackgroundImage(new Image(new File("images/restart_arrow.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 		    	    Background restartImageHover = new Background(restartBackgroundHover);
@@ -185,7 +185,7 @@ public class PuzzleGame {
 		            BackgroundImage changeLevelBackground = new BackgroundImage(new Image(new File("images/ingame_change_level.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 		    	    Background changeLevelImage = new Background(changeLevelBackground);
 		    	    changeLevel.setBackground(changeLevelImage);
-		    	    changeLevel.setPrefSize(370, 100);
+		    	    changeLevel.setPrefSize(370, 80);
 		    	    
 		    	    BackgroundImage changeLevelBackgroundHover = new BackgroundImage(new Image(new File("images/ingame_change_level_arrow.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 		    	    Background changeLevelImageHover = new Background(changeLevelBackgroundHover);
@@ -203,7 +203,7 @@ public class PuzzleGame {
 		      		BackgroundImage mainMenuBackground = new BackgroundImage(new Image(new File("images/ingame_main.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 		    	    Background mainMenuImage = new Background(mainMenuBackground);
 		    	    mainMenu.setBackground(mainMenuImage);
-		    	    mainMenu.setPrefSize(300, 100);
+		    	    mainMenu.setPrefSize(300, 80);
 		    	    
 		    	    BackgroundImage mainMenuBackgroundHover = new BackgroundImage(new Image(new File("images/ingame_main_arrow.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 		    	    Background mainMenuImageHover = new Background(mainMenuBackgroundHover);
@@ -224,7 +224,7 @@ public class PuzzleGame {
 		              BackgroundImage quitBackground = new BackgroundImage(new Image(new File("images/ingame_quit.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 			    	    Background quitImage = new Background(quitBackground);
 			    	    quit.setBackground(quitImage);
-			    	    quit.setPrefSize(300, 100);
+			    	    quit.setPrefSize(300, 80);
 			    	    
 			    	    BackgroundImage quitBackgroundHover = new BackgroundImage(new Image(new File("images/ingame_quit_arrow.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 			    	    Background quitImageHover = new Background(quitBackgroundHover);
@@ -281,11 +281,12 @@ public class PuzzleGame {
 
 		              // Create a VBox to store the buttons.
 
-		              VBox buttons = new VBox(5);
+		              VBox buttons = new VBox();
 		              buttons.getChildren().addAll(resume, restart, changeLevel, mainMenu, quit);
 		              //buttons.setSpacing(10);
-		              buttons.setTranslateY(20);
-		              buttons.setTranslateX(10);
+		             // buttons.setTranslateY(20);
+		              //buttons.setTranslateX(10);
+		          
 
 		            buttons.setAlignment(Pos.CENTER);
 		              inGameMenuOptions.getChildren().addAll(topSection, buttons);
@@ -301,7 +302,15 @@ public class PuzzleGame {
 		              inGameMenu.setOnCloseRequest(actionEvent -> {
 		                timer.start();
 		              });
-
+		              
+		              inGameMenu.setTitle("Game Menu");
+		              try {
+						inGameMenu.getIcons().add(new Image(new FileInputStream(new File("images/sprite1.png"))));
+					  } catch (FileNotFoundException e) {
+						e.printStackTrace();
+					  }
+		              
+		              
 		              // Turned off full screen mode for inGameMenu
 		              inGameMenu.setResizable(false);
 
@@ -437,191 +446,201 @@ public class PuzzleGame {
 					}
 				}
 			} else if (event.getCode() == KeyCode.ESCAPE) {
-				 final Stage inGameMenu = new Stage();
-			        timer.stop();
-			              inGameMenu.initModality(Modality.APPLICATION_MODAL);
-			              inGameMenu.initOwner(primaryStage);
-			              VBox inGameMenuOptions = new VBox(2);
+				final Stage inGameMenu = new Stage();
+		        timer.stop();
+		              inGameMenu.initModality(Modality.APPLICATION_MODAL);
+		              inGameMenu.initOwner(primaryStage);
+		              VBox inGameMenuOptions = new VBox(2);
 
-			              String background = "-fx-background-image: url(file:images/background.png);" + "\n"
-			            + "-fx-background-size: stretch;" + "\n"
-			            + "-fx-background-repeat: no-repeat;";
+		              String background = "-fx-background-image: url(file:images/background.png);" + "\n"
+		            + "-fx-background-size: stretch;" + "\n"
+		            + "-fx-background-repeat: no-repeat;";
 
-			              // Title -- Game Paused!
-			              Label title = new Label();
-			              title.setText("Game Paused!");
-			              title.setStyle("-fx-text-fill: white;" + "\n" +
-			           "-fx-font-family: \"Fixedsys Excelsior 3.01\";"  + "\n" +
-			           "-fx-font-size: 55;" + "\n");
+		              // Title -- Game Paused!
+		              Label title = new Label();
+		              title.setText("Game Paused!");
+		              title.setStyle("-fx-text-fill: white;" + "\n" +
+		           "-fx-font-family: \"Fixedsys Excelsior 3.01\";"  + "\n" +
+		           "-fx-font-size: 65;" + "\n");
 
-			              BorderPane topSection = new BorderPane();
-			              topSection.setCenter(title);
-			              title.setTranslateY(-20);
+		              BorderPane topSection = new BorderPane();
+		              topSection.setCenter(title);
+		              title.setTranslateY(-20);
 
 
 
-			              // Buttons
+		              // Buttons
 
-			            Button resume = new Button("");
-			            
-			      		BackgroundImage resumeBackground = new BackgroundImage(new Image(new File("images/resume.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-			    	    Background resumeImage = new Background(resumeBackground);
-			    	    resume.setBackground(resumeImage);
-			    	    resume.setPrefSize(300, 100);
+		            Button resume = new Button("");
+		            
+		      		BackgroundImage resumeBackground = new BackgroundImage(new Image(new File("images/resume.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+		    	    Background resumeImage = new Background(resumeBackground);
+		    	    resume.setBackground(resumeImage);
+		    	    resume.setPrefSize(300, 80);
+		    	    
+		    	    BackgroundImage resumeBackgroundHover = new BackgroundImage(new Image(new File("images/resume_arrow.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+		    	    Background resumeImageHover = new Background(resumeBackgroundHover);
+
+		    	    resume.setOnMouseEntered(actionEvent -> {
+		    	    	resume.setBackground(resumeImageHover);
+		    		});
+		    	    
+		    	    resume.setOnMouseExited(actionEvent -> {
+		    	    	resume.setBackground(resumeImage);
+		    		});
+		            
+		            Button restart = new Button("");
+
+		            BackgroundImage restartBackground = new BackgroundImage(new Image(new File("images/restart.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+		    	    Background restartImage = new Background(restartBackground);
+		    	    restart.setBackground(restartImage);
+		    	    restart.setPrefSize(300, 80);
+		    	    
+		    	    BackgroundImage restartBackgroundHover = new BackgroundImage(new Image(new File("images/restart_arrow.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+		    	    Background restartImageHover = new Background(restartBackgroundHover);
+
+		    	    restart.setOnMouseEntered(actionEvent -> {
+		    	    	restart.setBackground(restartImageHover);
+		    		});
+		    	    
+		    	    restart.setOnMouseExited(actionEvent -> {
+		    	    	restart.setBackground(restartImage);
+		    		});
+		            
+		            Button changeLevel = new Button("");
+
+		            BackgroundImage changeLevelBackground = new BackgroundImage(new Image(new File("images/ingame_change_level.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+		    	    Background changeLevelImage = new Background(changeLevelBackground);
+		    	    changeLevel.setBackground(changeLevelImage);
+		    	    changeLevel.setPrefSize(370, 80);
+		    	    
+		    	    BackgroundImage changeLevelBackgroundHover = new BackgroundImage(new Image(new File("images/ingame_change_level_arrow.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+		    	    Background changeLevelImageHover = new Background(changeLevelBackgroundHover);
+
+		    	    changeLevel.setOnMouseEntered(actionEvent -> {
+		    	    	changeLevel.setBackground(changeLevelImageHover);
+		    		});
+		    	    
+		    	    changeLevel.setOnMouseExited(actionEvent -> {
+		    	    	changeLevel.setBackground(changeLevelImage);
+		    		});
+		            
+		            Button mainMenu = new Button("");
+		              
+		      		BackgroundImage mainMenuBackground = new BackgroundImage(new Image(new File("images/ingame_main.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+		    	    Background mainMenuImage = new Background(mainMenuBackground);
+		    	    mainMenu.setBackground(mainMenuImage);
+		    	    mainMenu.setPrefSize(300, 80);
+		    	    
+		    	    BackgroundImage mainMenuBackgroundHover = new BackgroundImage(new Image(new File("images/ingame_main_arrow.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+		    	    Background mainMenuImageHover = new Background(mainMenuBackgroundHover);
+
+		    	    mainMenu.setOnMouseEntered(actionEvent -> {
+		    	    	mainMenu.setBackground(mainMenuImageHover);
+		    		});
+		    	    
+		    	    mainMenu.setOnMouseExited(actionEvent -> {
+		    	    	mainMenu.setBackground(mainMenuImage);
+		    		});
+		    	    
+		    	    AnchorPane.setTopAnchor(mainMenu, 490d);
+		    	    AnchorPane.setLeftAnchor(mainMenu, 310d);	    
+
+		              Button quit = new Button("");
+		              
+		              BackgroundImage quitBackground = new BackgroundImage(new Image(new File("images/ingame_quit.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+			    	    Background quitImage = new Background(quitBackground);
+			    	    quit.setBackground(quitImage);
+			    	    quit.setPrefSize(300, 80);
 			    	    
-			    	    BackgroundImage resumeBackgroundHover = new BackgroundImage(new Image(new File("images/resume_arrow.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-			    	    Background resumeImageHover = new Background(resumeBackgroundHover);
+			    	    BackgroundImage quitBackgroundHover = new BackgroundImage(new Image(new File("images/ingame_quit_arrow.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+			    	    Background quitImageHover = new Background(quitBackgroundHover);
 
-			    	    resume.setOnMouseEntered(actionEvent -> {
-			    	    	resume.setBackground(resumeImageHover);
+			    	    quit.setOnMouseEntered(actionEvent -> {
+			    	    	quit.setBackground(quitImageHover);
 			    		});
 			    	    
-			    	    resume.setOnMouseExited(actionEvent -> {
-			    	    	resume.setBackground(resumeImage);
+			    	    quit.setOnMouseExited(actionEvent -> {
+			    	    	quit.setBackground(quitImage);
 			    		});
-			            
-			            Button restart = new Button("");
+		              
+		              // Button functionality
+		              resume.setOnAction(actionEvent -> {
+		                timer.start();
+		                inGameMenu.close();
+		              });
 
-			            BackgroundImage restartBackground = new BackgroundImage(new Image(new File("images/restart.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-			    	    Background restartImage = new Background(restartBackground);
-			    	    restart.setBackground(restartImage);
-			    	    restart.setPrefSize(300, 100);
-			    	    
-			    	    BackgroundImage restartBackgroundHover = new BackgroundImage(new Image(new File("images/restart_arrow.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-			    	    Background restartImageHover = new Background(restartBackgroundHover);
+		              restart.setOnAction(actionEvent -> {
+		              resetGame(grid, primaryStage, menu, playerCount, blockCount, inputFile);
+		              inGameMenu.close();
+		            });
 
-			    	    restart.setOnMouseEntered(actionEvent -> {
-			    	    	restart.setBackground(restartImageHover);
-			    		});
-			    	    
-			    	    restart.setOnMouseExited(actionEvent -> {
-			    	    	restart.setBackground(restartImage);
-			    		});
-			            
-			            Button changeLevel = new Button("");
+		              changeLevel.setOnAction(actionEvent -> {
+		                PuzzleHome levelSelect = new PuzzleHome();
 
-			            BackgroundImage changeLevelBackground = new BackgroundImage(new Image(new File("images/ingame_change_level.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-			    	    Background changeLevelImage = new Background(changeLevelBackground);
-			    	    changeLevel.setBackground(changeLevelImage);
-			    	    changeLevel.setPrefSize(370, 100);
-			    	    
-			    	    BackgroundImage changeLevelBackgroundHover = new BackgroundImage(new Image(new File("images/ingame_change_level_arrow.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-			    	    Background changeLevelImageHover = new Background(changeLevelBackgroundHover);
+		                // Using the file name to indicate whether game is easy, medium or hard.
+		                String levelDifficulty = inputFile.getName();
+		                if (levelDifficulty.charAt(0) == 'e') {
+		                  primaryStage.setScene(levelSelect.easyDifficulty(primaryStage, menu, playerCount));
+		                } else if (levelDifficulty.charAt(0) == 'm') {
+		                  primaryStage.setScene(levelSelect.mediumDifficulty(primaryStage, menu, playerCount));
+		                } else if (levelDifficulty.charAt(0) == 'h') {
+		                  primaryStage.setScene(levelSelect.hardDifficulty(primaryStage, menu, playerCount));
+		                }
 
-			    	    changeLevel.setOnMouseEntered(actionEvent -> {
-			    	    	changeLevel.setBackground(changeLevelImageHover);
-			    		});
-			    	    
-			    	    changeLevel.setOnMouseExited(actionEvent -> {
-			    	    	changeLevel.setBackground(changeLevelImage);
-			    		});
-			            
-			            Button mainMenu = new Button("");
-			              
-			      		BackgroundImage mainMenuBackground = new BackgroundImage(new Image(new File("images/ingame_main.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-			    	    Background mainMenuImage = new Background(mainMenuBackground);
-			    	    mainMenu.setBackground(mainMenuImage);
-			    	    mainMenu.setPrefSize(300, 100);
-			    	    
-			    	    BackgroundImage mainMenuBackgroundHover = new BackgroundImage(new Image(new File("images/ingame_main_arrow.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-			    	    Background mainMenuImageHover = new Background(mainMenuBackgroundHover);
+		            inGameMenu.close();
+		              });
 
-			    	    mainMenu.setOnMouseEntered(actionEvent -> {
-			    	    	mainMenu.setBackground(mainMenuImageHover);
-			    		});
-			    	    
-			    	    mainMenu.setOnMouseExited(actionEvent -> {
-			    	    	mainMenu.setBackground(mainMenuImage);
-			    		});
-			    	    
-			    	    AnchorPane.setTopAnchor(mainMenu, 490d);
-			    	    AnchorPane.setLeftAnchor(mainMenu, 310d);	    
+		              mainMenu.setOnAction(actionEvent -> {
+		                primaryStage.setScene(menu);
+		                inGameMenu.close();
+		              });
 
-			              Button quit = new Button("");
-			              
-			              BackgroundImage quitBackground = new BackgroundImage(new Image(new File("images/ingame_quit.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-				    	    Background quitImage = new Background(quitBackground);
-				    	    quit.setBackground(quitImage);
-				    	    quit.setPrefSize(300, 100);
-				    	    
-				    	    BackgroundImage quitBackgroundHover = new BackgroundImage(new Image(new File("images/ingame_quit_arrow.png").toURI().toString()), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-				    	    Background quitImageHover = new Background(quitBackgroundHover);
+		              quit.setOnAction(actionEvent -> {
+		                Alert confirmExit = new Alert(AlertType.CONFIRMATION, "Would you like to exit Wacky Warehouse?", ButtonType.OK, ButtonType.CANCEL);
+		                confirmExit.setTitle("Exit Game");
+		                confirmExit.showAndWait();
 
-				    	    quit.setOnMouseEntered(actionEvent -> {
-				    	    	quit.setBackground(quitImageHover);
-				    		});
-				    	    
-				    	    quit.setOnMouseExited(actionEvent -> {
-				    	    	quit.setBackground(quitImage);
-				    		});
-			              
-			              // Button functionality
-			              resume.setOnAction(actionEvent -> {
-			                timer.start();
-			                inGameMenu.close();
-			              });
+		                if (confirmExit.getResult() == ButtonType.OK) {
+		                  Platform.exit();
+		                }
+		              });
+		              
+		              
 
-			              restart.setOnAction(actionEvent -> {
-			              resetGame(grid, primaryStage, menu, playerCount, blockCount, inputFile);
-			              inGameMenu.close();
-			            });
+		              // Create a VBox to store the buttons.
 
-			              changeLevel.setOnAction(actionEvent -> {
-			                PuzzleHome levelSelect = new PuzzleHome();
+		              VBox buttons = new VBox();
+		              buttons.getChildren().addAll(resume, restart, changeLevel, mainMenu, quit);
+		              //buttons.setSpacing(10);
+		             // buttons.setTranslateY(20);
+		              //buttons.setTranslateX(10)
+		          
 
-			                // Using the file name to indicate whether game is easy, medium or hard.
-			                String levelDifficulty = inputFile.getName();
-			                if (levelDifficulty.charAt(0) == 'e') {
-			                  primaryStage.setScene(levelSelect.easyDifficulty(primaryStage, menu, playerCount));
-			                } else if (levelDifficulty.charAt(0) == 'm') {
-			                  primaryStage.setScene(levelSelect.mediumDifficulty(primaryStage, menu, playerCount));
-			                } else if (levelDifficulty.charAt(0) == 'h') {
-			                  primaryStage.setScene(levelSelect.hardDifficulty(primaryStage, menu, playerCount));
-			                }
+		              buttons.setAlignment(Pos.CENTER);
+		              inGameMenuOptions.getChildren().addAll(topSection, buttons);
+		              inGameMenuOptions.setAlignment(Pos.CENTER);
 
-			            inGameMenu.close();
-			              });
+		              // Set the style of the VBox
+		              inGameMenuOptions.setStyle(background);
+		              Scene inGameMenuScene = new Scene(inGameMenuOptions, 500, 600);
 
-			              mainMenu.setOnAction(actionEvent -> {
-			                primaryStage.setScene(menu);
-			                inGameMenu.close();
-			              });
+		              inGameMenu.setScene(inGameMenuScene);
+		              inGameMenu.show();
 
-			              quit.setOnAction(actionEvent -> {
-			                Alert confirmExit = new Alert(AlertType.CONFIRMATION, "Would you like to exit Wacky Warehouse?", ButtonType.OK, ButtonType.CANCEL);
-			                confirmExit.setTitle("Exit Game");
-			                confirmExit.showAndWait();
+		              inGameMenu.setOnCloseRequest(actionEvent -> {
+		                timer.start();
+		              });
+		              
+		              inGameMenu.setTitle("Game Menu");
+		              try {
+						inGameMenu.getIcons().add(new Image(new FileInputStream(new File("images/sprite1.png"))));
+					  } catch (FileNotFoundException e) {
+						e.printStackTrace();
+					  }
 
-			                if (confirmExit.getResult() == ButtonType.OK) {
-			                  Platform.exit();
-			                }
-			              });
-
-			              // Create a VBox to store the buttons.
-
-			              VBox buttons = new VBox(5);
-			              buttons.getChildren().addAll(resume, restart, changeLevel, mainMenu, quit);
-			              buttons.setSpacing(20);
-			             // buttons.setTranslateY(20);
-			             // buttons.setTranslateX(100);
-
-			            buttons.setAlignment(Pos.CENTER);
-			              inGameMenuOptions.getChildren().addAll(topSection, buttons);
-			              inGameMenuOptions.setAlignment(Pos.CENTER);
-
-			              // Set the style of the VBox
-			              inGameMenuOptions.setStyle(background);
-			              Scene inGameMenuScene = new Scene(inGameMenuOptions, 500, 600);
-
-			              inGameMenu.setScene(inGameMenuScene);
-			              inGameMenu.show();
-
-			              inGameMenu.setOnCloseRequest(actionEvent -> {
-			                timer.start();
-			              });
-
-			              // Turned off full screen mode for inGameMenu
-			              inGameMenu.setResizable(false);
+		              // Turned off full screen mode for inGameMenu
+		              inGameMenu.setResizable(false);
 			} else if (event.getCode() == KeyCode.R) {
 				resetGame(grid, primaryStage, menu, playerCount, blockCount, inputFile);
 			} else if (event.getCode() == KeyCode.U) {

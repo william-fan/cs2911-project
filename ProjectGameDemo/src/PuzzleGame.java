@@ -641,31 +641,53 @@ public class PuzzleGame {
 	}
 
 	private void undoGame(ImageView tempP1Image, ImageView tempP2Image) {
-		LinkedList<LinkedList<Integer>> test = player1.getPosList();
-		if (!test.isEmpty()) {
-			player1.setX(test.getLast().get(0));
-			player1.setY(test.getLast().get(1));
-			this.gamePane.getChildren().remove(tempP1Image);
-			this.gamePane.add(this.player1.getPlayerImage(), this.player1.getX(), this.player1.getY());
-			test.getLast().removeFirst();
-			test.getLast().removeFirst();
-			if (test.getLast().peek() != 0){
-				player2.setX(test.getLast().get(0));
-				player2.setY(test.getLast().get(1));
+		LinkedList<LinkedList<Integer>> posList = player1.getPosList();
+		LinkedList<LinkedList<Integer>> posList2 = player2.getPosList();
+		if (!posList.isEmpty()) {
+			if (posList.getLast().peek() == 1){
+				posList.getLast().removeFirst();
+				player1.setX(posList.getLast().getFirst());
+				posList.getLast().removeFirst();
+				player1.setY(posList.getLast().getFirst());
+				posList.getLast().removeFirst();
+				this.gamePane.getChildren().remove(tempP1Image);
+				this.gamePane.add(this.player1.getPlayerImage(), this.player1.getX(), this.player1.getY());
+				for (Block block : this.blockList) {
+					//if (block.getID() == posList.getLast().peek()){
+					//	posList.getLast().removeFirst();
+					block.setX(posList.getLast().getFirst());
+					posList.getLast().removeFirst();
+					block.setY(posList.getLast().getFirst());
+					posList.getLast().removeFirst();
+					this.gamePane.getChildren().remove(block.getBlockImage());
+					this.gamePane.add(block.getBlockImage(), block.getX(), block.getY());
+					//}
+				}
+				posList.removeLast();
+			}
+		}
+		if (!posList2.isEmpty()){
+			if (posList2.getLast().peek() == 2) {
+				posList2.getLast().removeFirst();
+				player2.setX(posList2.getLast().getFirst());
+				posList2.getLast().removeFirst();
+				player2.setY(posList2.getLast().getFirst());
+				posList2.getLast().removeFirst();
 				this.gamePane.getChildren().remove(tempP2Image);
 				this.gamePane.add(this.player2.getPlayerImage(), this.player2.getX(), this.player2.getY());
+				for (Block block : this.blockList) {
+					//if (block.getID() == posList2.getLast().peek()) {
+					//	posList2.getLast().removeFirst();
+					block.setX(posList2.getLast().getFirst());
+					posList2.getLast().removeFirst();
+					block.setY(posList2.getLast().getFirst());
+					posList2.getLast().removeFirst();
+					this.gamePane.getChildren().remove(block.getBlockImage());
+					this.gamePane.add(block.getBlockImage(), block.getX(), block.getY());
+					//}
+				}
+				posList2.removeLast();
 			}
-			test.getLast().removeFirst();
-			test.getLast().removeFirst();
-			for (Block block : this.blockList) {
-				block.setX(test.getLast().get(0));
-				block.setY(test.getLast().get(1));
-				this.gamePane.getChildren().remove(block.getBlockImage());
-				this.gamePane.add(block.getBlockImage(), block.getX(), block.getY());
-				test.getLast().removeFirst();
-				test.getLast().removeFirst();
-			}
-			test.removeLast();
 		}
 	}
 	

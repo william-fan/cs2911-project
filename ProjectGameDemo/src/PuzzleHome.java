@@ -130,9 +130,9 @@ public class PuzzleHome extends Application {
 		Text info = new Text();
 		info.setText("\n-Your goal is to push all the boxes to the goal squares."
 				+ "\nBe careful, because you cannot pull boxes."
-				+ "\n\n-If you get stuck you can press 'r' on the keyboard\nto restart the game, or press 'u' to undo a"
+				+ "\n\n-If you get stuck you can press 'R' on the keyboard\nto restart the game, or press 'U' to undo a"
 				+ "\nprevious movement. Make sure to check out the in game"
-				+ "\nmenu to pause the game by pressing the 'esc' key"
+				+ "\nmenu to pause the game by pressing the 'ESC' key"
 				+ "\nor by clicking on the icon 'menu' during gameplay." 
 				+ "\n\n-Also have fun creating your own puzzle\nwith the puzzle maker!");
 		info.setFont(Font.font ("Fixedsys Excelsior 3.01", 30));

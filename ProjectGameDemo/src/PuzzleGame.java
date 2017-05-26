@@ -29,7 +29,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -46,11 +45,6 @@ public class PuzzleGame {
 
 	// blockCount only for generation purposes
 	public Scene Game(Cell[][] grid, Stage primaryStage, Scene menu, int playerCount, int blockCount, File inputFile) {
-		try {
-			Font.loadFont(new FileInputStream(new File("fonts/FSEX300.ttf")), 36);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
 		this.gamePane.setAlignment(Pos.CENTER);
 		this.gamePane.setPrefSize(960, 720);
 		Label timeElapsed = new Label("");

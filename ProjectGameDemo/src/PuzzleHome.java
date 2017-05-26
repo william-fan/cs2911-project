@@ -41,11 +41,6 @@ public class PuzzleHome extends Application {
 			+ "-fx-background-size: stretch;" + "\n" + "-fx-background-repeat: no-repeat;";
 
 	private Scene helpPage(Stage primaryStage, Scene menu) {
-		try {
-			Font.loadFont(new FileInputStream(new File("fonts/FSEX300.ttf")), 11);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
 		// Create helpPane
 		BorderPane helpPane = new BorderPane();
 		// Create the scene to display the helpPane

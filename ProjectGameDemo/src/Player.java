@@ -22,7 +22,8 @@ public class Player {
 	private int blockMoveCount;
 	private ImageView playerImage;
 	private LinkedList<LinkedList<Integer>> posList = new LinkedList<LinkedList<Integer>>();
-
+	private ArrayList<ArrayList<Integer>> moveList = new ArrayList<ArrayList<Integer>>();
+	
 	/**
 	 * Initialises the player type
 	 * @param ID The player ID, whether player 1 or 2
@@ -349,6 +350,10 @@ public class Player {
 			spritePos.add(block.getX());
 			spritePos.add(block.getY());
 		}
+		ArrayList<Integer> tempList = new ArrayList<Integer>();
+		tempList.add(this.blockMoveCount);
+		tempList.add(this.moveCount);
+		this.moveList.add(tempList);
 		this.posList.add(spritePos);
 	}
 	
@@ -391,5 +396,21 @@ public class Player {
 	 */
 	public LinkedList<LinkedList<Integer>> getPosList() {
 		return this.posList;
+	}
+
+	/**
+	 * Get the list move/box move counts.
+	 * @return The list move/box move counts.
+	 */
+	public ArrayList<ArrayList<Integer>> getMoveList() {
+		return this.moveList;
+	}
+	
+	/**
+	 * Set the list move/box move counts.
+	 * @param moveList The list move/box move counts.
+	 */
+	public void setMoveList(ArrayList<ArrayList<Integer>> moveList) {
+		this.moveList = moveList;
 	}
 }

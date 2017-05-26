@@ -1053,6 +1053,7 @@ public class PuzzleGame {
 	 */
 	private void undoGame(ImageView tempP1Image, ImageView tempP2Image) {
 		LinkedList<LinkedList<Integer>> posList = player1.getPosList();
+		ArrayList<ArrayList<Integer>> moveList = player1.getMoveList();
 		LinkedList<LinkedList<Integer>> posList2 = player2.getPosList();
 		if (!posList.isEmpty()) {
 			if (posList.getLast().peek() == 1){
@@ -1072,6 +1073,10 @@ public class PuzzleGame {
 					this.gamePane.add(block.getBlockImage(), block.getX(), block.getY());
 				}
 				posList.removeLast();
+				ArrayList <Integer> tempList = moveList.get(moveList.size()-1);
+				moveList.remove(tempList);
+				this.player1.setBlockMoveCount(tempList.get(0));
+				this.player1.setMoveCount(tempList.get(1));
 			}
 		}
 		if (!posList2.isEmpty()){

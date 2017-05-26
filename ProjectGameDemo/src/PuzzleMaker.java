@@ -428,7 +428,7 @@ public class PuzzleMaker {
 						BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT));
 			} else if (newVal == 3) {
 				buttonBackground = new Background(new BackgroundImage(
-						new Image(new File("images/sprite1.png").toURI().toString()), BackgroundRepeat.NO_REPEAT,
+						new Image(new File("images/sprite_pm.png").toURI().toString()), BackgroundRepeat.NO_REPEAT,
 						BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT));
 			} else if (newVal == 4) {
 				buttonBackground = new Background(new BackgroundImage(

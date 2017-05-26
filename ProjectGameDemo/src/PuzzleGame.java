@@ -53,6 +53,7 @@ public class PuzzleGame {
 			e.printStackTrace();
 		}
 		this.gamePane.setAlignment(Pos.CENTER);
+		this.gamePane.setPrefSize(960, 720);
 		Label timeElapsed = new Label("");
 		timeElapsed.setStyle("-fx-text-fill: white;" + "\n" +
 							 "-fx-font-family: \"Fixedsys Excelsior 3.01\";"  + "\n" +

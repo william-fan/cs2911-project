@@ -138,7 +138,7 @@ public class PuzzleGame {
 
 		              BorderPane topSection = new BorderPane();
 		              topSection.setCenter(title);
-		              title.setTranslateY(-20);
+		              title.setTranslateY(25);
 
 
 
@@ -283,9 +283,9 @@ public class PuzzleGame {
 
 		              VBox buttons = new VBox(5);
 		              buttons.getChildren().addAll(resume, restart, changeLevel, mainMenu, quit);
-		              buttons.setSpacing(20);
-		             // buttons.setTranslateY(20);
-		             // buttons.setTranslateX(100);
+		              //buttons.setSpacing(10);
+		              buttons.setTranslateY(20);
+		              buttons.setTranslateX(10);
 
 		            buttons.setAlignment(Pos.CENTER);
 		              inGameMenuOptions.getChildren().addAll(topSection, buttons);

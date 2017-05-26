@@ -205,7 +205,8 @@ public class PuzzleHome extends Application {
 	}
 	
 	/**
-	 * Generates a map if no map file is found. 
+	 * Generates a map if no map file is found.
+	 * Only for testing purposes.
 	 * @param difficulty The difficulty of the map, 0-2 for easy to hard
 	 * @return returns the cell grid of the map
 	 */

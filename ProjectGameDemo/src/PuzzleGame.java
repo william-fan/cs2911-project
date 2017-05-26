@@ -1038,8 +1038,7 @@ public class PuzzleGame {
 	 */
 	private void resetGame(Cell[][] grid, Stage primaryStage, Scene menu, int playerCount, int blockCount,
 			File inputFile) {
-		this.player1 = new Player(1, 0, 0); // assume 0, 0 is a wall and is
-											// invalid
+		this.player1 = new Player(1, 0, 0); // assume 0, 0 is a wall and is invalid
 		this.player2 = new Player(2, 0, 0);
 		this.blockList = new ArrayList<Block>();
 		this.timerString = "";
@@ -1052,15 +1051,15 @@ public class PuzzleGame {
 	 * @param tempP2Image The P2 image
 	 */
 	private void undoGame(ImageView tempP1Image, ImageView tempP2Image) {
-		LinkedList<LinkedList<Integer>> posList = player1.getPosList();
-		ArrayList<ArrayList<Integer>> moveList = player1.getMoveList();
-		LinkedList<LinkedList<Integer>> posList2 = player2.getPosList();
+		LinkedList<LinkedList<Integer>> posList = this.player1.getPosList();
+		ArrayList<ArrayList<Integer>> moveList = this.player1.getMoveList();
+		LinkedList<LinkedList<Integer>> posList2 = this.player2.getPosList();
 		if (!posList.isEmpty()) {
 			if (posList.getLast().peek() == 1){
 				posList.getLast().removeFirst();
-				player1.setX(posList.getLast().getFirst());
+				this.player1.setX(posList.getLast().getFirst());
 				posList.getLast().removeFirst();
-				player1.setY(posList.getLast().getFirst());
+				this.player1.setY(posList.getLast().getFirst());
 				posList.getLast().removeFirst();
 				this.gamePane.getChildren().remove(tempP1Image);
 				this.gamePane.add(this.player1.getPlayerImage(), this.player1.getX(), this.player1.getY());
@@ -1082,9 +1081,9 @@ public class PuzzleGame {
 		if (!posList2.isEmpty()){
 			if (posList2.getLast().peek() == 2) {
 				posList2.getLast().removeFirst();
-				player2.setX(posList2.getLast().getFirst());
+				this.player2.setX(posList2.getLast().getFirst());
 				posList2.getLast().removeFirst();
-				player2.setY(posList2.getLast().getFirst());
+				this.player2.setY(posList2.getLast().getFirst());
 				posList2.getLast().removeFirst();
 				this.gamePane.getChildren().remove(tempP2Image);
 				this.gamePane.add(this.player2.getPlayerImage(), this.player2.getX(), this.player2.getY());
@@ -1137,11 +1136,11 @@ public class PuzzleGame {
 	}
 
 	/**
-	 * Finds the block in a list with given xy coordinates
+	 * Finds the block in a list with given x, y coordinates
 	 * @param tempBlockList A temporary block list with all the blocks
 	 * @param x The x coordinate of block
 	 * @param y The y coordinate of block
-	 * @return Returns the block with the same xy coordinates
+	 * @return Returns the block with the same x, y coordinates
 	 */
 	private Block findBlock(ArrayList<Block> tempBlockList, int x, int y) {
 		for (Block block : tempBlockList) {

@@ -400,6 +400,7 @@ public class Player {
 
 	/**
 	 * Get the list move/box move counts.
+	 * Stored as a list of (boxMoveCount, moveCount)
 	 * @return The list move/box move counts.
 	 */
 	public ArrayList<ArrayList<Integer>> getMoveList() {
@@ -408,6 +409,7 @@ public class Player {
 	
 	/**
 	 * Set the list move/box move counts.
+	 * Stored as a list of (boxMoveCount, moveCount)
 	 * @param moveList The list move/box move counts.
 	 */
 	public void setMoveList(ArrayList<ArrayList<Integer>> moveList) {
